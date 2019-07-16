@@ -1,0 +1,41 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "server": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sauti-databank/back-end.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sauti-databank/back-end/issues"
+  },
+  "homepage": "https://github.com/sauti-databank/back-end#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cleaner": "^2.0.0-alpha",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.0",
+    "helmet": "^3.18.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.17.0-next3",
+    "knex-cleaner": "^1.1.4",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "pg": "^7.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1",
+    "jest": "^24.8.0",
+    "supertest": "^4.0.2"
+  }
+}
