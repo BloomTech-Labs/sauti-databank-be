@@ -16,7 +16,7 @@ module.exports = {
 
   staging: {
     client: 'mysql',
-    connection: process.env,
+    connection: process.env.CLEARDB_DATABASE_URL,
     pool: {
       min: 2,
       max: 10
@@ -28,7 +28,7 @@ module.exports = {
 
   production: {
     client: 'mysql',
-    connection: process.env,
+    connection: process.env.CLEARDB_DATABASE_URL,
     pool: {
       min: 2,
       max: 10
