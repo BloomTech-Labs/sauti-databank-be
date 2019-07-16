@@ -1,6 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const sessions = require("../routes/sessions-router")
+const cors = require("cors");
 
 const server = express();
 
@@ -13,8 +14,9 @@ const server = express();
 
 server.use(helmet());
 server.use(express.json());
+server.use(cors({origin: 'http://localhost:3000'}));
+
 server.use("/sessions", sessions);
-server.use(cors());
 
 server.get("/", (req, res) => {
   res.send("WE ARE UP!");
