@@ -19,7 +19,7 @@ server.use(cors());
 server.use("/sessions", sessions);
 
 server.get("/", (req, res) => {
-  res.send("WE ARE UP!");
+  res.status(200).send("WE ARE UP!");
 });
 
 module.exports = server;

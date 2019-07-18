@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Sessions = require("../routes/sessions-model");
+const Sessions = require("./sessions-model");
 
 router.get("/all", (req, res) => {
     Sessions.find()
@@ -12,6 +12,5 @@ router.get("/all", (req, res) => {
         res.status(500).json(err)
     })
 });
-
 
 module.exports = router;
