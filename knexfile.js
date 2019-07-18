@@ -39,14 +39,12 @@ module.exports = {
   testing: {
     client: "mysql",
     connection: {
-      filename: "./data/test"
+      host: "localhost",
+      user: "root",
+      password: "password",
+      database: "sauti-test",
+      charset: "utf8"
     },
     useNullAsDefault: true,
-    migrations: {
-      directory: "./data/migrations"
-    },
-    seeds: {
-      directory: "./data/seeds"
-    }
   }
 };
