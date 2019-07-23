@@ -8,7 +8,7 @@ module.exports = {
       host: "localhost",
       user: "root",
       password: "password",
-      database: "sauti_1",
+      database: "sauti",
       charset: "utf8"
     }
   },

@@ -18,8 +18,10 @@ exports.up = function(knex, Promise) {
         sessions.increments(); 
 
         // User id, foreign key 
+        // We had to add .unsigned() for our foreign keys because mySQL needs us to mark this if the data will never have a negative value
         sessions
             .integer("user_id")
+            .unsigned()
             .references("id")
             .inTable("users")
             .onDelete("RESTRICT")
@@ -48,6 +50,7 @@ exports.up = function(knex, Promise) {
         // Commodity id, foreign key 
         commodity_selection
             .integer("commodity_id")
+            .unsigned()
             .references("id")
             .inTable("commodity")
             .onDelete("RESTRICT")
@@ -56,6 +59,7 @@ exports.up = function(knex, Promise) {
         // Session id, foreign key 
         commodity_selection 
             .integer("sessions_id")
+            .unsigned()
             .references("id")
             .inTable("sessions")
             .onDelete("RESTRICT")
