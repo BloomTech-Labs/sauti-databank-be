@@ -35,7 +35,7 @@ exports.up = function(knex, Promise) {
         commodity.increments(); 
 
         // Name 
-        sessions
+        commodity
             .string("name", 100)
 
     })
