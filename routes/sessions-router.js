@@ -13,4 +13,17 @@ router.get("/all", (req, res) => {
     })
 });
 
+router.get("/products/:id", (req,res) => {
+
+    const { id } = req.params;
+
+    Sessions.getProduct(id)
+    .then(sessions => {
+        res.status(200).json(sessions)
+    })
+    .catch(err => {
+        res.status(500).json(err)
+    }) 
+});
+
 module.exports = router;
