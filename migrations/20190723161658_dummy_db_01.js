@@ -7,7 +7,7 @@ exports.up = function(knex, Promise) {
         // // Primary key
         // users.integer();
         // users.integer("id");
-        users.integer('id').primary().unsigned().notNullable();
+        users.integer("id").primary().unsigned().notNullable();
 
         // Gender
         users.string("gender", 10);
