@@ -5,8 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       // Inserts seed entries
       return knex("commodity_selection").insert([
-        { commodity_id: 1, sessions_id: 1 },
-        { commodity_id: 1, sessions_id: 11 },
+        { commodity_id: 1, sessions_id: 2 },
         { commodity_id: 1, sessions_id: 21 },
         { commodity_id: 1, sessions_id: 31 },
         { commodity_id: 1, sessions_id: 41 },
@@ -19,7 +18,8 @@ exports.seed = function(knex, Promise) {
         { commodity_id: 1, sessions_id: 111 },
         { commodity_id: 1, sessions_id: 121 },
         { commodity_id: 1, sessions_id: 131 },
-        { commodity_id: 1, sessions_id: 141 }
+        { commodity_id: 1, sessions_id: 141 },
+        { commodity_id: 1, sessions_id: 151 }
       ]);
     });
 };
