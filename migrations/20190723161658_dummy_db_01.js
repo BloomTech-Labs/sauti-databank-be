@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
     knex.schema
       .createTable("users", users => {
         // // Primary key
-        users.increments();
-        //users.integer("id");
-        //users.integer('id').primary().unsigned()
+        // users.integer();
+        // users.integer("id");
+        users.integer('id').primary().unsigned().notNullable();
 
         // Gender
         users.string("gender", 10);
@@ -15,7 +15,7 @@ exports.up = function(knex, Promise) {
 
       // Sessions table
       .createTable("sessions", sessions => {
-        sessions.increments();
+        sessions.integer('id').primary().unsigned().notNullable();
 
         // // Primary key
         //sessions.integer("id");
@@ -36,7 +36,7 @@ exports.up = function(knex, Promise) {
 
       // Commodity table
       .createTable("commodity", commodity => {
-        commodity.increments();
+        commodity.integer('id').primary().unsigned().notNullable();
 
         // Name
         commodity.string("name", 100);
@@ -44,7 +44,7 @@ exports.up = function(knex, Promise) {
 
       // Commodity selection table
       .createTable("commodity_selection", commodity_selection => {
-        commodity_selection.increments();
+        commodity_selection.integer('id').primary().unsigned().notNullable();
 
         // Commodity id, foreign key
         commodity_selection
