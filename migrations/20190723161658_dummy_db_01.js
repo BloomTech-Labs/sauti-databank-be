@@ -27,8 +27,8 @@ exports.up = function(knex, Promise) {
           .unsigned()
           .references("id")
           .inTable("users")
-          .onDelete("RESTRICT")
-          .onUpdate("CASCADE");
+        //   .onDelete("RESTRICT")
+        //   .onUpdate("CASCADE");
 
         // Timestamp
         sessions.timestamp("date");
@@ -52,8 +52,8 @@ exports.up = function(knex, Promise) {
           .unsigned()
           .references("id")
           .inTable("commodity")
-          .onDelete("RESTRICT")
-          .onUpdate("CASCADE");
+        //   .onDelete("RESTRICT")
+        //   .onUpdate("CASCADE");
 
         // Session id, foreign key
         commodity_selection
@@ -61,8 +61,8 @@ exports.up = function(knex, Promise) {
           .unsigned()
           .references("id")
           .inTable("sessions")
-          .onDelete("RESTRICT")
-          .onUpdate("CASCADE");
+        //   .onDelete("RESTRICT")
+        //   .onUpdate("CASCADE");
       })
   );
 };
