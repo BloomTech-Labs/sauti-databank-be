@@ -5,21 +5,21 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       // Inserts seed entries
       return knex("commodity_selection").insert([
-        { commodity_id: 1, sessions_id: 2 },
-        { commodity_id: 1, sessions_id: 21 },
-        { commodity_id: 1, sessions_id: 31 },
-        { commodity_id: 1, sessions_id: 41 },
-        { commodity_id: 1, sessions_id: 51 },
-        { commodity_id: 1, sessions_id: 61 },
-        { commodity_id: 1, sessions_id: 71 },
-        { commodity_id: 1, sessions_id: 81 },
-        { commodity_id: 1, sessions_id: 91 },
-        { commodity_id: 1, sessions_id: 101 },
-        { commodity_id: 1, sessions_id: 111 },
-        { commodity_id: 1, sessions_id: 121 },
-        { commodity_id: 1, sessions_id: 131 },
-        { commodity_id: 1, sessions_id: 141 },
-        { commodity_id: 1, sessions_id: 151 }
+        { commodity_id: 2, sessions_id: 2 },
+        { commodity_id: 2, sessions_id: 12 },
+        { commodity_id: 2, sessions_id: 22 },
+        { commodity_id: 2, sessions_id: 32 },
+        { commodity_id: 2, sessions_id: 42 },
+        { commodity_id: 2, sessions_id: 52 },
+        { commodity_id: 2, sessions_id: 62 },
+        { commodity_id: 2, sessions_id: 72 },
+        { commodity_id: 2, sessions_id: 82 },
+        { commodity_id: 2, sessions_id: 92 },
+        { commodity_id: 2, sessions_id: 102 },
+        { commodity_id: 2, sessions_id: 112 },
+        { commodity_id: 2, sessions_id: 122 },
+        { commodity_id: 2, sessions_id: 132 },
+        { commodity_id: 2, sessions_id: 142 }
       ]);
     });
 };
