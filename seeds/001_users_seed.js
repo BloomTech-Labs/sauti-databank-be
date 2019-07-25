@@ -5,7 +5,7 @@ exports.seed = function(knex, Promise) {
     .then(function() {
       // Inserts seed entries
       return knex("users").insert([
-        {
+        {  
           gender: "female"
         },
         {
@@ -49,7 +49,7 @@ exports.seed = function(knex, Promise) {
         },
         {
           gender: "male"
-        },
+        }
       ]);
     });
 };
