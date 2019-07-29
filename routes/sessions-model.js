@@ -2,7 +2,8 @@ const db = require('../data/dbConfig');
 
 module.exports = {
     find,
-    getProduct
+    getProduct,
+    findRealSessions
 };
 
 function find() {
