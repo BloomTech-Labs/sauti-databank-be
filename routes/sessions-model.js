@@ -9,6 +9,10 @@ function find() {
     return db('sessions');
 }
 
+function findRealSessions() {
+    return db('csv_import')
+}
+
 function getProduct(id) {
     return db('sessions')
     .join('users', { 'sessions.user_id': 'users.id' })

@@ -26,4 +26,15 @@ router.get("/products/:id", (req,res) => {
     }) 
 });
 
+
+router.get("/real/all", (req,res) => {
+    Sessions.findRealSessions()
+    .then(sessions => {
+        res.status(200).json(sessions)
+    })
+        .catch(err => {
+            res.status(500).json(err)
+        })
+});
+
 module.exports = router;
