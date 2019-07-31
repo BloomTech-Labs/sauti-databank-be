@@ -4,10 +4,11 @@ require("dotenv").config();
 module.exports = {
   development: {
     client: "mysql",
+
     connection: {
       host: "160.153.141.46",
-      user: "lambda2019",
-      password: "JlgRzqmvh83Z",
+      user: process.env.user,
+      password: process.env.password,
       database: "lambdaStaging",
       charset: "utf8"
     }
@@ -17,8 +18,8 @@ module.exports = {
     client: "mysql",
      connection: {
       host: "160.153.141.46",
-      user: "lambda2019",
-      password: "JlgRzqmvh83Z",
+      user: process.env.user,
+      password: process.env.password,
       database: "lambdaStaging",
       charset: "utf8"
     },
@@ -35,8 +36,8 @@ module.exports = {
     client: "mysql",
     connection: {
       host: "160.153.141.46",
-      user: "lambda2019",
-      password: "JlgRzqmvh83Z",
+      user: process.env.user,
+      password: process.env.password,
       database: "lambdaStaging",
       charset: "utf8",
     pool: {
