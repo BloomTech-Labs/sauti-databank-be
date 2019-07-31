@@ -2,11 +2,16 @@ const db = require('../data/dbConfig');
 
 module.exports = {
     find,
-    getProduct
+    getProduct,
+    findRealSessions
 };
 
 function find() {
     return db('sessions');
+}
+
+function findRealSessions() {
+    return db('csv_import')
 }
 
 function getProduct(id) {
