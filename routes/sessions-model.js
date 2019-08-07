@@ -4,7 +4,8 @@ module.exports = {
     find,
     getProduct,
     findRealSessions,
-    findLanceData
+    findLanceData,
+    getUsersTable
 };
 
 function find() {
@@ -17,6 +18,10 @@ function findRealSessions() {
 
 function findLanceData() {
     return db('platform_sessions')
+}
+
+function getUsersTable() {
+    return db("users");
 }
 
 function getProduct(id) {
