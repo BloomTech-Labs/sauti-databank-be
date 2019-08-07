@@ -3,7 +3,8 @@ const db = require('../data/dbConfig');
 module.exports = {
     find,
     getProduct,
-    findRealSessions
+    findRealSessions,
+    findLanceData
 };
 
 function find() {
@@ -12,6 +13,10 @@ function find() {
 
 function findRealSessions() {
     return db('csv_import')
+}
+
+function findLanceData() {
+    return db('platform_sessions')
 }
 
 function getProduct(id) {

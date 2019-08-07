@@ -72,6 +72,17 @@ typings/
 # next.js build output
 .next
 
+#database
+.db3
+
+#env
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+=======
 # nuxt.js build output
 .nuxt
 
