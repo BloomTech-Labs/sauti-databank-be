@@ -10,8 +10,9 @@ module.exports = {
       user: process.env.user,
       password: process.env.password,
       database: "lambdaStaging",
-      charset: "utf8"
-    }
+      charset: "utf8",
+    },
+      useNullAsDefault: true,
   },
 
   staging: {
@@ -22,6 +23,8 @@ module.exports = {
       password: process.env.password,
       database: "lambdaStaging",
       charset: "utf8"
+     },
+      useNullAsDefault: true,
     },
     pool: {
       min: 2,
@@ -29,8 +32,7 @@ module.exports = {
     },
     migrations: {
       tableName: "knex_migrations"
-    }
-  },
+    },
 
   production: {
     client: "mysql",
@@ -39,7 +41,9 @@ module.exports = {
       user: process.env.user,
       password: process.env.password,
       database: "lambdaStaging",
-      charset: "utf8",
+      charset: "utf8"
+    },
+    useNullAsDefault: true,
     pool: {
       min: 2,
       max: 10
@@ -58,5 +62,4 @@ module.exports = {
   //     charset: "utf8",
   //   useNullAsDefault: true,
   // }
-}
 };
