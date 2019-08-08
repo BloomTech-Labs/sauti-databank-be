@@ -283,5 +283,90 @@ router.get("/all/country/rwanda/count", (req, res) => {
     });
 });
 
+// Age routes // 
+
+// All users with age
+router.get("/all/age/all", (req, res) => {
+  Users.getAgeAll()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+// Group zero, 10-20
+router.get("/all/age/group-zero/count", (req, res) => {
+
+  Users.getAgeGroupZero()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group one, 20-30
+router.get("/all/age/group-one/count", (req, res) => {
+
+  Users.getAgeGroupOne()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group two, 30-40
+router.get("/all/age/group-two/count", (req, res) => {
+
+  Users.getAgeGroupTwo()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group three, 40-50
+router.get("/all/age/group-three/count", (req, res) => {
+
+  Users.getAgeGroupThree()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group four, 50-60
+router.get("/all/age/group-four/count", (req, res) => {
+
+  Users.getAgeGroupFour()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group five, 60-70
+router.get("/all/age/group-five/count", (req, res) => {
+
+  Users.getAgeGroupFive()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 
 module.exports = router;
