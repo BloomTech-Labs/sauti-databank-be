@@ -83,6 +83,16 @@ const getAgeGroupFour = () => db('users').where({age: "50-60"});
 
 const getAgeGroupFive = () => db('users').where({age: "60-70"});
 
+// Primary Income functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null}); 
+
+const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"}); 
+
+const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"}); 
+
 
 module.exports = {
   get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, 
@@ -96,4 +106,6 @@ module.exports = {
   getCountryAll, getCountryKenya, getCountryUganda, getCountryRwanda, 
 
   getAgeAll, getAgeGroupZero, getAgeGroupOne, getAgeGroupTwo, getAgeGroupThree, getAgeGroupFour, getAgeGroupFive,
+
+  getPrimaryIncomeAll, getPrimaryIncomeYes, getPrimaryIncomeNo, 
 }
