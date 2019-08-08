@@ -160,5 +160,213 @@ router.get("/all/education/none/count", (req, res) => {
     });
 });
 
+// Language routes // 
+
+// All users who filled out a language
+router.get("/all/language/all", (req, res) => {
+
+  Users.getLanguageAll()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// English language count 
+router.get("/all/language/english/count", (req, res) => {
+
+  Users.getLanguageEnglish()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Swahili count 
+router.get("/all/language/swahili/count", (req, res) => {
+
+  Users.getLanguageSwahili()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Kinyarwanda count
+router.get("/all/language/kinya/count", (req, res) => {
+
+  Users.getLanguageKinya()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Luganda count 
+router.get("/all/language/luganda/count", (req, res) => {
+
+  Users.getLanguageLug()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Lukiga count 
+router.get("/all/language/lukiga/count", (req, res) => {
+
+  Users.getLanguageLuk()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Country of residence routes // 
+
+// All users who input a country 
+router.get("/all/country/all", (req, res) => {
+  Users.getCountryAll()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+// Kenya 
+router.get("/all/country/kenya/count", (req, res) => {
+
+  Users.getCountryKenya()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Uganda
+router.get("/all/country/uganda/count", (req, res) => {
+
+  Users.getCountryUganda()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Rwanda 
+router.get("/all/country/rwanda/count", (req, res) => {
+
+  Users.getCountryRwanda()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Age routes // 
+
+// All users with age
+router.get("/all/age/all", (req, res) => {
+  Users.getAgeAll()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+// Group zero, 10-20
+router.get("/all/age/group-zero/count", (req, res) => {
+
+  Users.getAgeGroupZero()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group one, 20-30
+router.get("/all/age/group-one/count", (req, res) => {
+
+  Users.getAgeGroupOne()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group two, 30-40
+router.get("/all/age/group-two/count", (req, res) => {
+
+  Users.getAgeGroupTwo()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group three, 40-50
+router.get("/all/age/group-three/count", (req, res) => {
+
+  Users.getAgeGroupThree()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group four, 50-60
+router.get("/all/age/group-four/count", (req, res) => {
+
+  Users.getAgeGroupFour()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Group five, 60-70
+router.get("/all/age/group-five/count", (req, res) => {
+
+  Users.getAgeGroupFive()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 
 module.exports = router;
