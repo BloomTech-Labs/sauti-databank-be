@@ -234,5 +234,54 @@ router.get("/all/language/lukiga/count", (req, res) => {
     });
 });
 
+// Country of residence routes // 
+
+// All users who input a country 
+router.get("/all/country/all", (req, res) => {
+  Users.getCountryAll()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+// Kenya 
+router.get("/all/country/kenya/count", (req, res) => {
+
+  Users.getCountryKenya()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Uganda
+router.get("/all/country/uganda/count", (req, res) => {
+
+  Users.getCountryUganda()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Rwanda 
+router.get("/all/country/rwanda/count", (req, res) => {
+
+  Users.getCountryRwanda()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 
 module.exports = router;
