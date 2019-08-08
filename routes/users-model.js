@@ -65,6 +65,25 @@ const getCountryUganda = () => db('users').where({country_of_residence: "UGA"});
 
 const getCountryRwanda = () => db('users').where({country_of_residence: "RWA"});
 
+// Age functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getAgeAll = () => db('users').whereNot({age: null}); 
+
+const getAgeGroupZero = () => db('users').where({age: "10-20"});
+
+const getAgeGroupOne = () => db('users').where({age: "20-30"});
+
+const getAgeGroupTwo = () => db('users').where({age: "30-40"});
+
+const getAgeGroupThree = () => db('users').where({age: "40-50"});
+
+const getAgeGroupFour = () => db('users').where({age: "50-60"});
+
+const getAgeGroupFive = () => db('users').where({age: "60-70"});
+
+
 module.exports = {
   get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, 
 
@@ -75,4 +94,6 @@ module.exports = {
   getLanguageAll, getLanguageEnglish, getLanguageSwahili, getLanguageKinya, getLanguageLug, getLanguageLuk,
 
   getCountryAll, getCountryKenya, getCountryUganda, getCountryRwanda, 
+
+  getAgeAll, getAgeGroupZero, getAgeGroupOne, getAgeGroupTwo, getAgeGroupThree, getAgeGroupFour, getAgeGroupFive,
 }
