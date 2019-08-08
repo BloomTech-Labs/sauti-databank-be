@@ -368,5 +368,41 @@ router.get("/all/age/group-five/count", (req, res) => {
     });
 });
 
+// Primary Income routes // 
+
+// All users who answered primary income
+router.get("/all/primary-income/all", (req, res) => {
+  Users.getPrimaryIncomeAll()
+  .then(users => {
+    res.status(200).json(users); 
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+// Yes primary income
+router.get("/all/primary-income/yes/count", (req, res) => {
+
+  Users.getPrimaryIncomeYes()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Not primary income 
+router.get("/all/primary-income/no/count", (req, res) => {
+
+  Users.getPrimaryIncomeNo()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
 
 module.exports = router;
