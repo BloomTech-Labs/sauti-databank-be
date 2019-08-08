@@ -37,7 +37,7 @@ router.get("/all/gender/female/count", (req, res) => {
 })
 
 // Getting number of users who marked male 
-router.get("all/gender/male/count", (req, res) => {
+router.get("/all/gender/male/count", (req, res) => {
   Users.getGenderMale()
   .then(users => {
     res.status(200).json(users.length); 
@@ -51,7 +51,7 @@ router.get("all/gender/male/count", (req, res) => {
 
 // All border crossing frequencies
 router.get("/all/crossingfreq/all", (req, res) => {
-  Users.getCrossingFreq()
+  Users.getCrossingFreqAll()
   .then(users => {
     res.status(200).json(users); 
   })
@@ -61,7 +61,7 @@ router.get("/all/crossingfreq/all", (req, res) => {
 })
 
 // Daily 
-router.get("all/crossingfreq/daily/count", (req, res) => {
+router.get("/all/crossingfreq/daily/count", (req, res) => {
   Users.getCrossingFreqDaily()
   .then(users => {
     res.status(200).json(users.length); 
@@ -72,7 +72,7 @@ router.get("all/crossingfreq/daily/count", (req, res) => {
 })
 
 // Weekly 
-router.get("all/crossingfreq/weekly/count", (req, res) => {
+router.get("/all/crossingfreq/weekly/count", (req, res) => {
   Users.getCrossingFreqWeekly()
   .then(users => {
     res.status(200).json(users.length); 
@@ -83,7 +83,7 @@ router.get("all/crossingfreq/weekly/count", (req, res) => {
 })
 
 // Monthly 
-router.get("all/crossingfreq/monthly/count", (req, res) => {
+router.get("/all/crossingfreq/monthly/count", (req, res) => {
   Users.getCrossingFreqMonthly()
   .then(users => {
     res.status(200).json(users.length); 
@@ -94,7 +94,7 @@ router.get("all/crossingfreq/monthly/count", (req, res) => {
 })
 
 // Never 
-router.get("all/crossingfreq/never/count", (req, res) => {
+router.get("/all/crossingfreq/never/count", (req, res) => {
   Users.getCrossingFreqNever()
   .then(users => {
     res.status(200).json(users.length); 
