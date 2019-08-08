@@ -13,8 +13,7 @@ router.get("/all", (req, res) => {
     });
 });
 
-// education routes
-// select * from users where users.education 
+// Education routes
 
 router.get("/all/education/all", (req, res) => {
 
