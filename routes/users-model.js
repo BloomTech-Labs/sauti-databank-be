@@ -53,9 +53,26 @@ const getLanguageLug = () => db('users').where({language: "Luganda"});
 
 const getLanguageLuk = () => db('users').where({language: "Lukiga"});
 
+// Country of residence functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getCountryAll = () => db('users').whereNot({country_of_residence: null}); 
+
+const getCountryKenya = () => db('users').where({country_of_residence: "KEN"});
+
+const getCountryUganda = () => db('users').where({country_of_residence: "UGA"});
+
+const getCountryRwanda = () => db('users').where({country_of_residence: "RWA"});
+
 module.exports = {
   get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, 
+
   getGenderAll, getGenderMale, getGenderFemale, 
+
   getCrossingFreqAll, getCrossingFreqDaily, getCrossingFreqWeekly, getCrossingFreqMonthly, getCrossingFreqNever, 
-  getLanguageAll, getLanguageEnglish, getLanguageSwahili, getLanguageKinya, getLanguageLug, getLanguageLuk
+
+  getLanguageAll, getLanguageEnglish, getLanguageSwahili, getLanguageKinya, getLanguageLug, getLanguageLuk,
+
+  getCountryAll, getCountryKenya, getCountryUganda, getCountryRwanda, 
 }
