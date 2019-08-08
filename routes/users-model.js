@@ -37,6 +37,25 @@ const getCrossingFreqMonthly = () => db('users').where({crossing_freq: "Monthly"
 
 const getCrossingFreqNever = () => db('users').where({crossing_freq: "Never"});
 
+// Primary language functions //
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getLanguageAll = () => db('users').whereNot({language: null}); 
+
+const getLanguageEnglish = () => db('users').where({language: "English"});
+
+const getLanguageSwahili = () => db('users').where({language: "Swahili"}); 
+
+const getLanguageKinya = () => db('users').where({language: "Kinyarwanda"});
+
+const getLanguageLug = () => db('users').where({language: "Luganda"});
+
+const getLanguageLuk = () => db('users').where({language: "Lukiga"});
+
 module.exports = {
-  get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, getGenderAll, getGenderMale, getGenderFemale, getCrossingFreqAll, getCrossingFreqDaily, getCrossingFreqWeekly, getCrossingFreqMonthly, getCrossingFreqNever
+  get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, 
+  getGenderAll, getGenderMale, getGenderFemale, 
+  getCrossingFreqAll, getCrossingFreqDaily, getCrossingFreqWeekly, getCrossingFreqMonthly, getCrossingFreqNever, 
+  getLanguageAll, getLanguageEnglish, getLanguageSwahili, getLanguageKinya, getLanguageLug, getLanguageLuk
 }
