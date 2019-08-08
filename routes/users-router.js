@@ -160,5 +160,79 @@ router.get("/all/education/none/count", (req, res) => {
     });
 });
 
+// Language routes // 
+
+// All users who filled out a language
+router.get("/all/language/all", (req, res) => {
+
+  Users.getLanguageAll()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// English language count 
+router.get("/all/language/english/count", (req, res) => {
+
+  Users.getLanguageEnglish()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Swahili count 
+router.get("/all/language/swahili/count", (req, res) => {
+
+  Users.getLanguageSwahili()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Kinyarwanda count
+router.get("/all/language/kinya/count", (req, res) => {
+
+  Users.getLanguageKinya()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Luganda count 
+router.get("/all/language/luganda/count", (req, res) => {
+
+  Users.getLanguageLug()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+// Lukiga count 
+router.get("/all/language/lukiga/count", (req, res) => {
+
+  Users.getLanguageLuk()
+    .then(users => {
+      res.status(200).json(users.length);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
 
 module.exports = router;
