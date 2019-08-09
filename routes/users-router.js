@@ -374,7 +374,7 @@ router.get("/all/age/group-five/count", (req, res) => {
  ************************************ */
 
 
-server.get('/all/primary-income/all', (req, res) => {
+router.get('/all/primary-income/all', (req, res) => {
     Users.getPrimaryIncomeAll()
     .then(users => {
       res.status(200).json(users);
@@ -384,7 +384,7 @@ server.get('/all/primary-income/all', (req, res) => {
     });
 });
 
-server.get('/all/primary-income/yes/count', (req, res) => {
+router.get('/all/primary-income/yes/count', (req, res) => {
   Users.getPrimaryIncomeYes()
   .then(users => {
     res.status(200).json(users.length);
@@ -394,7 +394,7 @@ server.get('/all/primary-income/yes/count', (req, res) => {
   });
 });
 
-server.get('/all/primary-income/no/count', (req, res) => {
+router.get('/all/primary-income/no/count', (req, res) => {
   Users.getPrimaryIncomeNo()
   .then(users => {
     res.status(200).json(users.length);
@@ -408,7 +408,7 @@ server.get('/all/primary-income/no/count', (req, res) => {
         PRODUCE ROUTES
  ************************************ */
 
-server.get('/all/produce/all', (req, res) => {
+router.get('/all/produce/all', (req, res) => {
   Users.getProduceAll()
   .then(users => {
     res.status(200).json(users);
@@ -418,7 +418,7 @@ server.get('/all/produce/all', (req, res) => {
   });
 });
 
-server.get('/all/produce/yes/count', (req, res) => {
+router.get('/all/produce/yes/count', (req, res) => {
   Users.getProduceYes()
   .then(users => {
     res.status(200).json(users.length);
@@ -428,7 +428,7 @@ server.get('/all/produce/yes/count', (req, res) => {
   });
 });
 
-server.get('/all/produce/no/count', (req, res) => {
+router.get('/all/produce/no/count', (req, res) => {
   Users.getProduceNo()
   .then(users => {
     res.status(200).json(users.length);
