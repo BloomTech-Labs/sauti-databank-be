@@ -369,4 +369,74 @@ router.get("/all/age/group-five/count", (req, res) => {
 });
 
 
+/* ************************************
+        PRIMARY INCOME ROUTES
+ ************************************ */
+
+
+server.get('/all/primary-income/all', (req, res) => {
+    Users.getPrimaryIncomeAll()
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch(err => {
+      res.status(500).json(err);
+    });
+});
+
+server.get('/all/primary-income/yes/count', (req, res) => {
+  Users.getPrimaryIncomeYes()
+  .then(users => {
+    res.status(200).json(users.length);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+server.get('/all/primary-income/no/count', (req, res) => {
+  Users.getPrimaryIncomeNo()
+  .then(users => {
+    res.status(200).json(users.length);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+ /* ************************************
+        PRODUCE ROUTES
+ ************************************ */
+
+server.get('/all/produce/all', (req, res) => {
+  Users.getProduceAll()
+  .then(users => {
+    res.status(200).json(users);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+server.get('/all/produce/yes/count', (req, res) => {
+  Users.getProduceYes()
+  .then(users => {
+    res.status(200).json(users.length);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+server.get('/all/produce/no/count', (req, res) => {
+  Users.getProduceNo()
+  .then(users => {
+    res.status(200).json(users.length);
+  })
+  .catch(err => {
+    res.status(500).json(err);
+  });
+});
+
+
 module.exports = router;

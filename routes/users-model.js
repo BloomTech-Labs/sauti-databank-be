@@ -83,6 +83,22 @@ const getAgeGroupFour = () => db('users').where({age: "50-60"});
 
 const getAgeGroupFive = () => db('users').where({age: "60-70"});
 
+// Primary Income Functions 
+
+const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null});
+
+const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"});
+
+const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"});
+
+//Produce Functions
+
+const getProduceAll = () => db('users').whereNot({produce: null});
+
+const getProduceYes = () => db('users').where({produce: "Yes"});
+
+const getProduceNo = () => db('users').where({produce: "No"});
+
 
 module.exports = {
   get, add, getEducation, getEducationPrimary, getEducationSecondary, getEducationUni, getEducationNone, 
@@ -96,4 +112,9 @@ module.exports = {
   getCountryAll, getCountryKenya, getCountryUganda, getCountryRwanda, 
 
   getAgeAll, getAgeGroupZero, getAgeGroupOne, getAgeGroupTwo, getAgeGroupThree, getAgeGroupFour, getAgeGroupFive,
+
+  getPrimaryIncomeAll, getPrimaryIncomeYes, getPrimaryIncomeNo,
+
+  getProduceAll, getProduceYes, getProduceNo
 }
+
