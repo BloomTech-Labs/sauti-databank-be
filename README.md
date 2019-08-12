@@ -1,6 +1,6 @@
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [Heroku](🚫add URL here) <br>
+#### Backend deployed at [Heroku](🚫add URL here) <br>
 
 ## 1️⃣ Getting started
 
