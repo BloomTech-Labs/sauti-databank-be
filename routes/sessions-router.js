@@ -4,6 +4,8 @@ const router = express.Router();
 const Sessions = require("./sessions-model");
 const Users = require("./users-model");
 
+
+// Returns a list of all sessions
 router.get("/all", (req, res) => {
   Sessions.find()
     .then(sessions => {
@@ -14,6 +16,7 @@ router.get("/all", (req, res) => {
     });
 });
 
+// Returnt a list of all products 
 router.get("/products/:id", (req, res) => {
   const { id } = req.params;
 

@@ -94,14 +94,6 @@ const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"});
 
 const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"}); 
 
-// Primary Income Functions 
-
-const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null});
-
-const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"});
-
-const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"});
-
 //Produce Functions
 
 const getProduceAll = () => db('users').whereNot({produce: null});
