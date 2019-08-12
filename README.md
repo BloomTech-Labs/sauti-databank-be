@@ -30,9 +30,9 @@ To get the server running locally:
 
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/sessions/all` | all users      | Returns a list of all app sessions. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| GET    | `/sessions/all` | all users      | Returns a list of all databank sessions. |
+| GET    | `/sessions/products/:id"` | all users         | Returns a list of sessions where a specific product was searched by ID.             |
+| GET | `/sessions/real/all` | all users        | Returns a list of all real sessions from a csv import.                      |
 
 #### User Routes
 
