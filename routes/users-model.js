@@ -84,6 +84,7 @@ const getAgeGroupFour = () => db('users').where({age: "50-60"});
 const getAgeGroupFive = () => db('users').where({age: "60-70"});
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Primary Income functions // 
 // Futureproof: We can simplify these functions 
 // E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
@@ -94,6 +95,8 @@ const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"});
 
 const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"}); 
 =======
+=======
+>>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
 // Primary Income Functions 
 
 const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null});
@@ -109,6 +112,9 @@ const getProduceAll = () => db('users').whereNot({produce: null});
 const getProduceYes = () => db('users').where({produce: "Yes"});
 
 const getProduceNo = () => db('users').where({produce: "No"});
+<<<<<<< HEAD
+>>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
+=======
 >>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
 
 
@@ -126,12 +132,18 @@ module.exports = {
   getAgeAll, getAgeGroupZero, getAgeGroupOne, getAgeGroupTwo, getAgeGroupThree, getAgeGroupFour, getAgeGroupFive,
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   getPrimaryIncomeAll, getPrimaryIncomeYes, getPrimaryIncomeNo, 
 }
 =======
+=======
+>>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
   getPrimaryIncomeAll, getPrimaryIncomeYes, getPrimaryIncomeNo,
 
   getProduceAll, getProduceYes, getProduceNo
 }
 
+<<<<<<< HEAD
+>>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
+=======
 >>>>>>> 495a8fc526ff5d8af8fa54616f573db8a63c81dd
