@@ -350,4 +350,63 @@ describe('Users Routes', () => {
         });
     });
     
+    describe('Primary Income', () => {
+        describe('/users/all/primary-income/all', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/primary-income/all").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/primary-income/all").expect('Content-Type', /json/i)
+            });
+        });
+        describe('/users/all/primary-income/yes/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/primary-income/yes/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/primary-income/yes/count").expect('Content-Type', /json/i)
+            });
+        });
+        describe('/users/all/primary-income/no/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/primary-income/no/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/primary-income/no/count").expect('Content-Type', /json/i)
+            });
+        });
+    });
+
+    describe('Produce', () => {
+        describe('/users/all/produce/all', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/produce/all").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/produce/all").expect('Content-Type', /json/i)
+            });
+        });
+        describe('/users/all/produce/yes/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/produce/yes/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/produce/yes/count").expect('Content-Type', /json/i)
+            });
+        });
+        describe('/users/all/produce/no/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/produce/no/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/produce/no/count").expect('Content-Type', /json/i)
+            });
+        });
+    });
 });
