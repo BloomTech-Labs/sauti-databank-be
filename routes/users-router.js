@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Users = require("./users-model");
 
+// All recorded Sauti Databank users
 router.get("/all", (req, res) => {
   Users.get()
     .then(users => {

@@ -1,7 +1,7 @@
 # API Documentation
 
 #### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/) <br>
-_TEAM question: I just linked our staging link -- is that correct? _
+_TEAM question: I just linked our staging link -- is that correct?_
 
 ## 1️⃣ Getting started
 
@@ -26,15 +26,14 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 ## 2️⃣ Endpoints
 
 #### User Routes
+_TEAM question: Wonder if we should edit the users/all endpoint?_
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| GET    | `/users/all`        | public           | Returns a list of all recorded Sauti Databank users.               |
+| GET    | `/users/all/gender/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
+| GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
 
 # Data Model
 
