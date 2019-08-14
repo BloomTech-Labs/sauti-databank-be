@@ -14,13 +14,15 @@ _TEAM question: Confirming these are the right commands?_
 - **yarn test** to start server using testing environment
 
 ### Backend framework
+_TEAM question: is this all accurate?_
 
-🚫 What is our backend framework? Node, etc.? 
+We built our backend, including our REST API, using Node, Express, and Knex to work with a MySQL database. 
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+-    [REST API](https://restfulapi.net/): We decided a REST API, one that responds only with JSON data upon a user request, would give us enough flexibility to present our data however we deem fit. 
+-    [Node](https://nodejs.org/en/): We all learned Node.js, and since we were taking on a lot of new libraries in this project, learning MySQL, Nivo, and more, we decided Node.js would meet our needs for building our API and free us up to learn new tools. We also see potential for realtime data updating in the future, and know Node is particularly useful in those applications. 
+-    [Express](https://expressjs.com/): We added a bit more usability to Node for our project using Express, a web application framework that lets us build a bit more rapidly.  
+-    [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries. 
+-    [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
 
 ## 2️⃣ Endpoints
 
