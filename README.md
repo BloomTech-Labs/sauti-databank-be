@@ -27,18 +27,48 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 
 #### User Routes
 _TEAM question: Wonder if we should edit the users/all endpoint?_
+_TEAM question: Do we have to include users/all before everyone? If not, how do we indicate routes in most new user-friendly way?_
 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | GET    | `/users/all`        | public           | Returns a list of all recorded Sauti Databank users.               |
-| Gender data requests                             |
+
+#### Accessing gender data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | GET    | `/users/all/gender/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
 | GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
 | GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
 | GET    | `/users/all`        | public           | Returns a list of all recorded Sauti Databank users.               |
-| GET    | `/users/all/gender/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
-| GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
+
+#### Accessing crossing frequency data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
+| GET    | `/users/all/crossingfreq/daily/count`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/crossingfreq/weekly/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
+| GET    | `/users/all/crossingfreq/monthly/count`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/crossingfreq/never/count` | public                | Returns the number of users who marked male in a gender survey. |
+
+#### Accessing education data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/all/education/all`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/education/primary/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET    | `/users/all/education/secondary/count`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
+| GET    | `/users/all/education/secondary/count`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/education/uni/count` | public                | Returns the number of users who marked male in a gender survey. |
+
+#### Accessing language data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/language/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
+| GET    | `/users/all/language/english/count`        | public | Returns the number of users who marked female in a gender survey.                    |
+| GET  | `/users/all/language/swahili/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET  | `/users/all/language/kinya/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET  | `users/all/language/luganda/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET  | `users//all/language/lukiga/count` | public                | Returns the number of users who marked male in a gender survey. |
 
 # Data Model
 
