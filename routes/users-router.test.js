@@ -29,4 +29,26 @@ describe('Users Routes', () => {
             return supertest(server).get("/users/all/gender/all").expect('Content-Type', /json/i)
         });
     });
+
+    describe('/users/all/gender/female/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/gender/female/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/gender/female/count").expect('Content-Type', /json/i)
+        });
+    });
+
+    describe('/users/all/gender/male/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/gender/male/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/gender/male/count").expect('Content-Type', /json/i)
+        });
+    });
 });
