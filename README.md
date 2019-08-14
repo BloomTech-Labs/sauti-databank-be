@@ -31,6 +31,7 @@ _TEAM question: Wonder if we should edit the users/all endpoint?_
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | GET    | `/users/all`        | public           | Returns a list of all recorded Sauti Databank users.               |
+| Gender data requests                             |
 | GET    | `/users/all/gender/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
 | GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
 | GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
