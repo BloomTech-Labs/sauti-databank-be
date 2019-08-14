@@ -51,4 +51,61 @@ describe('Users Routes', () => {
             return supertest(server).get("/users/all/gender/male/count").expect('Content-Type', /json/i)
         });
     });
+
+    // Crossing Freq Tests
+    describe('/users/all/crossingfreq/all', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/crossingfreq/all").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/crossingfreq/all").expect('Content-Type', /json/i)
+        });
+    });
+
+    describe('/users/all/crossingfreq/daily/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/crossingfreq/daily/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/crossingfreq/daily/count").expect('Content-Type', /json/i)
+        });
+    });
+
+    describe('/users/all/crossingfreq/weekly/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/crossingfreq/weekly/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/crossingfreq/weekly/count").expect('Content-Type', /json/i)
+        });
+    });
+
+    describe('/users/all/crossingfreq/monthly/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/crossingfreq/monthly/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/crossingfreq/monthly/count").expect('Content-Type', /json/i)
+        });
+    });
+
+    describe('/users/all/crossingfreq/never/count', () => {
+        
+        it('returns 200', () => {
+            return supertest(server).get("/users/all/crossingfreq/never/count").expect(200)
+        });
+
+        it('returns json content', () => {
+            return supertest(server).get("/users/all/crossingfreq/never/count").expect('Content-Type', /json/i)
+        });
+    });
+    
 });
