@@ -169,14 +169,14 @@ describe('Users Routes', () => {
     });
 
     describe('Language', () => {
-        describe('users/all/language/all', () => {
+        describe('/users/all/language/all', () => {
         
             it('returns 200', () => {
-                return supertest(server).get("users/all/language/all").expect(200)
+                return supertest(server).get("/users/all/language/all").expect(200)
             });
     
             it('returns json content', () => {
-                return supertest(server).get("users/all/language/all").expect('Content-Type', /json/i)
+                return supertest(server).get("/users/all/language/all").expect('Content-Type', /json/i)
             });
         });
 
@@ -236,6 +236,46 @@ describe('Users Routes', () => {
         });
     });
 
+    describe('Country', () => {
+        describe('/users/all/country/all', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/country/all").expect(200)
+            });
     
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/country/all").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/country/kenya/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/country/kenya/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/country/kenya/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/country/uganda/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/country/uganda/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/country/uganda/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/country/rwanda/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/country/rwanda/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/country/rwanda/count").expect('Content-Type', /json/i)
+            });
+        });
+    });
     
 });
