@@ -39,17 +39,15 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 | GET    | `/users/all/gender/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
 | GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
 | GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET    | `/users/all`        | public           | Returns a list of all recorded Sauti Databank users.               |
 
 #### Accessing crossing frequency data 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
-| GET    | `/users/all/crossingfreq/daily/count`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/crossingfreq/weekly/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
-| GET    | `/users/all/crossingfreq/monthly/count`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/crossingfreq/never/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that recorded a border crossing frequency.             |
+| GET    | `/users/all/crossingfreq/daily/count`        | public | Returns the number of users who report crossing a border daily.                    |
+| GET  | `/users/all/crossingfreq/weekly/count` | public                | Returns the number of users who report crossing a border weekly.  |
+| GET    | `/users/all/crossingfreq/monthly/count`        | public | Returns the number of users who report crossing a border monthly.                    |
+| GET  | `/users/all/crossingfreq/never/count` | public                | Returns the number of users who report never crossing a border. |
 
 #### Accessing education data 
 | Method | Endpoint                | Access Control      | Description                                        |
