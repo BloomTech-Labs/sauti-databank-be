@@ -168,6 +168,74 @@ describe('Users Routes', () => {
         });
     });
 
+    describe('Language', () => {
+        describe('users/all/language/all', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("users/all/language/all").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("users/all/language/all").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/language/english/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/language/english/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/language/english/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/language/swahili/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/language/swahili/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/language/swahili/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/language/kinya/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/language/kinya/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/language/kinya/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/language/luganda/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/language/luganda/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/language/luganda/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/language/lukiga/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/language/lukiga/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/language/lukiga/count").expect('Content-Type', /json/i)
+            });
+        });
+    });
+
     
     
 });
