@@ -6,9 +6,8 @@ _TEAM question: I just linked our staging link -- is that correct? _
 ## 1️⃣ Getting started
 
 To get the server running locally:
-_TEAM question: Confirming these are the right commands?_
 
-- Clone this repo
+- Clone this repo, then, cd into the repo in Terminal and: 
 - **yarn install** to install all required dependencies
 - **yarn server** to start the local server
 - **yarn test** to start server using testing environment
@@ -25,16 +24,6 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 -    [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
 
 ## 2️⃣ Endpoints
-
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
-
-#### Sessions Routes
-
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/sessions/all` | all users      | Returns a list of all databank sessions. |
-| GET    | `/sessions/products/:id"` | all users         | Returns a list of sessions where a specific product was searched by ID.             |
-| GET | `/sessions/real/all` | all users        | Returns a list of all real sessions from a csv import.                      |
 
 #### User Routes
 
