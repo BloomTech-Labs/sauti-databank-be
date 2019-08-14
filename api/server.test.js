@@ -28,11 +28,5 @@ describe("server.js", () => {
     });
   });
 
-  describe("/sessions/all", () => {
-    it("Should return an OK", () => {
-      return request(server)
-        .get("/sessions/all")
-        .then(res => expect(res.status).toEqual(200));
-    });
-  });
+
 });
