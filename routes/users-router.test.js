@@ -53,9 +53,9 @@ describe('Users Routes', () => {
             });
         });
     });
-
+// Crossing Freq Tests
     describe('Crossing Frequency', () => {
-        // Crossing Freq Tests
+        
     describe('/users/all/crossingfreq/all', () => {
         
         it('returns 200', () => {
@@ -110,6 +110,62 @@ describe('Users Routes', () => {
             return supertest(server).get("/users/all/crossingfreq/never/count").expect('Content-Type', /json/i)
         });
     });
+    });
+
+    describe('Education', () => {
+        describe('/users/all/education/all', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/education/all").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/education/all").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/education/none/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/education/none/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/education/none/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/education/primary/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/education/primary/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/education/primary/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/education/secondary/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/education/secondary/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/education/secondary/count").expect('Content-Type', /json/i)
+            });
+        });
+        describe('/users/all/education/uni/count', () => {
+        
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/education/uni/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/education/uni/count").expect('Content-Type', /json/i)
+            });
+        });
     });
 
     
