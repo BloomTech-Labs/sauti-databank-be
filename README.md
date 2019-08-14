@@ -40,7 +40,7 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 | GET    | `/users/all/gender/female/count`        | public | Returns the number of users who marked female in a gender survey.                    |
 | GET  | `/users/all/gender/male/count` | public                | Returns the number of users who marked male in a gender survey. |
 
-#### Accessing crossing frequency data 
+#### Accessing border crossing frequency data 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
 | GET    | `/users/all/crossingfreq/all`    | public | Returns all Sauti Databank users that recorded a border crossing frequency.             |
@@ -52,11 +52,11 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 #### Accessing education data 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/all/all/education/all`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/education/primary/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET    | `/users/all/education/secondary/count`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
-| GET    | `/users/all/education/secondary/count`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/education/uni/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET    | `/users/all/all/education/all`        | public | Returns all users who reported any education history.                    |
+| GET  | `/users/all/education/primary/count` | public                | Returns a count of all users who reported primary as their highest level of education. |
+| GET    | `/users/all/education/secondary/count`    | public | Returns a count of all users who reported secondary as their highest level of education.              |
+| GET  | `/users/all/education/uni/count` | public                | Returns a count of all users who reported university as their highest level of education.  |
+| GET  | `/users/all/education/none/count` | public                | Returns a count of all users who reported they had no education. |
 
 #### Accessing language data 
 | Method | Endpoint                | Access Control      | Description                                        |
