@@ -52,14 +52,15 @@ module.exports = {
       tableName: "knex_migrations"
     }
   },
-  // testing: {
-  //   client: "mysql",
-  //   connection: {
-  //     host: "160.153.141.46",
-  //     user: "lambda2019",
-  //     password: "JlgRzqmvh83Z",
-  //     database: "lambdaStaging",
-  //     charset: "utf8",
-  //   useNullAsDefault: true,
-  // }
-};
+  testing: {
+    client: "mysql",
+    connection: {
+      host: "160.153.141.46",
+      user: "lambda2019",
+      password: "JlgRzqmvh83Z",
+      database: "lambdaStaging",
+      charset: "utf8",
+    useNullAsDefault: true,
+  },
+}
+}
