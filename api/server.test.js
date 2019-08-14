@@ -1,4 +1,4 @@
-const request = require("supertest");
+const supertest = require("supertest");
 const server = require("./server.js");
 
 const db = require("../data/dbConfig");
@@ -22,11 +22,18 @@ describe("server.js", () => {
     it("should return an OK status code from the index route", async () => {
       const expectedStatusCode = 200;
 
-      const response = await request(server).get("/");
+      const response = await supertest(server).get("/");
 
       expect(response.status).toEqual(expectedStatusCode);
     });
+
+    it('should return text from base route /', () => {
+      return supertest(server).get("/").expect('Content-Type', "text/html; charset=utf-8")
+    });
+    it('should return WE ARE UP from base route', () => {
+      return supertest(server).get("/")
+        .expect('WE ARE UP!')
+      })
+    });
   });
 
-
-});
