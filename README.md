@@ -25,7 +25,7 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 
 ## 2️⃣ Endpoints
 
-#### User Routes
+### User Routes
 _TEAM question: Wonder if we should edit the users/all endpoint?_
 _TEAM question: Do we have to include users/all before everyone? If not, how do we indicate routes in most new user-friendly way?_
 
