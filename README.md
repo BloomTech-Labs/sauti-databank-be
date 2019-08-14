@@ -1,19 +1,19 @@
 # API Documentation
 
-#### Backend deployed at [Heroku](🚫add URL here) <br>
+#### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/) <br>
+_TEAM question: I just linked our staging link -- is that correct? _
 
 ## 1️⃣ Getting started
 
 To get the server running locally:
-
-🚫 adjust these scripts to match your project
+_TEAM question: Confirming these are the right commands?_
 
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn server** to start the local server
 - **yarn test** to start server using testing environment
 
-### Backend framework goes here
+### Backend framework
 
 🚫 What is our backend framework? Node, etc.? 
 
