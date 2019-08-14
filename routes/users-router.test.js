@@ -257,13 +257,13 @@ describe('Users Routes', () => {
             });
         });
 
-        describe('/users/all/country/uganda/count', () => {
+        describe('/users/all/age/group-one/count', () => {
             it('returns 200', () => {
-                return supertest(server).get("/users/all/country/uganda/count").expect(200)
+                return supertest(server).get("/users/all/age/group-one/count").expect(200)
             });
     
             it('returns json content', () => {
-                return supertest(server).get("/users/all/country/uganda/count").expect('Content-Type', /json/i)
+                return supertest(server).get("/users/all/age/group-one/count").expect('Content-Type', /json/i)
             });
         });
 
@@ -274,6 +274,78 @@ describe('Users Routes', () => {
     
             it('returns json content', () => {
                 return supertest(server).get("/users/all/country/rwanda/count").expect('Content-Type', /json/i)
+            });
+        });
+    });
+
+    describe('Age', () => {
+        describe('/users/all/age/all', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/all").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/all").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-zero/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-zero/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-zero/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-one/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-one/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-one/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-two/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-two/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-two/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-three/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-three/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-three/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-four/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-four/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-four/count").expect('Content-Type', /json/i)
+            });
+        });
+
+        describe('/users/all/age/group-five/count', () => {
+            it('returns 200', () => {
+                return supertest(server).get("/users/all/age/group-five/count").expect(200)
+            });
+    
+            it('returns json content', () => {
+                return supertest(server).get("/users/all/age/group-five/count").expect('Content-Type', /json/i)
             });
         });
     });
