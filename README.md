@@ -3,7 +3,7 @@
 #### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/) <br>
 _TEAM question: I just linked our staging link -- is that correct?_
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
@@ -23,10 +23,10 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 -    [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries. 
 -    [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
 
-## 2️⃣ Endpoints
+## Endpoints
 
 ### User Routes
-_TEAM question: Wonder if we should edit the users/all endpoint?_
+_TEAM question: Wonder if we should edit the double all endpoints?_
 _TEAM question: Do we have to include users/all before everyone? If not, how do we indicate routes in most new user-friendly way?_
 
 | Method | Endpoint                | Access Control      | Description                                        |
@@ -103,27 +103,9 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 
 
 # Data Model
+_TEAM: Do we have any tables other than users?_
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
-
----
-
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
-
----
+#### Users
 
 ```
 {
@@ -141,9 +123,103 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 }
 ```
 
-## 2️⃣ Actions
+## Actions
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+
+### Education data actions
+
+`getEducation()` -> Returns all users who reported any education completed.
+
+`getEducationPrimary()` -> Returns all users who reported primary as their highest level of education. 
+
+`getEducationSecondary()` -> Returns all users who reported secondary as their highest level of education. 
+
+`getEducationUni()` -> Returns all users who reported University as their highest level of education. 
+
+`getEducationNone()` -> Returns all users who reported that they did not receive any formal education. 
+
+### Gender data actions
+`getGenderAll()` -> Returns all users who reported any gender selection. 
+
+`getGenderMale()` -> Returns all users who reported a male gender identity. 
+
+`getGenderFemale()` -> Returns all users who reported a female gender identity. 
+
+### Border crossing frequency data actions 
+`getCrossingFreqAll()`-> Returns all users who reported any border crossing frequency.
+
+`getCrossingFreqDaily()`-> Returns all users who reported crossing a border daily. 
+
+`getCrossingFreqWeekly()` -> Returns all users who reported crossing a border weekly.
+
+`getCrossingFreqMonthly()` -> Returns all users who reported crossing a border monthly. 
+
+`getCrossingFreqNever()` -> Returns all users who reported never crossing a border.  
+
+// Primary language functions //
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getLanguageAll = () => db('users').whereNot({language: null}); 
+
+const getLanguageEnglish = () => db('users').where({language: "English"});
+
+const getLanguageSwahili = () => db('users').where({language: "Swahili"}); 
+
+const getLanguageKinya = () => db('users').where({language: "Kinyarwanda"});
+
+const getLanguageLug = () => db('users').where({language: "Luganda"});
+
+const getLanguageLuk = () => db('users').where({language: "Lukiga"});
+
+// Country of residence functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getCountryAll = () => db('users').whereNot({country_of_residence: null}); 
+
+const getCountryKenya = () => db('users').where({country_of_residence: "KEN"});
+
+const getCountryUganda = () => db('users').where({country_of_residence: "UGA"});
+
+const getCountryRwanda = () => db('users').where({country_of_residence: "RWA"});
+
+// Age functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getAgeAll = () => db('users').whereNot({age: null}); 
+
+const getAgeGroupZero = () => db('users').where({age: "10-20"});
+
+const getAgeGroupOne = () => db('users').where({age: "20-30"});
+
+const getAgeGroupTwo = () => db('users').where({age: "30-40"});
+
+const getAgeGroupThree = () => db('users').where({age: "40-50"});
+
+const getAgeGroupFour = () => db('users').where({age: "50-60"});
+
+const getAgeGroupFive = () => db('users').where({age: "60-70"});
+
+
+// Primary Income functions // 
+// Futureproof: We can simplify these functions 
+// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+
+const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null}); 
+
+const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"}); 
+
+const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"}); 
+
+//Produce Functions
+
+const getProduceAll = () => db('users').whereNot({produce: null});
+
+const getProduceYes = () => db('users').where({produce: "Yes"});
+
+const getProduceNo = () => db('users').where({produce: "No"});
 
 `getOrgs()` -> Returns all organizations
 
