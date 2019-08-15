@@ -52,6 +52,7 @@ module.exports = {
       tableName: "knex_migrations"
     }
   },
+
   // For local testing 
   // testing: {
   //   client: "mysql",
