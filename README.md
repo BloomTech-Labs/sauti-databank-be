@@ -170,17 +170,15 @@ _TEAM: Do we have any tables other than users?_
 
 `getLanguageLuk()` -> Returns all users who reported Lukiga as their primary language. 
 
-// Country of residence functions // 
-// Futureproof: We can simplify these functions 
-// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+### Country of residence actions 
 
-const getCountryAll = () => db('users').whereNot({country_of_residence: null}); 
+`getCountryAll()` -> Returns all users who reported a country of residence. 
 
-const getCountryKenya = () => db('users').where({country_of_residence: "KEN"});
+`getCountryKenya()` -> Returns all users who reported Kenya as their country of residence. 
 
-const getCountryUganda = () => db('users').where({country_of_residence: "UGA"});
+`getCountryUganda()` -> Returns all users who reported Uganda as their country of residence. 
 
-const getCountryRwanda = () => db('users').where({country_of_residence: "RWA"});
+`getCountryRwanda()` -> Returns all users who reported Rwanda as their country of residence. 
 
 // Age functions // 
 // Futureproof: We can simplify these functions 
