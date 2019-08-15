@@ -94,6 +94,13 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 | GET    | `users/all/primary-income/yes/count`        | public | Returns the number of Sauti Databank users who reported small border trade as a primary source of income.           |
 | GET  | `/users/all/primary-income/no/count` | public                | Returns the number of Sauti Databank users who reported small border trade was not their primary source of income.  |
 
+#### Accessing produce data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/produce/all`    | public | Returns all Sauti Databank users that reported an answer to the produce question.            |
+| GET    | `users/all/produce/yes/count`        | public | Returns the number of Sauti Databank users who reported trading produce at the border.           |
+| GET  | `/users/all/produce/no/count` | public                | Returns the number of Sauti Databank users who reported that they do not trade produce at the border.  |
+
 
 # Data Model
 
