@@ -61,12 +61,31 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 #### Accessing language data 
 | Method | Endpoint                | Access Control      | Description                                        |
 | ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/all/language/all`    | public | Returns all Sauti Databank users that answered a gender survey along with recorded gender.             |
-| GET    | `/users/all/language/english/count`        | public | Returns the number of users who marked female in a gender survey.                    |
-| GET  | `/users/all/language/swahili/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET  | `/users/all/language/kinya/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET  | `users/all/language/luganda/count` | public                | Returns the number of users who marked male in a gender survey. |
-| GET  | `users//all/language/lukiga/count` | public                | Returns the number of users who marked male in a gender survey. |
+| GET    | `/users/all/language/all`    | public | Returns all Sauti Databank users that reported a language.             |
+| GET    | `/users/all/language/english/count`        | public | Returns the number of Sauti Databank users who reported English as their language.                    |
+| GET  | `/users/all/language/swahili/count` | public                | Returns the number of Sauti Databank users who reported Swahili as their language.  |
+| GET  | `/users/all/language/kinya/count` | public                | Returns the number of Sauti Databank users who reported Kinyarwanda as their language.  |
+| GET  | `users/all/language/luganda/count` | public                | Returns the number of Sauti Databank users who reported Luganda as their language.  |
+| GET  | `users//all/language/lukiga/count` | public                |Returns the number of Sauti Databank users who reported Lukiga as their language. . |
+
+#### Accessing country of residence data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/country/all`    | public | Returns all Sauti Databank users that reported a country of residence.            |
+| GET    | `users/all/country/kenya/count`        | public | Returns the number of Sauti Databank users who reported Kenya as their country of residence.                   |
+| GET  | `/users/all/country/uganda/count` | public                | Returns the number of Sauti Databank users who reported Uganda as their country of residence.   |
+| GET  | `/users/all/country/rwanda/count` | public                | Returns the number of Sauti Databank users who reported Rwanda as their country of residence.  |
+
+#### Accessing age data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/age/all`    | public | Returns all Sauti Databank users that reported an age demographic.            |
+| GET    | `users/all/age/group-zero/count`        | public | Returns the number of Sauti Databank users who reported an age between 10-20 years.           |
+| GET  | `/users/all/age/group-one/count` | public                | Returns the number of Sauti Databank users who reported an age between 20-30 years.   |
+| GET  | `/users/all/age/group-two/count` | public                | Returns the number of Sauti Databank users who reported an age between 30-40 years.  |
+| GET  | `/users/all/age/group-three/count` | public                | Returns the number of Sauti Databank users who reported an age between 40-50 years.  |
+| GET  | `/users/all/age/group-four/count` | public                | Returns the number of Sauti Databank users who reported an age between 50-60 years.  |
+| GET  | `/users/all/age/group-five/count` | public                | Returns the number of Sauti Databank users who reported an age between 60-70 years.  |
 
 # Data Model
 
