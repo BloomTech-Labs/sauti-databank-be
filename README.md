@@ -1,22 +1,16 @@
 # API Documentation
 
-#### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/) <br>
-
-_TEAM question: I just linked our staging link -- is that correct?_
+#### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/). <br>
 
 ## Getting started
-
 To get the server running locally:
 
 - Clone this repo, then, cd into the repo in Terminal and:
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **yarn install** to install all required dependencies.
+- **yarn server** to start the local server.
+- **yarn test** to start server using testing environment.
 
 ### Backend framework
-
-_TEAM question: is this all accurate?_
-
 We built our backend, including our REST API, using Node, Express, and Knex to work with a MySQL database.
 
 - [REST API](https://restfulapi.net/): We decided a REST API, one that responds only with JSON data upon a user request, would give us enough flexibility to present our data however we deem fit.
@@ -28,10 +22,6 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 ## Endpoints
 
 ### User Routes
-
-_TEAM question: Wonder if we should edit the double all endpoints?_
-_TEAM question: Do we have to include users/all before everyone? If not, how do we indicate routes in most new user-friendly way?_
-
 | Method | Endpoint     | Access Control | Description                                          |
 | ------ | ------------ | -------------- | ---------------------------------------------------- |
 | GET    | `/users/all` | public         | Returns a list of all recorded Sauti Databank users. |
@@ -242,8 +232,8 @@ _Note: every time we say users below, we're referring to the traders who log on 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-  
-_TEAM: need help here_!
+- username: Reach out to Sauti for access. 
+- password: Reach out to Sauti for access.
 
 ## Contributing
 
@@ -282,4 +272,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](https://github.com/sauti-databank/front-end/blob/master/README.md) for details on the fronend of our project.
+See [Frontend Documentation](https://github.com/sauti-databank/front-end/blob/master/README.md) for details on the frontend of our project.
