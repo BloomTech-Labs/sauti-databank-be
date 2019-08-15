@@ -180,23 +180,21 @@ _TEAM: Do we have any tables other than users?_
 
 `getCountryRwanda()` -> Returns all users who reported Rwanda as their country of residence. 
 
-// Age functions // 
-// Futureproof: We can simplify these functions 
-// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+### Age actions 
 
-const getAgeAll = () => db('users').whereNot({age: null}); 
+`getAgeAll()` ->  Returns all users who reported an age demographic. 
 
-const getAgeGroupZero = () => db('users').where({age: "10-20"});
+`getAgeGroupZero()` -> Returns all users who reported their age demographic as 10-20 years. 
 
-const getAgeGroupOne = () => db('users').where({age: "20-30"});
+`getAgeGroupOne()` -> Returns all users who reported their age demographic as 20-30 years. 
 
-const getAgeGroupTwo = () => db('users').where({age: "30-40"});
+`getAgeGroupTwo()` -> Returns all users who reported their age demographic as 30-40 years. 
 
-const getAgeGroupThree = () => db('users').where({age: "40-50"});
+`getAgeGroupThree()` -> Returns all users who reported their age demographic as 40-50 years. 
 
-const getAgeGroupFour = () => db('users').where({age: "50-60"});
+`getAgeGroupFour()` -> Returns all users who reported their age demographic as 50-60 years. 
 
-const getAgeGroupFive = () => db('users').where({age: "60-70"});
+`getAgeGroupFive()` -> Returns all users who reported their age demographic as 60-70 years. 
 
 
 // Primary Income functions // 
