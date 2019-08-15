@@ -124,10 +124,9 @@ _TEAM: Do we have any tables other than users?_
 ```
 
 ## Actions
-
+_Note: every time we say users below, we're referring to the traders who log on and use the Sauti Databan platform, not the users (often researchers) who view Sauti's data_. 
 
 ### Education data actions
-
 `getEducation()` -> Returns all users who reported any education completed.
 
 `getEducationPrimary()` -> Returns all users who reported primary as their highest level of education. 
@@ -157,7 +156,6 @@ _TEAM: Do we have any tables other than users?_
 `getCrossingFreqNever()` -> Returns all users who reported never crossing a border.  
 
 ### Language data actions 
-
 `getLanguageAll()` ->  Returns all users who reported any language data. 
 
 `getLanguageEnglish()` -> Returns all users who reported English as their primary language. 
@@ -170,8 +168,7 @@ _TEAM: Do we have any tables other than users?_
 
 `getLanguageLuk()` -> Returns all users who reported Lukiga as their primary language. 
 
-### Country of residence actions 
-
+### Country of residence data actions 
 `getCountryAll()` -> Returns all users who reported a country of residence. 
 
 `getCountryKenya()` -> Returns all users who reported Kenya as their country of residence. 
@@ -180,8 +177,7 @@ _TEAM: Do we have any tables other than users?_
 
 `getCountryRwanda()` -> Returns all users who reported Rwanda as their country of residence. 
 
-### Age actions 
-
+### Age data actions 
 `getAgeAll()` ->  Returns all users who reported an age demographic. 
 
 `getAgeGroupZero()` -> Returns all users who reported their age demographic as 10-20 years. 
@@ -197,45 +193,19 @@ _TEAM: Do we have any tables other than users?_
 `getAgeGroupFive()` -> Returns all users who reported their age demographic as 60-70 years. 
 
 
-// Primary Income functions // 
-// Futureproof: We can simplify these functions 
-// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+### Primary income data actions 
+`getPrimaryIncomeAll()` -> Returns all users who answered a question about trade and primary income.  
 
-const getPrimaryIncomeAll = () => db('users').whereNot({primary_income: null}); 
+`getPrimaryIncomeYes()` -> Returns all users who reported border trade as their primary source of income. 
 
-const getPrimaryIncomeYes = () => db('users').where({primary_income: "Yes"}); 
+`getPrimaryIncomeNo()` ->  Returns all users who reported that border trade is *not* their primary source of income. 
 
-const getPrimaryIncomeNo = () => db('users').where({primary_income: "No"}); 
+### Produce data actions
+`getProduceAll()` -> Returns a list of all users who answered whether or not they trade produce at the border. 
 
-//Produce Functions
+`getProduceYes()` -> Returns a list of all users who say that yes they do trade produce at the border. 
 
-const getProduceAll = () => db('users').whereNot({produce: null});
-
-const getProduceYes = () => db('users').where({produce: "Yes"});
-
-const getProduceNo = () => db('users').where({produce: "No"});
-
-`getOrgs()` -> Returns all organizations
-
-`getOrg(orgId)` -> Returns a single organization by ID
-
-`addOrg(org)` -> Returns the created org
-
-`updateOrg(orgId)` -> Update an organization by ID
-
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
-
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
+`getProduceNo()` -> Returns a list of all users who say they do *not* trade produce at the border. 
 
 ## 3️⃣ Environment Variables
 
