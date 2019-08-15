@@ -1,148 +1,252 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend deployed on [Heroku](https://staging-sauti-labs-14.herokuapp.com/). <br>
 
-## 1️⃣ Getting started
-
+## Getting started
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
+- Clone this repo, then, cd into the repo in Terminal and:
+- **yarn install** to install all required dependencies.
+- **yarn server** to start the local server.
+- **yarn test** to start server using testing environment.
 
-- Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+### Backend framework
+We built our backend, including our REST API, using Node, Express, and Knex to work with a MySQL database.
 
-### Backend framework goes here
+- [REST API](https://restfulapi.net/): We decided a REST API, one that responds only with JSON data upon a user request, would give us enough flexibility to present our data however we deem fit.
+- [Node](https://nodejs.org/en/): We all learned Node.js, and since we were taking on a lot of new libraries in this project, learning MySQL, Nivo, and more, we decided Node.js would meet our needs for building our API and free us up to learn new tools. We also see potential for realtime data updating in the future, and know Node is particularly useful in those applications.
+- [Express](https://expressjs.com/): We added a bit more usability to Node for our project using Express, a web application framework that lets us build a bit more rapidly.
+- [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries.
+- [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
 
-🚫 Why did you choose this framework?
+## Endpoints
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
+### User Routes
+| Method | Endpoint     | Access Control | Description                                          |
+| ------ | ------------ | -------------- | ---------------------------------------------------- |
+| GET    | `/users/all` | public         | Returns a list of all recorded Sauti Databank users. |
 
-## 2️⃣ Endpoints
+#### Accessing gender data
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
+| Method | Endpoint                         | Access Control | Description                                                                                |
+| ------ | -------------------------------- | -------------- | ------------------------------------------------------------------------------------------ |
+| GET    | `/users/all/gender/all`          | public         | Returns all Sauti Databank users that answered a gender survey along with recorded gender. |
+| GET    | `/users/all/gender/female/count` | public         | Returns the number of users who marked female in a gender survey.                          |
+| GET    | `/users/all/gender/male/count`   | public         | Returns the number of users who marked male in a gender survey.                            |
 
-#### Organization Routes
+#### Accessing border crossing frequency data
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| Method | Endpoint                                | Access Control | Description                                                                 |
+| ------ | --------------------------------------- | -------------- | --------------------------------------------------------------------------- |
+| GET    | `/users/all/crossingfreq/all`           | public         | Returns all Sauti Databank users that recorded a border crossing frequency. |
+| GET    | `/users/all/crossingfreq/daily/count`   | public         | Returns the number of users who report crossing a border daily.             |
+| GET    | `/users/all/crossingfreq/weekly/count`  | public         | Returns the number of users who report crossing a border weekly.            |
+| GET    | `/users/all/crossingfreq/monthly/count` | public         | Returns the number of users who report crossing a border monthly.           |
+| GET    | `/users/all/crossingfreq/never/count`   | public         | Returns the number of users who report never crossing a border.             |
 
-#### User Routes
+#### Accessing education data
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
+| Method | Endpoint                               | Access Control | Description                                                                               |
+| ------ | -------------------------------------- | -------------- | ----------------------------------------------------------------------------------------- |
+| GET    | `/users/all/all/education/all`         | public         | Returns all users who reported any education history.                                     |
+| GET    | `/users/all/education/primary/count`   | public         | Returns a count of all users who reported primary as their highest level of education.    |
+| GET    | `/users/all/education/secondary/count` | public         | Returns a count of all users who reported secondary as their highest level of education.  |
+| GET    | `/users/all/education/uni/count`       | public         | Returns a count of all users who reported university as their highest level of education. |
+| GET    | `/users/all/education/none/count`      | public         | Returns a count of all users who reported they had no education.                          |
+
+#### Accessing language data
+
+| Method | Endpoint                            | Access Control | Description                                                                            |
+| ------ | ----------------------------------- | -------------- | -------------------------------------------------------------------------------------- |
+| GET    | `/users/all/language/all`           | public         | Returns all Sauti Databank users that reported a language.                             |
+| GET    | `/users/all/language/english/count` | public         | Returns the number of Sauti Databank users who reported English as their language.     |
+| GET    | `/users/all/language/swahili/count` | public         | Returns the number of Sauti Databank users who reported Swahili as their language.     |
+| GET    | `/users/all/language/kinya/count`   | public         | Returns the number of Sauti Databank users who reported Kinyarwanda as their language. |
+| GET    | `users/all/language/luganda/count`  | public         | Returns the number of Sauti Databank users who reported Luganda as their language.     |
+| GET    | `users//all/language/lukiga/count`  | public         | Returns the number of Sauti Databank users who reported Lukiga as their language. .    |
+
+#### Accessing country of residence data
+
+| Method | Endpoint                          | Access Control | Description                                                                                   |
+| ------ | --------------------------------- | -------------- | --------------------------------------------------------------------------------------------- |
+| GET    | `/users/all/country/all`          | public         | Returns all Sauti Databank users that reported a country of residence.                        |
+| GET    | `users/all/country/kenya/count`   | public         | Returns the number of Sauti Databank users who reported Kenya as their country of residence.  |
+| GET    | `/users/all/country/uganda/count` | public         | Returns the number of Sauti Databank users who reported Uganda as their country of residence. |
+| GET    | `/users/all/country/rwanda/count` | public         | Returns the number of Sauti Databank users who reported Rwanda as their country of residence. |
+
+#### Accessing age data
+
+| Method | Endpoint                           | Access Control | Description                                                                         |
+| ------ | ---------------------------------- | -------------- | ----------------------------------------------------------------------------------- |
+| GET    | `/users/all/age/all`               | public         | Returns all Sauti Databank users that reported an age demographic.                  |
+| GET    | `users/all/age/group-zero/count`   | public         | Returns the number of Sauti Databank users who reported an age between 10-20 years. |
+| GET    | `/users/all/age/group-one/count`   | public         | Returns the number of Sauti Databank users who reported an age between 20-30 years. |
+| GET    | `/users/all/age/group-two/count`   | public         | Returns the number of Sauti Databank users who reported an age between 30-40 years. |
+| GET    | `/users/all/age/group-three/count` | public         | Returns the number of Sauti Databank users who reported an age between 40-50 years. |
+| GET    | `/users/all/age/group-four/count`  | public         | Returns the number of Sauti Databank users who reported an age between 50-60 years. |
+| GET    | `/users/all/age/group-five/count`  | public         | Returns the number of Sauti Databank users who reported an age between 60-70 years. |
+
+#### Accessing primary income data
+
+| Method | Endpoint                             | Access Control | Description                                                                                                        |
+| ------ | ------------------------------------ | -------------- | ------------------------------------------------------------------------------------------------------------------ |
+| GET    | `/users/all/primary-income/all`      | public         | Returns all Sauti Databank users that reported an answer to the primary income question.                           |
+| GET    | `users/all/primary-income/yes/count` | public         | Returns the number of Sauti Databank users who reported small border trade as a primary source of income.          |
+| GET    | `/users/all/primary-income/no/count` | public         | Returns the number of Sauti Databank users who reported small border trade was not their primary source of income. |
+
+#### Accessing produce data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/users/all/produce/all`      | public         | Returns all Sauti Databank users that reported an answer to the produce question.                     |
+| GET    | `users/all/produce/yes/count` | public         | Returns the number of Sauti Databank users who reported trading produce at the border.                |
+| GET    | `/users/all/produce/no/count` | public         | Returns the number of Sauti Databank users who reported that they do not trade produce at the border. |
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
+#### Platform sessions
 
-#### 2️⃣ ORGANIZATIONS
+```
+{
+  sess_id: UUID
+  cell_num: varchar(25)
+  created_date: datetime
+  udate: timestamp
+  data: STRING
+  platform_id:  int(2)
+  notes: varchar(400)
+}
+```
 
----
+#### Users
 
 ```
 {
   id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
+  cell_num: UUID foreign key in PLATFORM_SESSIONS table
+  gender: STRING
+  age: STRING
+  education: STRING
+  crossing_freq: STRING
+  produce: STRING
+  primary_income: STRING
+  language: STRING
+  country_of_residence: STRING
 }
 ```
 
-#### USERS
+## Actions
 
----
+_Note: every time we say users below, we're referring to the traders who log on and use the Sauti Databan platform, not the users (often researchers) who view Sauti's data_.
 
-```
-{
-  id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
-}
-```
+### Education data actions
 
-## 2️⃣ Actions
+`getEducation()` -> Returns all users who reported any education completed.
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+`getEducationPrimary()` -> Returns all users who reported primary as their highest level of education.
 
-`getOrgs()` -> Returns all organizations
+`getEducationSecondary()` -> Returns all users who reported secondary as their highest level of education.
 
-`getOrg(orgId)` -> Returns a single organization by ID
+`getEducationUni()` -> Returns all users who reported University as their highest level of education.
 
-`addOrg(org)` -> Returns the created org
+`getEducationNone()` -> Returns all users who reported that they did not receive any formal education.
 
-`updateOrg(orgId)` -> Update an organization by ID
+### Gender data actions
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+`getGenderAll()` -> Returns all users who reported any gender selection.
 
-`getUser(userId)` -> Returns a single user by user ID
+`getGenderMale()` -> Returns all users who reported a male gender identity.
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+`getGenderFemale()` -> Returns all users who reported a female gender identity.
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+### Border crossing frequency data actions
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+`getCrossingFreqAll()`-> Returns all users who reported any border crossing frequency.
 
-## 3️⃣ Environment Variables
+`getCrossingFreqDaily()`-> Returns all users who reported crossing a border daily.
+
+`getCrossingFreqWeekly()` -> Returns all users who reported crossing a border weekly.
+
+`getCrossingFreqMonthly()` -> Returns all users who reported crossing a border monthly.
+
+`getCrossingFreqNever()` -> Returns all users who reported never crossing a border.
+
+### Language data actions
+
+`getLanguageAll()` -> Returns all users who reported any language data.
+
+`getLanguageEnglish()` -> Returns all users who reported English as their primary language.
+
+`getLanguageSwahili()` -> Returns all users who reported Swahili as their primary language.
+
+`getLanguageKinya()` -> Returns all users who reported Kinyarwanda as their primary language.
+
+`getLanguageLug()` -> Returns all users who reported Luganda as their primary language.
+
+`getLanguageLuk()` -> Returns all users who reported Lukiga as their primary language.
+
+### Country of residence data actions
+
+`getCountryAll()` -> Returns all users who reported a country of residence.
+
+`getCountryKenya()` -> Returns all users who reported Kenya as their country of residence.
+
+`getCountryUganda()` -> Returns all users who reported Uganda as their country of residence.
+
+`getCountryRwanda()` -> Returns all users who reported Rwanda as their country of residence.
+
+### Age data actions
+
+`getAgeAll()` -> Returns all users who reported an age demographic.
+
+`getAgeGroupZero()` -> Returns all users who reported their age demographic as 10-20 years.
+
+`getAgeGroupOne()` -> Returns all users who reported their age demographic as 20-30 years.
+
+`getAgeGroupTwo()` -> Returns all users who reported their age demographic as 30-40 years.
+
+`getAgeGroupThree()` -> Returns all users who reported their age demographic as 40-50 years.
+
+`getAgeGroupFour()` -> Returns all users who reported their age demographic as 50-60 years.
+
+`getAgeGroupFive()` -> Returns all users who reported their age demographic as 60-70 years.
+
+### Primary income data actions
+
+`getPrimaryIncomeAll()` -> Returns all users who answered a question about trade and primary income.
+
+`getPrimaryIncomeYes()` -> Returns all users who reported border trade as their primary source of income.
+
+`getPrimaryIncomeNo()` -> Returns all users who reported that border trade is _not_ their primary source of income.
+
+### Produce data actions
+
+`getProduceAll()` -> Returns a list of all users who answered whether or not they trade produce at the border.
+
+`getProduceYes()` -> Returns a list of all users who say that yes they do trade produce at the border.
+
+`getProduceNo()` -> Returns a list of all users who say they do _not_ trade produce at the border.
+
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
+- username: Reach out to Sauti for access. 
+- password: Reach out to Sauti for access.
 
-🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
-    
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
 
-Please note we have a [code of conduct](./code_of_conduct.md). Please follow it in all your interactions with the project.
-
 ### Issue/Bug Request
 
- **If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
- - Check first to see if your issue has already been reported.
- - Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
- - Create a live example of the problem.
- - Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes,  where you believe the issue is originating from, and any potential solutions you have considered.
+**If you are having an issue with the existing project code, please submit a bug report under the following guidelines:**
+
+- Check first to see if your issue has already been reported.
+- Check to see if the issue has recently been fixed by attempting to reproduce the issue using the latest master branch in the repository.
+- Create a live example of the problem.
+- Submit a detailed bug report including your environment & browser, steps to reproduce the issue, actual and expected outcomes, where you believe the issue is originating from, and any potential solutions you have considered.
 
 ### Feature Requests
 
@@ -168,5 +272,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/sauti-databank/front-end/blob/master/README.md) for details on the frontend of our project.
