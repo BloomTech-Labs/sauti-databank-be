@@ -156,21 +156,19 @@ _TEAM: Do we have any tables other than users?_
 
 `getCrossingFreqNever()` -> Returns all users who reported never crossing a border.  
 
-// Primary language functions //
-// Futureproof: We can simplify these functions 
-// E.g. const getCrossingFreq = (arg) => db('users').where({crossing_freq: arg}) 
+### Language data actions 
 
-const getLanguageAll = () => db('users').whereNot({language: null}); 
+`getLanguageAll()` ->  Returns all users who reported any language data. 
 
-const getLanguageEnglish = () => db('users').where({language: "English"});
+`getLanguageEnglish()` -> Returns all users who reported English as their primary language. 
 
-const getLanguageSwahili = () => db('users').where({language: "Swahili"}); 
+`getLanguageSwahili()` ->  Returns all users who reported Swahili as their primary language. 
 
-const getLanguageKinya = () => db('users').where({language: "Kinyarwanda"});
+`getLanguageKinya()` -> Returns all users who reported Kinyarwanda as their primary language. 
 
-const getLanguageLug = () => db('users').where({language: "Luganda"});
+`getLanguageLug()` -> Returns all users who reported Luganda as their primary language. 
 
-const getLanguageLuk = () => db('users').where({language: "Lukiga"});
+`getLanguageLuk()` -> Returns all users who reported Lukiga as their primary language. 
 
 // Country of residence functions // 
 // Futureproof: We can simplify these functions 
