@@ -87,6 +87,14 @@ _TEAM question: Do we have to include users/all before everyone? If not, how do 
 | GET  | `/users/all/age/group-four/count` | public                | Returns the number of Sauti Databank users who reported an age between 50-60 years.  |
 | GET  | `/users/all/age/group-five/count` | public                | Returns the number of Sauti Databank users who reported an age between 60-70 years.  |
 
+#### Accessing primary income data 
+| Method | Endpoint                | Access Control      | Description                                        |
+| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
+| GET    | `/users/all/primary-income/all`    | public | Returns all Sauti Databank users that reported an answer to the primary income question.            |
+| GET    | `users/all/primary-income/yes/count`        | public | Returns the number of Sauti Databank users who reported small border trade as a primary source of income.           |
+| GET  | `/users/all/primary-income/no/count` | public                | Returns the number of Sauti Databank users who reported small border trade was not their primary source of income.  |
+
+
 # Data Model
 
 🚫This is just an example. Replace this with your data model
