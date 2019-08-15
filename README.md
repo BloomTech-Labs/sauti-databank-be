@@ -237,18 +237,13 @@ _Note: every time we say users below, we're referring to the traders who log on 
 
 `getProduceNo()` -> Returns a list of all users who say they do _not_ trade produce at the border.
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
   
- _ STAGING_DB - optional development db for using functionality not available in SQLite
-_ NODE_ENV - set to "development" until ready for "production"
-_ JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;_(-_=+)') for i in range(50)])
-_ SENDGRID_API_KEY - this is generated in your Sendgrid account \* stripe_secret - this is generated in the Stripe dashboard
+_TEAM: need help here_!
 
 ## Contributing
 
