@@ -3,6 +3,7 @@ const db = require("../data/dbConfig");
 const Sessions = require("./sessions-model");
 const Users = require("./users-model");
 
+// First Lance's Data is saved in array = []
 try {
   Sessions.findLanceData().then(sessions => {
     let array = [];
@@ -12,7 +13,8 @@ try {
       object.cell_num = element.cell_num;
       array.push(object);
     });
-
+// Then a new array is created with unique phone numbers for filtering out unique users
+// Data for each category is set to null to begin with 
     const distinctUsers = [];
     const map = new Map();
     for (const item of array) {
@@ -38,6 +40,7 @@ try {
     // console.log(sessions);
   });
 
+  // These functions do the updating for the categories
   getGender = (sessions, distinctUsers) => {
     let arrayWithGender = distinctUsers;
 
