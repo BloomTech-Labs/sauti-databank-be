@@ -4,6 +4,8 @@ const get = () => db('users')
 
 const add = (user) => db('users').insert(user)
 
+const addTest = (user) => db('trader_test').insert(user)
+ 
 // Education functions // 
 
 const getEducation = () => db('users').whereNot({education: null})
@@ -118,5 +120,5 @@ module.exports = {
 
   getPrimaryIncomeAll, getPrimaryIncomeYes, getPrimaryIncomeNo, 
 
-  getProduceAll, getProduceYes, getProduceNo
+  getProduceAll, getProduceYes, getProduceNo, addTest
 }

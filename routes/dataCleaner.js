@@ -3,6 +3,8 @@ const db = require("../data/dbConfig");
 const Sessions = require("./sessions-model");
 const Users = require("./users-model");
 
+const bcrypt = require('bcryptjs');
+
 // First Lance's Data is saved in array = []
 try {
   Sessions.findLanceData().then(sessions => {
@@ -291,6 +293,11 @@ try {
         user.country_of_residence = "RWA";
       }
     });
+
+    arrayWithCountry.map(user => {
+      const hash = bcrypt.hashSync(user.cell_num, 2);
+      user.cell_num = hash;    
+    })
 
     console.log(arrayWithCountry);
 
