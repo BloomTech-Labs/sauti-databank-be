@@ -6,7 +6,7 @@ module.exports = {
     client: "mysql",
 
     connection: {
-      host: "160.153.141.46",
+      host: process.env.host,
       user: process.env.user,
       password: process.env.password,
       database: "lambdaStaging",
@@ -18,7 +18,7 @@ module.exports = {
   staging: {
     client: "mysql",
      connection: {
-      host: "160.153.141.46",
+      host: process.env.host,
       user: process.env.user,
       password: process.env.password,
       database: "lambdaStaging",
@@ -37,7 +37,7 @@ module.exports = {
   production: {
     client: "mysql",
     connection: {
-      host: "160.153.141.46",
+      host: process.env.host,
       user: process.env.user,
       password: process.env.password,
       database: "lambdaStaging",
@@ -57,7 +57,7 @@ module.exports = {
   // testing: {
   //   client: "mysql",
   //   connection: {
-  //     host: "160.153.141.46",
+  //     host: process.env.host,
   //     user: process.env.user,
   //     password: process.env.password,
   //     database: "lambdaStaging",
