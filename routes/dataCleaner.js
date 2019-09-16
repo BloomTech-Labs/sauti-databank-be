@@ -1,9 +1,10 @@
 require("dotenv").config();
+console.log(process.env.host);
 const db = require("../data/dbConfig");
 const Sessions = require("./sessions-model");
 const Users = require("./users-model");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 // First Lance's Data is saved in array = []
 try {
@@ -15,8 +16,8 @@ try {
       object.cell_num = element.cell_num;
       array.push(object);
     });
-// Then a new array is created with unique phone numbers for filtering out unique users
-// Data for each category is set to null to begin with 
+    // Then a new array is created with unique phone numbers for filtering out unique users
+    // Data for each category is set to null to begin with
     const distinctUsers = [];
     const map = new Map();
     for (const item of array) {
@@ -296,8 +297,8 @@ try {
 
     arrayWithCountry.map(user => {
       const hash = bcrypt.hashSync(user.cell_num, 2);
-      user.cell_num = hash;    
-    })
+      user.cell_num = hash;
+    });
 
     console.log(arrayWithCountry);
 
