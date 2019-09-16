@@ -9,6 +9,7 @@ To get the server running locally:
 - **yarn install** to install all required dependencies.
 - **yarn server** to start the local server.
 - **yarn test** to start server using testing environment.
+- **update .env** store SQL server connection info there.
 
 ### Backend framework
 We built our backend, including our REST API, using Node, Express, and Knex to work with a MySQL database.
