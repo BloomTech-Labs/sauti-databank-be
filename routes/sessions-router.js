@@ -4,11 +4,11 @@ const router = express.Router();
 const Sessions = require("./sessions-model");
 const Users = require("./users-model");
 
-
 // Returns a list of all databank sessions
 router.get("/all", (req, res) => {
-  Sessions.find()
+  Sessions.findLanceData()
     .then(sessions => {
+      console.log(sessions);
       res.status(200).json(sessions);
     })
     .catch(err => {
@@ -29,7 +29,7 @@ router.get("/products/:id", (req, res) => {
     });
 });
 
-// Returns a list of all real sessions from a csv import 
+// Returns a list of all real sessions from a csv import
 router.get("/real/all", (req, res) => {
   Sessions.findRealSessions()
     .then(sessions => {
