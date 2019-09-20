@@ -15,21 +15,28 @@ try {
 
       //building an an array with only those sessions that have a  non-null data field:
       let array = sessions.filter(element => {
-        return element.data.length > 500;
+        return element.data.length > 400 && element.data.includes("lang");
       });
 
       console.log(array.length);
       //taking a subset of 10 sessions:
-      let newArr = array.slice(0, 10);
+      let newArr = array.slice(0, 1);
+      let languageArr = [];
 
-      //testing out unserializer
-      newArr.map((element, index) => {
-        //printing the index:
-        console.log(`${index}`);
-        //printing the unserialized data:
-        console.log(element.data);
-        //printing the serialized data:
-        console.log(unserializer.unserialize(element.data));
+      newArr.forEach((element1, index) => {
+        const data = unserializer.unserialize(element1.data);
+
+        console.log(element1);
+
+        Object.values(data.language).forEach((element2, index) => {
+          console.log(element2);
+          languageArr.push({
+            id: languageArr.length,
+            session_id: element1.sess_id,
+            language: element2
+          });
+        });
+        console.log(languageArr);
       });
     }
   );
