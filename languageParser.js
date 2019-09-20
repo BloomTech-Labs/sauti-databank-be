@@ -20,7 +20,7 @@ try {
 
       console.log(array.length);
       //taking a subset of 10 sessions:
-      let newArr = array.slice(0, 1);
+      let newArr = array.slice(0, 10);
       let languageArr = [];
 
       newArr.forEach((element1, index) => {
@@ -29,7 +29,6 @@ try {
         console.log(element1);
 
         Object.values(data.language).forEach((element2, index) => {
-          console.log(element2);
           languageArr.push({
             id: languageArr.length,
             session_id: element1.sess_id,
