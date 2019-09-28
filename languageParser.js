@@ -42,4 +42,4 @@ try {
 } catch ({ message }) {
   console.log(message);
 }
-//to run this script on the command line, type:  node testParser.js
+//to run this script on the command line, type:  node languageParser.js
