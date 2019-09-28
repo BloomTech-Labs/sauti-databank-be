@@ -305,6 +305,7 @@ try {
     try {
       for (const user of arrayWithCountry) {
         console.log(user);
+        //adding rows to the users table:
         await Users.add(user);
       }
     } catch ({ message }) {
