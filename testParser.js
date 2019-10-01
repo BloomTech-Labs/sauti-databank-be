@@ -8,9 +8,10 @@ const bcrypt = require("bcryptjs");
 try {
   //fetch all rows from the platform_sessions data
   Sessions.findLanceData().then(
-    //taking sessions data table:
+    //taking the platform_sessions data table (called sessions below):
     sessions => {
       //checking to see how many rows it has:
+      console.log(typeof sessions);
       console.log(sessions.length);
 
       //building an an array with only those sessions that have a  non-null data field:
