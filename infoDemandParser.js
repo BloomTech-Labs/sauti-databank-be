@@ -4,6 +4,19 @@ const Sessions = require('./routes/sessions-model');
 let unserializer = require('php-unserialize');
 const bcrypt = require('bcryptjs');
 
+const request_types = [ 
+  'procedurecommodity',
+  'procedurecommoditycat',
+  'proceduredest',
+  'procedurerequireddocument',
+  'procedurerelevantagency',
+  'procedureorigin',
+  'commoditycountry',
+  'commoditymarket',
+  'commoditycat',
+  'commodityproduct',
+  'exchangedirection']
+
 try {
   //accessing the session model and and the platform sessions table
   Sessions.findLanceData().then(
