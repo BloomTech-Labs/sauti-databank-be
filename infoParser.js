@@ -33,13 +33,16 @@ try {
         console.log(data);//unserialized data 
         //Object.keys returning the enumerable keys from the data, looping through each key and pushing this info into the empty infoArr
         Object.keys(data).forEach((keyEle, index) => {
-          infoArr.push({
+          
+            infoArr.push({
             id: infoArr.length, //incrementing the id by the length of the array 
             session_id: serializedRow.sess_id,// from the serialized data in the newArr that was created from the sess_id: value 
             cell_num: serializedRow.cell_num,// from the serialized data in the newArr that was created from the cell_num: value 
             request_type: keyEle, // request_type is receiving its value from the keyEle in the callback function from the unserialized data
             request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index 
-          }); //these are the key value pairs that we are pushing into the empty array 
+          });
+          
+           //these are the key value pairs that we are pushing into the empty array 
         });
         console.log(infoArr);//Seeing if the array now has access to the key value pairs(data) 
       });
