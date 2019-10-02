@@ -1,4 +1,4 @@
-
+//this will be used to create the if/else statements for the request types 
 require("dotenv").config();
 const Sessions = require("./routes/sessions-model");
 let unserializer = require("php-unserialize");
@@ -33,14 +33,16 @@ try {
         console.log(data);//unserialized data 
         //Object.keys returning the enumerable keys from the data, looping through each key and pushing this info into the empty infoArr
         Object.keys(data).forEach((keyEle, index) => {
-          
+          if(keyEle === 'procedurecommodity'){
+            
           infoArr.push({
             id: infoArr.length, //incrementing the id by the length of the array 
-            session_id: serializedRow.sess_id,// from the serialized data in the newArr that was created from the sess_id: value 
+            platform_session_id: serializedRow.sess_id,// from the serialized data in the newArr that was created from the sess_id: value 
             cell_num: serializedRow.cell_num,// from the serialized data in the newArr that was created from the cell_num: value 
-            request_type: keyEle, // request_type is receiving its value from the keyEle in the callback function from the unserialized data
+            request_type_id: 1, 
             request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index 
-          }); //these are the key value pairs that we are pushing into the empty array 
+          });
+        } else if 
         });
         console.log(infoArr);//Seeing if the array now has access to the key value pairs(data) 
       });
@@ -51,22 +53,18 @@ try {
 }// if we don't successfully retrieve the data we should see an error message 
 //to run this script on the command line, type:  node testParser.js
 
-// console.log(newArr[0].data);
-// console.log(Object.keys(newArr[0].data));
-// console.log(Object.values(Object.values(newArr[0].data)[12]));
 
-
-/**
- * Steps to creating the info demand table 
- * This table requires :
- * id:
- * platform_session_id:
- * request_id:
- * user_id:
+/** 11 if /else statements 
+ * procedurecommoditycat
+ * procedurecommodity
+ * proceduredest
+ * procedurerequiredocument
+ * procedurerelevantagency
+ * procedureorigin
+ * commodititycountry
+ * commoditymarket
+ * commoditycat
+ * commodityproduct
+ * exchangedirection
+ * 
  */
-
-// Difficult things to fix creating a request_id for request_type & request_value
-<<<<<<< HEAD
-=======
- 
->>>>>>> 7fe13c182cae17455c2680326cd142c52a68c690

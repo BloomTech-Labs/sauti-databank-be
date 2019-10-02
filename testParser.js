@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 // make sure you have php-unserialize in your package.json. If not, yarn add php-unserialize
 
 try {
-  //fetch all rows from the platform_sessions data
+  
   Sessions.findLanceData().then(
     //taking the platform_sessions data table (called sessions below):
     sessions => {
