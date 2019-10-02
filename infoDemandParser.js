@@ -79,6 +79,46 @@ try {
               request_type_id: 6,
               request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
             });
+          } else if (keyEle === 'commoditycountry') {
+            infoArr.push({
+              id: infoArr.length, //incrementing the id by the length of the array
+              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+              request_type_id: 7,
+              request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
+            });
+          } else if (keyEle === 'commoditymarket'){
+            infoArr.push({
+              id: infoArr.length, //incrementing the id by the length of the array
+              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+              request_type_id: 8,
+              request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
+            });
+          } else if (keyEle === 'commoditycat'){
+            infoArr.push({
+              id: infoArr.length, //incrementing the id by the length of the array
+              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+              request_type_id: 9,
+              request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
+            });
+          } else if (keyEle === 'commodityproduct'){
+            infoArr.push({
+              id: infoArr.length, //incrementing the id by the length of the array
+              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+              request_type_id: 10,
+              request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
+            });
+          } else if (keyEle === 'exchangedirection') {
+            infoArr.push({
+              id: infoArr.length, //incrementing the id by the length of the array
+              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+              request_type_id: 11,
+              request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
+            });
           }
         });
         console.log(infoArr); //Seeing if the array now has access to the key value pairs(data)
