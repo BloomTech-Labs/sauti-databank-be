@@ -15,7 +15,7 @@ try {
   
         //building an an array with only those sessions that have a  non-null data field:
         let array = sessions.filter(element => {
-          return element.data.length > 400 && element.data;
+          return element.data.length > 0 && element.data;
         });
   
         console.log(array.length);
