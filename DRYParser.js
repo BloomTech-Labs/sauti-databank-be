@@ -3,6 +3,7 @@ require('dotenv').config();
 const Sessions = require('./routes/sessions-model');
 let unserializer = require('php-unserialize');
 const bcrypt = require('bcryptjs');
+const InfoDemand = require('./routes/infodemand-model');
 
 const request_types = [ 
   'procedurecommodity',
@@ -50,9 +51,9 @@ try {
           if (keyEle === request_type) {
             infoArr.push({
               id: infoArr.length, //incrementing the id by the length of the array
-              platform_session_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+              platform_sessions_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
               cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
-              request_type_id: request_type.indexOf(keyEle)+1,
+              request_type_id: request_types.indexOf(keyEle)+1,
               request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
             });
           
@@ -63,6 +64,16 @@ try {
       });
       console.log('infoArr', infoArr);
       console.log('infoArr length', infoArr.length)
+
+      try {
+        for (const info_row of infoArr) {
+          console.log('row',info_row );
+           InfoDemand.add(info_row) 
+        }
+      }
+      catch ({ message}) {
+        console.log(message);
+      }
     }
   );
 } catch ({ message }) {
