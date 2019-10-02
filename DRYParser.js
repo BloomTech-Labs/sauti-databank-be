@@ -46,8 +46,9 @@ try {
         //Object.keys returning the enumerable keys from the data, looping through each key and pushing this info into the empty infoArr
         Object.keys(data).forEach((keyEle, index) => {
           // console.log('Key', keyEle);
-          console.log(request_types)
+          // console.log(request_types)
           request_types.forEach( request_type => {
+            // console.log("req", request_type)
           if (keyEle === request_type) {
             infoArr.push({
               id: infoArr.length, //incrementing the id by the length of the array
@@ -56,11 +57,9 @@ try {
               request_type_id: request_types.indexOf(keyEle)+1,
               request_value: data[keyEle] //request_value is receiving its value from the data variable which uses the key element as its index
             });
-          
           }
         })
-        });
-        // console.log('infoArr', infoArr); //Seeing if the array now has access to the key value pairs(data)
+        }); // console.log('infoArr', infoArr); //Seeing if the array now has access to the key value pairs(data)
       });
       console.log('infoArr', infoArr);
       console.log('infoArr length', infoArr.length)
