@@ -1,5 +1,5 @@
 //this will be used to create the if/else statements for the request types 
-equire("dotenv").config();
+require("dotenv").config();
 const Sessions = require("./routes/sessions-model");
 let unserializer = require("php-unserialize");
 const bcrypt = require("bcryptjs");

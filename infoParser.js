@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const Sessions = require("./routes/sessions-model");
 let unserializer = require("php-unserialize");
@@ -65,3 +66,7 @@ try {
  */
 
 // Difficult things to fix creating a request_id for request_type & request_value
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 7fe13c182cae17455c2680326cd142c52a68c690
