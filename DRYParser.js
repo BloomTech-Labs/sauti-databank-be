@@ -33,7 +33,7 @@ try {
 
       // console.log('Array size', array.length);
       //slicing the array to condense the amount of data retrieved/taking a subset of 2 sessions:
-      let newArr = array.slice(0, 4);
+      let newArr = array.slice(0, 10);
       // making a new array
       let infoArr = [];
       //looping through the new array
@@ -68,7 +68,15 @@ try {
         for (const info_row of infoArr) {
           console.log('row',info_row );
            InfoDemand.add(info_row) 
-        }
+         
+        }//
+        // InfoDemand.add({
+        //   id: 4,
+        //   platform_sessions_id: 8,
+        //   cell_num: 5207679889,
+        //   request_type_id: 8,
+        //   request_value: "UGA"
+        // }) 
       }
       catch ({ message}) {
         console.log(message);
@@ -80,17 +88,20 @@ try {
 } // if we don't successfully retrieve the data we should see an error message
 //to run this script on the command line, type:  node testParser.js
 
+module.exports = Sessions
 /** 11 if /else statements
- * procedurecommodity
- * procedurecommoditycat
- * proceduredest
- * procedurerequireddocument
- * procedurerelevantagency
- * procedureorigin
- * commoditycountry
- * commoditymarket
- * commoditycat
- * commodityproduct
- * exchangedirection
+==========================
+
+ * 1.  procedurecommodity
+ * 2.  procedurecommoditycat
+ * 3.  proceduredest
+ * 4.  procedurerequireddocument
+ * 5.  procedurerelevantagency
+ * 6.  procedureorigin
+ * 7.  commoditycountry
+ * 8.  commoditymarket
+ * 9.  commoditycat
+ * 10. commodityproduct
+ * 11. exchangedirection
  *
  */
