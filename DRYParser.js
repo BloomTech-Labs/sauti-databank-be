@@ -90,16 +90,18 @@ try {
 
 module.exports = Sessions
 /** 11 if /else statements
- * procedurecommodity
- * procedurecommoditycat
- * proceduredest
- * procedurerequireddocument
- * procedurerelevantagency
- * procedureorigin
- * commoditycountry
- * commoditymarket
- * commoditycat
- * commodityproduct
- * exchangedirection
+==========================
+
+ * 1.  procedurecommodity
+ * 2.  procedurecommoditycat
+ * 3.  proceduredest
+ * 4.  procedurerequireddocument
+ * 5.  procedurerelevantagency
+ * 6.  procedureorigin
+ * 7.  commoditycountry
+ * 8.  commoditymarket
+ * 9.  commoditycat
+ * 10. commodityproduct
+ * 11. exchangedirection
  *
  */
