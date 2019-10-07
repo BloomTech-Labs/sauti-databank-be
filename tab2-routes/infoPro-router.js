@@ -40,3 +40,6 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+/** For subcategories: Most Requested Document Information for Procedures & Most Requested Agency Information for Procedures 
+ * The for loop and if/else statement were needed to help populate the table with its true values. Prior to setting this up the request_value returned a number in a string ie: '5'
+ */
