@@ -4,7 +4,7 @@ module.exports = {
     getInfoPro
 } // export all the helper functions you create 
 
-// create a function to locate the document information for procedures get
+// create a function to locate the Document Information for Procedures get
 
 
 function getInfoPro(){
