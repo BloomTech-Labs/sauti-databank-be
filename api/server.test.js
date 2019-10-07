@@ -30,9 +30,9 @@ describe("server.js", () => {
     it('should return text from base route /', () => {
       return supertest(server).get("/").expect('Content-Type', "text/html; charset=utf-8")
     });
-    it('should return WE ARE UP from base route', () => {
+    it('should return FFT WAS HERE!!! from base route', () => {
       return supertest(server).get("/")
-        .expect('WE ARE UP!')
+        .expect('FFT WAS HERE!!!')
       })
     });
   });
