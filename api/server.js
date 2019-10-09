@@ -26,7 +26,8 @@ server.use('/procedure-com', proCom);
 server.use('/info-pro', infoPro);
 
 server.get('/', (req, res) => {
-	res.status(200).send('WE ARE UP!');
+	res.status(200).send('FFT WAS HERE!!!');
+	
 });
 
 module.exports = server;
