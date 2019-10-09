@@ -1,7 +1,7 @@
 const supertest = require("supertest"); // import supertest
 const server = require("../api/server.js"); //import server so we can test the endpoints that were created 
 
-const db = require('../data/dbConfig');
+
 
 //Get all commodity categories 
 describe('/commodity-cat', () => {
