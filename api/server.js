@@ -8,6 +8,9 @@ const reqAge = require('../tab2-routes/mostReqAge-router');
 const comCat = require('../tab2-routes/comCat-router');
 const proCom = require('../tab2-routes/proCom-router');
 const infoPro = require('../tab2-routes/infoPro-router');
+const topCat = require('../tab3-routes/topCat-router');
+const topCom = require('../tab3-routes/topCom-router');
+const exRate = require('../tab3-routes/exchangeRate-router');
 
 const server = express();
 
@@ -24,6 +27,11 @@ server.use('/agency-info', reqAge);
 server.use('/commodity-cat', comCat);
 server.use('/procedure-com', proCom);
 server.use('/info-pro', infoPro);
+
+// Tab 3
+server.use('/top-cat', topCat);
+server.use('/top-com', topCom);
+server.use('/exchange-rate', exRate);
 
 server.get('/', (req, res) => {
 	res.status(200).send('FFT WAS HERE!!!');
