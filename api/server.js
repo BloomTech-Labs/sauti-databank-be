@@ -1,8 +1,8 @@
 const express = require('express');
 const helmet = require('helmet');
+const cors = require('cors');
 const sessions = require('../routes/sessions-router');
 const users = require('../routes/users-router');
-const cors = require('cors');
 const proDes = require('../tab2-routes/proDes-router');
 const reqAge = require('../tab2-routes/mostReqAge-router');
 const comCat = require('../tab2-routes/comCat-router');
@@ -11,6 +11,9 @@ const infoPro = require('../tab2-routes/infoPro-router');
 const topCat = require('../tab3-routes/topCat-router');
 const topCom = require('../tab3-routes/topCom-router');
 const exRate = require('../tab3-routes/exchangeRate-router');
+const tradersGoods = require('../tab3-routes/tradersGoods-router');
+const destCountry = require('../tab3-routes/destCountry-router');
+const destMarket = require('../tab3-routes/destMarket-router');
 
 const server = express();
 
@@ -18,6 +21,7 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+// Tab 1
 server.use('/sessions', sessions);
 server.use('/users', users);
 
@@ -32,10 +36,12 @@ server.use('/info-pro', infoPro);
 server.use('/top-cat', topCat);
 server.use('/top-com', topCom);
 server.use('/exchange-rate', exRate);
+server.use('/traders-goods', tradersGoods);
+server.use('/dest-country', destCountry);
+server.use('/dest-market', destMarket);
 
 server.get('/', (req, res) => {
 	res.status(200).send('FFT WAS HERE!!!');
-	
 });
 
 module.exports = server;
