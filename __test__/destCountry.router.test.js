@@ -6,7 +6,7 @@ describe('/dest-country', () => {
 
     it('return 200', async () => {
         await supertest(server).get('/dest-country')
-        .expect(300) 
+        .expect(200) 
     });
     it ('returns json content', async () => {
         await supertest(server).get('/dest-country')

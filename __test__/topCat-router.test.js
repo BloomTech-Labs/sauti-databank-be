@@ -5,7 +5,7 @@ describe('/top-cat', () => {
 	it('return 200', async () => {
 		await supertest(server)
 			.get('/top-cat')
-			.expect(300);
+			.expect(200);
 	});
 	it('returns json content', async () => {
 		await supertest(server)

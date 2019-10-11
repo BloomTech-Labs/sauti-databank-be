@@ -6,7 +6,7 @@ describe('/dest-market', () => {
 
     it('return 200', async () => {
         await supertest(server).get('/dest-market')
-        .expect(300) 
+        .expect(200) 
     });
     it ('returns json content', async () => {
         await supertest(server).get('/dest-market')
