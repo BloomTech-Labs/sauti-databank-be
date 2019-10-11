@@ -11,6 +11,7 @@ const infoPro = require('../tab2-routes/infoPro-router');
 const topCat = require('../tab3-routes/topCat-router');
 const topCom = require('../tab3-routes/topCom-router');
 const exRate = require('../tab3-routes/exchangeRate-router');
+const tradersGoods = require('../tab3-routes/tradersGoods-router');
 
 const server = express();
 
@@ -27,6 +28,7 @@ server.use('/agency-info', reqAge);
 server.use('/commodity-cat', comCat);
 server.use('/procedure-com', proCom);
 server.use('/info-pro', infoPro);
+server.use('/traders-goods', tradersGoods);
 
 // Tab 3
 server.use('/top-cat', topCat);
@@ -35,7 +37,6 @@ server.use('/exchange-rate', exRate);
 
 server.get('/', (req, res) => {
 	res.status(200).send('FFT WAS HERE!!!');
-	
 });
 
 module.exports = server;
