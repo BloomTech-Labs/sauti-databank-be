@@ -13,6 +13,7 @@ const topCom = require('../tab3-routes/topCom-router');
 const exRate = require('../tab3-routes/exchangeRate-router');
 const tradersGoods = require('../tab3-routes/tradersGoods-router');
 const destCountry = require('../tab3-routes/destCountry-router');
+const destMarket = require('../tab3-routes/destMarket-router');
 
 const server = express();
 
@@ -37,6 +38,7 @@ server.use('/top-com', topCom);
 server.use('/exchange-rate', exRate);
 server.use('/traders-goods', tradersGoods);
 server.use('/dest-country', destCountry);
+server.use('/dest-market', destMarket);
 
 server.get('/', (req, res) => {
 	res.status(200).send('FFT WAS HERE!!!');
