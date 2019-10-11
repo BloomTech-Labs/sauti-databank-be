@@ -1,20 +1,6 @@
 const supertest = require("supertest");
-const server = require("./server.js");
+const server = require("../api/server");
 
-const db = require("../data/dbConfig");
-
-//rollback, migrations and seeds before each tests
-/*beforeAll(async () => {
-  await db.migrate.latest();
-});
-
-beforeEach(async () => {
-  await db.seed.run();
-});
-
-afterAll(async () => {
-  await db.migrate.rollback(null, true);
-});*/
 
 describe("server.js", () => {
   describe("index route", () => {
