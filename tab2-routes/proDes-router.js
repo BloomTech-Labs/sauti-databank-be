@@ -8,8 +8,12 @@ const ProDes = require('./proDes-model');
 
 router.get('/', (req, res) => {
     ProDes.getDesInfo()
+        
         .then(dest => {
+            
             res.status(200).json(dest);
+            
+
         })
         .catch(err => {
             res.status(500).json(err);

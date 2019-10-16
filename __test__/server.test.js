@@ -1,20 +1,6 @@
 const supertest = require("supertest");
-const server = require("./server.js");
+const server = require("../api/server");
 
-const db = require("../data/dbConfig");
-
-//rollback, migrations and seeds before each tests
-/*beforeAll(async () => {
-  await db.migrate.latest();
-});
-
-beforeEach(async () => {
-  await db.seed.run();
-});
-
-afterAll(async () => {
-  await db.migrate.rollback(null, true);
-});*/
 
 describe("server.js", () => {
   describe("index route", () => {
@@ -30,9 +16,9 @@ describe("server.js", () => {
     it('should return text from base route /', () => {
       return supertest(server).get("/").expect('Content-Type', "text/html; charset=utf-8")
     });
-    it('should return WE ARE UP from base route', () => {
+    it('should return FFT WAS HERE!!! from base route', () => {
       return supertest(server).get("/")
-        .expect('WE ARE UP!')
+        .expect('FFT WAS HERE!!!')
       })
     });
   });

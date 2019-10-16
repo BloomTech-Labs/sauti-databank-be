@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const proCom = require('./proCom-model');
+const DestMarket = require('./destMarket-model');
 
-// Procedures for Commodity
+// Final Destination Market
 
 router.get('/', (req, res) => {
-	proCom
-		.getProCom()
-		.then(commodities => {
-			res.status(200).json(commodities);
+	DestMarket.getDestMarket()
+		.then(market => {
+			res.status(200).json(market);
 		})
 		.catch(err => {
 			res.status(500).json(err);
