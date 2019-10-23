@@ -20,6 +20,7 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 - [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries.
 - [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
 
+
 ## Endpoints
 
 ### User Routes
@@ -213,6 +214,13 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
   "request_value": STRING
 }
 ```
+### Data parsers:
+- the file dataCleaner.js in the routes folder has the script that cleaned the data from platform_sessions table and poppulated the trader demographic info in the Users table (labs14)
+
+- the file sessionsDataParser.js in the root back-end directory has the script that cleaned the data from platform_sessions table and poppulated the trader demographic info in the Users table (labs16)
+
+
+
 ## Actions
 
 _Note: every time we say users below, we're referring to the traders who log on and use the Sauti Databan platform, not the users (often researchers) who view Sauti's data_.
