@@ -136,6 +136,16 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 }
 ```
 
+#### Information demand
+```
+{
+  "id": INTEGER,
+  "platform_sessions_id": INTEGER,
+  "cell_num": INTEGER,
+  "request_type_id": INTEGER,
+  "request_value": STRING
+}
+```
 ## Actions
 
 _Note: every time we say users below, we're referring to the traders who log on and use the Sauti Databan platform, not the users (often researchers) who view Sauti's data_.
@@ -227,6 +237,40 @@ _Note: every time we say users below, we're referring to the traders who log on 
 `getProduceYes()` -> Returns a list of all users who say that yes they do trade produce at the border.
 
 `getProduceNo()` -> Returns a list of all users who say they do _not_ trade produce at the border.
+
+### Commodity category actions
+`getComCat()` -> Returns a list of all the commodity categories.
+
+### Document information procedures action
+`getInfoPro()` -> Returnas a list of all the documentation for procedures.
+
+### Most requested agency actions
+`getReqAge()` -> Returns a list of the most requested agencies.
+
+### Procedure commodities actions
+`getProCom()` -> Returns a list of procedure commodities.
+
+### Prodecude destination actions
+`getDestInfo()` -> Returns a list of destinations frequented.
+
+
+### Final destination country actions
+`getDestCountry()` -> Returns a list of the final destination countries.
+
+### Final destination market actions
+`getDestMarket()` -> Returns a list of the final destination markets.
+
+### Exchange rate destination  actions
+`getExRate()` -> Returns a list of the exchange rate countries.
+
+### Top commodity categories
+`getTopCat()` -> Returns a list of the top commodity categories.
+
+###Top commodities
+`getTopCom()` -> Returns a list of the top commodites.
+
+### Origin of traders goods actions
+`getTradersGoods()` -> Returns a list of the origin(country) of traded goods.
 
 ## Environment Variables
 
