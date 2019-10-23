@@ -103,6 +103,73 @@ We built our backend, including our REST API, using Node, Express, and Knex to w
 | GET    | `users/all/produce/yes/count` | public         | Returns the number of Sauti Databank users who reported trading produce at the border.                |
 | GET    | `/users/all/produce/no/count` | public         | Returns the number of Sauti Databank users who reported that they do not trade produce at the border. |
 
+#### Accessing Procedures for Commodity Categories data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/commodity-cat`      | public         | Returns the most requested procedures for commodity categories.   
+
+#### Accessing Most Requested Document Information for Procedures data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/info-pro`      | public         | Returns the most requested document information for procedures.  
+
+#### Accessing Most Requested Agency Information for Procedures data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/agency-info`      | public         | Returns the most requested agency information for procedures.  
+
+#### Accessing Most Requested Procedures for Commodities data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/procedure-com`      | public         | Returns the most requested procedures for commodities.
+
+#### Accessing Requested Procedures for Destination (Imports to:) data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/dest-info`      | public         | Returns the requested procedures for destination.
+
+#### Accessing Final Destination Country data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/dest-country`      | public         | Returns the final destination country.
+
+#### Accessing Final Destination Markert data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/dest-market`      | public         | Returns the final destination market.
+
+#### Accessing Exchange Direction data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/exchange-rate`      | public         | Returns the exchange direction.
+
+#### Accessing Top Commodity Categories data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/top-cat`      | public         | Returns the top commodity categories.
+
+#### Accessing Top Commodities data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/top-com`      | public         | Returns the top commodities.
+
+#### Accessing Origin of Traders' Goods data
+
+| Method | Endpoint                      | Access Control | Description                                                                                           |
+| ------ | ----------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| GET    | `/traders-goods`      | public         | Returns origin of traders' goods.
+
+
 # Data Model
 
 #### Platform sessions
