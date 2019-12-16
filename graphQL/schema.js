@@ -3,14 +3,14 @@ const schema = buildSchema(`
     type Query {
         tradersData(request_value: String): [SautiTrader]
         tradersUsers(limit: Int, age: Int): [User]
-        tradersCommodities(produce: String): [Commodity]
+        tradersCommodities(product: String, product_cat: String): [Commodity]
     }
 
     type SautiTrader {
         sess_id: Int
         cell_num: String
         created_date: String
-        udate: String
+        update: String
         platform_id: String
         notes: String
         request_value: String
@@ -24,7 +24,7 @@ const schema = buildSchema(`
         education: String
         crossing_freq: String
         produce: String
-        primary)income: String
+        primary_income: String
         language: String
         country_of_residence: String
     }
@@ -40,7 +40,7 @@ const schema = buildSchema(`
         retail: Int
         wholesale: Int
         currency: String
-        unit: Int
+        unit: String
     }
 `);
 
