@@ -5,8 +5,6 @@ const schema = buildSchema(`
         tradersUsers(limit: Int, age: Int): [User]
         tradersCommodities(product: String, product_cat: String): [Commodity]
         businessBehaviour(data_key: String): [conceptData]
-        infoDemand: [InfoDemand]
-        platformSessions: [PlatformSessions]
     }
 
     type SautiTrader {
