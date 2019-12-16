@@ -11,7 +11,8 @@ const getLanceData = async args => {
 }
 
 const getTraderUsers = async args => {
-    const traderUsers = await data.getUsers();
+    const traderUsers = await data.getData();
+
 
     let filtered = traderUsers;
 

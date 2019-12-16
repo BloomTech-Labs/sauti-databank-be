@@ -14,6 +14,7 @@ const schema = buildSchema(`
         notes: String
         request_value: String
         request_type: String
+        gender: String
     }
 
     type User { 

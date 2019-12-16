@@ -35,7 +35,6 @@ try {
         });
       }
     }
-
     getGender(sessions, distinctUsers);
     // console.log(sessions);
   });
@@ -293,11 +292,8 @@ try {
     });
 
     try {
-
-      // arrayWithCountry.forEach(trader => Traders.add(trader))
-
       for (let trader of arrayWithCountry) {
-        console.log(trader);
+        console.log(trader)
         await Traders.add(trader);
       }
     } catch ({ message }) {
