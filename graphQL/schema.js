@@ -4,6 +4,7 @@ const schema = buildSchema(`
         tradersData(request_value: String): [SautiTrader]
         tradersUsers(limit: Int, age: Int): [User]
         tradersCommodities(product: String, product_cat: String): [Commodity]
+        businessBehaviour(data_key: String): [businessBehaviour]
     }
 
     type SautiTrader {
@@ -41,6 +42,13 @@ const schema = buildSchema(`
         wholesale: Int
         currency: String
         unit: String
+    }
+
+    type BusinessBehaviour {
+        data_id: Int
+        data_key: String
+        data_value: String
+        cell_num: Int
     }
 `);
 
