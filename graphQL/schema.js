@@ -4,7 +4,9 @@ const schema = buildSchema(`
         tradersData(request_value: String): [SautiTrader]
         tradersUsers(limit: Int, age: Int): [User]
         tradersCommodities(product: String, product_cat: String): [Commodity]
-        businessBehaviour(data_key: String): [businessBehaviour]
+        businessBehaviour(data_key: String): [conceptData]
+        infoDemand: [InfoDemand]
+        platformSessions: [PlatformSessions]
     }
 
     type SautiTrader {
@@ -44,7 +46,7 @@ const schema = buildSchema(`
         unit: String
     }
 
-    type BusinessBehaviour {
+    type conceptData {
         data_id: Int
         data_key: String
         data_value: String
