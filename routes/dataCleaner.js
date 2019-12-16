@@ -1,10 +1,7 @@
 require("dotenv").config();
-console.log(process.env.host);
-const db = require("../data/dbConfig");
-const Sessions = require("./sessions-model");
-const Users = require("./users-model");
 
-const bcrypt = require("bcryptjs");
+const Sessions = require("./sessions-model");
+const Traders = require("../graphQL/traders-model");
 
 // First Lance's Data is saved in array = []
 try {
@@ -295,22 +292,18 @@ try {
       }
     });
 
-    arrayWithCountry.map(user => {
-      const hash = bcrypt.hashSync(user.cell_num, 2);
-      user.cell_num = hash;
-    });
-
-    console.log(arrayWithCountry);
-
     try {
-      for (const user of arrayWithCountry) {
-        console.log(user);
-        await Users.add (user);
+
+      // arrayWithCountry.forEach(trader => Traders.add(trader))
+
+      for (let trader of arrayWithCountry) {
+        console.log(trader);
+        await Traders.add(trader);
       }
     } catch ({ message }) {
-      console.log(message);
+      console.log("Failed to add user", message);
     }
   };
 } catch ({ message }) {
-  console.log(message);
+  console.log("Failed file", message);
 }
