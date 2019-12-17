@@ -1,22 +1,24 @@
 const { buildSchema } = require('graphql');
 const schema = buildSchema(`
     type Query {
-        tradersData(request_value: String): [SautiTrader]
+        tradersData(request_value: String): [Session]
         tradersUsers(limit: Int, age: Int, education: String): [User]
         tradersCommodities(product: String, product_cat: String): [Commodity]
         businessBehaviour(data_key: String): [Business]
     }
 
     type Session {
-        sess_id: Int
-        cell_num: String
-        created_date: String
-        update: String
-        platform_id: String
-        notes: String
-        request_value: String
-        request_type: String
+        id: Int
         gender: String
+        age: String
+        education: String
+        crossing_freq: String
+        produce: String
+        primary_income: String
+        language: String
+        country_of_residence: String
+        request_type: String
+        request_value: String
     }
 
     type User { 

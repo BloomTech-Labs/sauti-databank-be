@@ -11,7 +11,7 @@ const server = express();
 const root = {
   tradersUsers: getUsers,
   tradersData: getSessions
-}
+};
 
 server.use(helmet());
 server.use(express.json());
