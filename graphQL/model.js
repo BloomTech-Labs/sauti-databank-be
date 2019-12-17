@@ -2,6 +2,10 @@ const db = require('../data/dbconfig')
 
 const getUsers = () => {
    return db('traders as t')
+}
+
+const getSessions = () => {
+   return db('traders as t')
       .join('information_demand as id', 'id.cell_num', 't.cell_num')
       .join('request_type as rt', 'id.request_type_id', 'rt.id')
       .select(
@@ -21,4 +25,4 @@ const getUsers = () => {
 }
 
 
-module.exports = { getUsers }
+module.exports = { getUsers, getSessions }
