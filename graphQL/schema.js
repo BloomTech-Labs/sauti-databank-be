@@ -7,7 +7,7 @@ const schema = buildSchema(`
         businessBehaviour(data_key: String): [Business]
     }
 
-    type SautiTrader {
+    type Session {
         sess_id: Int
         cell_num: String
         created_date: String
