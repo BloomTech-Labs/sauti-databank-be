@@ -2,6 +2,7 @@ const data = require("./model")
 
 const getUsers = async args => {
     const traderUsers = await data.getUsers();
+    console.log(traderUsers)
 
     let filtered = traderUsers;
 
@@ -14,6 +15,8 @@ const getUsers = async args => {
 
 const getSessions = async args => {
     const traderUsers = await data.getSessions();
+
+    console.log(traderUsers)
 
     let filtered = traderUsers;
 
