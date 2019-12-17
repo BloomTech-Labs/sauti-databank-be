@@ -2,9 +2,9 @@ const { buildSchema } = require('graphql');
 const schema = buildSchema(`
     type Query {
         tradersData(request_value: String): [SautiTrader]
-        tradersUsers(limit: Int, age: Int): [User]
+        tradersUsers(limit: Int, age: Int, education: String): [User]
         tradersCommodities(product: String, product_cat: String): [Commodity]
-        businessBehaviour(data_key: String): [conceptData]
+        businessBehaviour(data_key: String): [Business]
     }
 
     type SautiTrader {
@@ -42,13 +42,19 @@ const schema = buildSchema(`
         wholesale: Int
         currency: String
         unit: String
+        platform_session_id: Int
     }
 
-    type conceptData {
+    type Business {
+        id: Int
         data_id: Int
         data_key: String
         data_value: String
         cell_num: Int
+        source: String
+        country: String
+        market: String
+        product: String
     }
 `);
 
