@@ -3,7 +3,7 @@ require("dotenv").config();
 const Sessions = require("./routes/sessions-model");
 let unserializer = require("php-unserialize");
 const bcrypt = require("bcryptjs");
-const InfoDemand = require("./routes/infodemand-model");
+const InfoDemand = require("./models/infodemand-model");
 
 //The purpose of this data parser is to parse the info that is stored inside the data column of the platform_sessions table in PHP serialized format, and populate it into new tables built according to this data model (ADD HERE) to enable building a backend/frontend for the data portal
 
