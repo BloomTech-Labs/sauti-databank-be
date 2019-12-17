@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const Sessions = require("./sessions-model");
-const Traders = require("../graphQL/traders-model");
+const Traders = require("./traders-model");
 
 // First Lance's Data is saved in array = []
 try {

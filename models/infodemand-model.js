@@ -1,8 +1,7 @@
 const db = require("../data/dbConfig");
 
-const add = async function(info_row) {
-  const insertedData = await db("information_demand").insert(info_row);
-  return insertedData;
+const add = function(info_row) {
+  return db("information_demand").insert(info_row);
 };
 
 module.exports = {

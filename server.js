@@ -16,7 +16,6 @@ const root = {
 server.use(helmet());
 server.use(express.json());
 server.use(cors());
-
 server.use(
   "/graphql",
   graphqlHTTP({

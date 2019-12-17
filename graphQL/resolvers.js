@@ -1,30 +1,30 @@
-const data = require("../models/model");
+const data = require("../models/model")
 
 const getUsers = async args => {
-  const traderUsers = await data.getUsers();
+    const traderUsers = await data.getUsers();
 
-  let filtered = traderUsers;
+    let filtered = traderUsers;
 
-  for (let arg in args) {
-    filtered = filtered.filter(trader => trader[arg] === args[arg]);
-  }
+    for (let arg in args) {
+        filtered = filtered.filter(trader => trader[arg] === args[arg] )
+    }
 
-  return filtered;
-};
+    return filtered;
+}
 
 const getSessions = async args => {
-  const traderUsers = await data.getSessions();
+    const traderUsers = await data.getSessions();
 
-  let filtered = traderUsers;
+    let filtered = traderUsers;
 
-  for (let arg in args) {
-    filtered = filtered.filter(trader => trader[arg] === args[arg]);
-  }
+    for (let arg in args) {
+        filtered = filtered.filter(trader => trader[arg] === args[arg] )
+    }
 
-  return filtered;
-};
+    return filtered;
+}
 
 module.exports = {
-  getUsers,
-  getSessions
-};
+    getUsers,
+    getSessions
+}
