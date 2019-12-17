@@ -17,12 +17,18 @@ server.use(cors());
 ///////////////////// GRAPHQL
 
 const schema = require("../graphQL/schema");
-const { getLanceData, getTraderUsers } = require("../graphQL/queries");
+const { getUsers, getSessions } = require("../graphQL/queries");
 
 const root = {
+<<<<<<< HEAD
+     tradersUsers: getUsers,
+     tradersData: getSessions
+}
+=======
   tradersData: getLanceData,
   tradersUsers: getTraderUsers
 };
+>>>>>>> 9635d58bf1f2c6f2e28d688f9d3d81c10318f46c
 
 server.use(
   "/graphql",
