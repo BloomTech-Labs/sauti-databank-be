@@ -300,6 +300,105 @@ try {
       console.log("Failed to add user", message);
     }
   };
+
+  getRequestType = (sessions, arrayWithRequestType) => {
+    let arrayWithRequestType = arrayWithCountry;
+    // let arrayWithRequestType = distinctUsers;
+
+    sessions.map(el=> {
+      let num = element.cell_num;
+
+      if(el.data.includes("procedurecommodity")){
+        arrayWithRequestType.map(user=> {
+          if (user.cell_num === num){
+            user.request_type = "procedurecommodity"
+          }
+        })
+      } 
+        else if (el.data.includes("procedurecommoditycat")){
+          arrayWithRequestType.map(user=> {
+            if(user.cell_num === num){
+              user.request_type = "procedurecommoditycat"
+            }
+          })
+        }
+      
+      else if (el.data.includes("proceduredest")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "proceduredest"
+          }
+        })
+      }
+
+      else if (el.data.includes("procedurerequireddocument")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "procedurerequireddocument"
+          }
+        })
+      }
+
+      else if (el.data.includes("procedurerelevantagency")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "procedurerelevantagency"
+          }
+        })
+      }
+
+      else if (el.data.includes("procedureorigin")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "procedureorigin"
+          }
+        })
+      }
+
+      else if (el.data.includes("commoditycountry")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "commoditycountry"
+          }
+        })
+      }
+
+      else if (el.data.includes("commoditymarket")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "commoditymarket"
+          }
+        })
+      }
+
+      else if (el.data.includes("commoditycat")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "commoditycat"
+          }
+        })
+      }
+
+      else if (el.data.includes("commodityproduct")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "commodityproduct"
+          }
+        })
+      }
+
+      else if (el.data.includes("exchangedirection")){
+        arrayWithRequestType.map(user=> {
+          if(user.cell_num === num){
+            user.request_type = "exchangedirection"
+          }
+        })
+      };
+
+
+    })
+  }
+
 } catch ({ message }) {
   console.log("Failed file", message);
 }
