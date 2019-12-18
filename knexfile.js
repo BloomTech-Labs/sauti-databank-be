@@ -39,7 +39,7 @@ module.exports = {
       host: process.env.host,
       user: process.env.user,
       password: process.env.password,
-      database: "lambdaStaging",
+      database: process.env.database,
       charset: "utf8"
     },
     useNullAsDefault: true,
