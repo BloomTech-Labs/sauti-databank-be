@@ -301,104 +301,130 @@ try {
     }
   };
 
-  getRequestType = (sessions, arrayWithRequestType) => {
+  getRequestType = (sessions, arrayWithCountry) => {
     let arrayWithRequestType = arrayWithCountry;
-    // let arrayWithRequestType = distinctUsers;
+    let requestTypes = [
+            'procedurecomodity', 
+            'procedurecommoditycat', 
+            'proceduredest', 
+            'procedurerequireddocument',
+            'procedurerelevantagency',
+            'procedureorigin',
+            'commoditycountry',
+            'commoditymarket',
+            'commoditycat',
+            'commodityproduct',
+            'exchangedirection'
+    ];
 
     sessions.map(el=> {
       let num = element.cell_num;
 
-      if(el.data.includes("procedurecommodity")){
-        arrayWithRequestType.map(user=> {
-          if (user.cell_num === num){
-            user.request_type = "procedurecommodity"
-          }
-        })
-      } 
-        else if (el.data.includes("procedurecommoditycat")){
+      requestTypes.map(type=> {
+        if(el.data.includes(type)){
           arrayWithRequestType.map(user=> {
-            if(user.cell_num === num){
-              user.request_type = "procedurecommoditycat"
+            if (user.cell_num === num){
+              user.request_type = type
+              return procedureCommValue = arrayWithRequestType.filter(request_value.sort());
             }
           })
-        }
-      
-      else if (el.data.includes("proceduredest")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "proceduredest"
-          }
-        })
-      }
-
-      else if (el.data.includes("procedurerequireddocument")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "procedurerequireddocument"
-          }
-        })
-      }
-
-      else if (el.data.includes("procedurerelevantagency")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "procedurerelevantagency"
-          }
-        })
-      }
-
-      else if (el.data.includes("procedureorigin")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "procedureorigin"
-          }
-        })
-      }
-
-      else if (el.data.includes("commoditycountry")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "commoditycountry"
-          }
-        })
-      }
-
-      else if (el.data.includes("commoditymarket")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "commoditymarket"
-          }
-        })
-      }
-
-      else if (el.data.includes("commoditycat")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "commoditycat"
-          }
-        })
-      }
-
-      else if (el.data.includes("commodityproduct")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "commodityproduct"
-          }
-        })
-      }
-
-      else if (el.data.includes("exchangedirection")){
-        arrayWithRequestType.map(user=> {
-          if(user.cell_num === num){
-            user.request_type = "exchangedirection"
-          }
-        })
-      };
-
-
+        } 
+      })
     })
   }
 
-} catch ({ message }) {
-  console.log("Failed file", message);
-}
+  } catch ({ message }) {
+    console.log("Failed file", message);
+  }
+
+      // else if (el.data.includes("procedurecommoditycat")){
+      //     arrayWithRequestType.map(user=> {
+      //       if(user.cell_num === num){
+      //         user.request_type = "procedurecommoditycat"
+      //       }
+      //     })
+      // }
+      
+      // else if (el.data.includes("proceduredest")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "proceduredest"
+      //       return procedureDestTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("procedurerequireddocument")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "procedurerequireddocument"
+      //       return procedureRequiredDocTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("procedurerelevantagency")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "procedurerelevantagency"
+      //       return procedureRelevantAgencyTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("procedureorigin")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "procedureorigin"
+      //       return procedureOriginTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("commoditycountry")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "commoditycountry"
+      //       return commodityCountryTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("commoditymarket")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "commoditymarket"
+      //       return commodityMarketTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("commoditycat")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "commoditycat"
+      //       return commodityCatTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("commodityproduct")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "commodityproduct"
+      //       return commodityProductTotal = el.data.length;
+      //     }
+      //   })
+      // }
+
+      // else if (el.data.includes("exchangedirection")){
+      //   arrayWithRequestType.map(user=> {
+      //     if(user.cell_num === num){
+      //       user.request_type = "exchangedirection"
+      //       return exchangedDirectionTotal = el.data.length;
+      //     }
+      //   })
+      // };
+   
+
+
