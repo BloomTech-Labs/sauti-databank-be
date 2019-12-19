@@ -277,7 +277,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry = async (sessions, arrayWithLanguage) => {
+  getCountry =  (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {
@@ -291,8 +291,39 @@ try {
       }
     });
 
+    getRequestType(sessions, arrayWithCountry)
+  };
+
+  getRequestType = async (sessions, arrayWithCountry) => {
+    let arrayWithRequestTypes = arrayWithCountry;
+    let requestTypes = [
+            'procedurecommodity', 
+            'procedurecommoditycat', 
+            'proceduredest', 
+            'procedurerequireddocument',
+            'procedurerelevantagency',
+            'procedureorigin',
+            'commoditycountry',
+            'commoditymarket',
+            'commoditycat',
+            'commodityproduct',
+            'exchangedirection'
+    ];
+
+    sessions.map(el=> {
+      let num = element.cell_num;
+
+      requestTypes.map(type=> {
+        if(el.data.includes(type)){
+          arrayWithRequestTypes.map(user=> {
+            if (user.cell_num === num){
+              user.request_type = type
+            }
+        })} 
+      })
+    })
     try {
-      for (let trader of arrayWithCountry) {
+      for (let trader of arrayWithRequestTypes) {
         console.log(trader)
         // await Traders.add(trader);
       }
@@ -300,6 +331,11 @@ try {
       console.log("Failed to add user", message);
     }
   };
-} catch ({ message }) {
-  console.log("Failed file", message);
-}
+
+  } catch ({ message }) {
+    console.log("Failed file", message);
+  }
+
+   
+
+
