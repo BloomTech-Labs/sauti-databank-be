@@ -92,7 +92,8 @@ try {
       for (const info_row of infoArr.slice(52000, infoArr.length)) {
         try {
           //see infodemand-model for the function that adds the rows into the information_demand table
-          InfoDemand.add(info_row);
+          // InfoDemand.add(info_row);
+          console.log(info_row)
         } catch ({ message }) {
           //
           console.log(message);
