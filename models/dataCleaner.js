@@ -277,7 +277,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry = async (sessions, arrayWithLanguage) => {
+  getCountry =  (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {
@@ -291,20 +291,13 @@ try {
       }
     });
 
-    try {
-      for (let trader of arrayWithCountry) {
-        console.log(trader)
-        await Traders.add(trader);
-      }
-    } catch ({ message }) {
-      console.log("Failed to add user", message);
-    }
+    getRequestType(sessions, arrayWithCountry)
   };
 
-  getRequestType = (sessions, arrayWithCountry) => {
-    let arrayWithRequestType = arrayWithCountry;
+  getRequestType = async (sessions, arrayWithCountry) => {
+    let arrayWithRequestTypes = arrayWithCountry;
     let requestTypes = [
-            'procedurecomodity', 
+            'procedurecommodity', 
             'procedurecommoditycat', 
             'proceduredest', 
             'procedurerequireddocument',
@@ -322,109 +315,27 @@ try {
 
       requestTypes.map(type=> {
         if(el.data.includes(type)){
-          arrayWithRequestType.map(user=> {
+          arrayWithRequestTypes.map(user=> {
             if (user.cell_num === num){
               user.request_type = type
-              return procedureCommValue = arrayWithRequestType.filter(request_value.sort());
             }
-          })
-        } 
+        })} 
       })
     })
-  }
+    try {
+      for (let trader of arrayWithRequestTypes) {
+        console.log(trader)
+        // await Traders.add(trader);
+      }
+    } catch ({ message }) {
+      console.log("Failed to add user", message);
+    }
+  };
 
   } catch ({ message }) {
     console.log("Failed file", message);
   }
 
-      // else if (el.data.includes("procedurecommoditycat")){
-      //     arrayWithRequestType.map(user=> {
-      //       if(user.cell_num === num){
-      //         user.request_type = "procedurecommoditycat"
-      //       }
-      //     })
-      // }
-      
-      // else if (el.data.includes("proceduredest")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "proceduredest"
-      //       return procedureDestTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("procedurerequireddocument")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "procedurerequireddocument"
-      //       return procedureRequiredDocTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("procedurerelevantagency")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "procedurerelevantagency"
-      //       return procedureRelevantAgencyTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("procedureorigin")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "procedureorigin"
-      //       return procedureOriginTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("commoditycountry")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "commoditycountry"
-      //       return commodityCountryTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("commoditymarket")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "commoditymarket"
-      //       return commodityMarketTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("commoditycat")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "commoditycat"
-      //       return commodityCatTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("commodityproduct")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "commodityproduct"
-      //       return commodityProductTotal = el.data.length;
-      //     }
-      //   })
-      // }
-
-      // else if (el.data.includes("exchangedirection")){
-      //   arrayWithRequestType.map(user=> {
-      //     if(user.cell_num === num){
-      //       user.request_type = "exchangedirection"
-      //       return exchangedDirectionTotal = el.data.length;
-      //     }
-      //   })
-      // };
    
 
 
