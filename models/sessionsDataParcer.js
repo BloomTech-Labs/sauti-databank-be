@@ -1,9 +1,9 @@
 //this will be used to create the if/else statements for the request types
 require("dotenv").config();
-const Sessions = require("./routes/sessions-model");
+const Sessions = require("./sessions-model");
 let unserializer = require("php-unserialize");
 const bcrypt = require("bcryptjs");
-const InfoDemand = require("./models/infodemand-model");
+const InfoDemand = require("./infodemand-model");
 
 //The purpose of this data parser is to parse the info that is stored inside the data column of the platform_sessions table in PHP serialized format, and populate it into new tables built according to this data model (ADD HERE) to enable building a backend/frontend for the data portal
 
@@ -48,7 +48,7 @@ try {
           //Object.keys turns the set of keys in the data object into an array so we can loop over them with a forEach.
           Object.keys(data).forEach(key => {
             //next, we need to take each key in the data object and check to see if it is in the request_types array (line 11) because those are the only keys we are interested in.
-            request_types.forEach(request_type => {
+            request_types.forEach( async request_type => {
               if (key === request_type) {
                 const request_value = data[key];
                 // we then check the value for each key. The value is stored in 2 different formats so we have an if/else statement to handle the two formats:
