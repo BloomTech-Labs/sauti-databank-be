@@ -45,7 +45,7 @@ const agencyTypes = {
 '10': 'National Biosafety Authority (NBA)',	
 '11': 'Kenya National Chamber of Commerce & Industry (KNCCI)',	
 '12':	'Clearing Agent',
-'13':	'Uganda Police Dpts'
+'15':	'Uganda Police Dpts'
 };
 
 try {
@@ -77,7 +77,7 @@ try {
               if (key === request_type) {
                 let request_value = data[key];
                 
-                if(request_type === 'procedurerequireddocument' || request_type === 'procedurerelevantagency'){
+                if(request_type === 'procedurerequireddocument'){
                   if(typeof request_value === 'string'){
                     request_value = {'0': request_value}
                   } else if(typeof request_value === Object){
@@ -86,6 +86,13 @@ try {
                       ...request_value,
                       [obj]: documentTypes[request_value[obj]]
                     }
+                  }}
+                } else if(request_type === 'procedurerelevantagency'){                  
+                  for(let obj in request_value){
+                    request_value = {
+                      ...request_value,
+                      [obj]: agencyTypes[request_value[obj]]
+                    
                   }}
                 }
 
@@ -105,26 +112,6 @@ try {
                 //FORMAT 2: request_value is stored as an OBJECT with several values: {"0": "KEN", "1": "RWA"..}
                 
                 else {
-                  
-                  if(request_type === 'procedurerequireddocument'){
-                    for(let obj in request_value){
-                      request_value = {
-                        ...request_value,
-                        [obj]: documentTypes[request_value[obj]]
-                      }
-                    }
-                      // console.log(request_value)
-                  }
-
-                  else if(request_type === 'procedurerelevantagency'){
-                    for (let obj in request_value){
-                      request_value = {
-                        ...request_value,
-                        [obj]: documentTypes[request_value[obj]]
-                      }
-                    }
-                  }
-
                   Object.values(request_value).forEach(async value => {
                     // if(request_types.indexOf(key) + 1 === 4){
                     //   console.log(request_type)
@@ -154,11 +141,10 @@ try {
         }
       });
 
-      // Now add array of unserialized and sorted data to information_demand table. The data addition was a manual process due to the rate at which the addition was happening was too quick for the db so it timed out. Previous Lab would've ideally liked to automate this batch processing and tried several things to make it happen but they didn't work so in interest of time, they manually processed ~3000 rows at a time.
       for (const info_row of infoArr) {
         try {
           if(info_row.request_type_id === 5){
-            console.log(info_row);
+            console.log(info_row.request_value);
           }
           
           //see infodemand-model for the function that adds the rows into the information_demand table
