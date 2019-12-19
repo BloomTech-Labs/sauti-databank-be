@@ -1,4 +1,4 @@
-const db = require('../data/dbconfig')
+const db = require('../data/dbConfig')
 
 const getUsers = () => {
    return db('traders as t')
