@@ -291,37 +291,6 @@ try {
       }
     });
 
-    getRequestType(sessions, arrayWithCountry)
-  };
-
-  getRequestType = async (sessions, arrayWithCountry) => {
-    let arrayWithRequestTypes = arrayWithCountry;
-    let requestTypes = [
-            'procedurecommodity', 
-            'procedurecommoditycat', 
-            'proceduredest', 
-            'procedurerequireddocument',
-            'procedurerelevantagency',
-            'procedureorigin',
-            'commoditycountry',
-            'commoditymarket',
-            'commoditycat',
-            'commodityproduct',
-            'exchangedirection'
-    ];
-
-    sessions.map(el=> {
-      let num = element.cell_num;
-
-      requestTypes.map(type=> {
-        if(el.data.includes(type)){
-          arrayWithRequestTypes.map(user=> {
-            if (user.cell_num === num){
-              user.request_type = type
-            }
-        })} 
-      })
-    })
     try {
       for (let trader of arrayWithRequestTypes) {
         console.log(trader)
@@ -331,11 +300,7 @@ try {
       console.log("Failed to add user", message);
     }
   };
-
-  } catch ({ message }) {
+} catch ({ message }) {
     console.log("Failed file", message);
-  }
-
+}
    
-
-
