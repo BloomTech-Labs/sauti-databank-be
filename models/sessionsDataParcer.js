@@ -1,13 +1,13 @@
 //this will be used to create the if/else statements for the request types
 require("dotenv").config();
-const Sessions = require("./routes/sessions-model");
+const Sessions = require("./sessions-model");
 let unserializer = require("php-unserialize");
 const bcrypt = require("bcryptjs");
-const InfoDemand = require("./models/infodemand-model");
+const InfoDemand = require("./infodemand-model");
 
-//The purpose of this data parser is to parse the info that is stored inside the data column of the platform_sessions table in PHP serialized format, and populate it into new tables built according to this data model (ADD HERE) to enable building a backend/frontend for the data portal
+//sessionsDataParser parses info stored in the DATA COLUMN of platform_sessions table in PHP serialized format, and populates it into new tables to enable building a BE/FE for data portal.
 
-// this is the list of all the types of requests that traders make that we want to parse from the data and put inside the tables
+// List of all request_types traders make that we want to parse from the data and put inside the tables
 const request_types = [
   "procedurecommodity",
   "procedurecommoditycat",
@@ -21,56 +21,109 @@ const request_types = [
   "commodityproduct",
   "exchangedirection"
 ];
+const documentTypes = { 
+  '1': 'Import Permit', 
+  '2': 'Valid Invoice', 
+  '3': 'Simplified Certificate Of Origin (SCOO)',	
+  '4': 'National ID Card/Passport',
+  '5': 'Yellow Fever Card',
+  '6': 'Certificate of Origin',	
+  '7': 'Phytosanitary Certificate',
+  '8': 'Import Entry Declaration Form (SAD)',
+  '9': 'Fumigation Certificate',
+  '10': 'Bill of Lading',
+};
+const agencyTypes = {
+'1': 'Ministry of Agriculture Animal Industry & Fisheries (MAAIF)',
+'2': 'Kenya Revenue Authority (KRA)',
+'3': 'COMESA Trade Information Desk Office (TIDO)',
+'4': 'Uganda National Bureau of Standards (UNBS)',
+'6': 'PORT Health',
+'7': 'Kenya Plant Health Inspectorate Service (KEPHIS)',	
+'8': 'Uganda Revenue Authority (URA)',
+'9': 'Kenya Bureau of Standards (KEBS)',
+'10': 'National Biosafety Authority (NBA)',	
+'11': 'Kenya National Chamber of Commerce & Industry (KNCCI)',	
+'12':	'Clearing Agent',
+'15':	'Uganda Police Dpts'
+};
 
 try {
-  //accessing the session model and the platform sessions table
+  //Accessing sessions-model and platform_sessions table:
   Sessions.findLanceData().then(
-    //sessions is the entire platform sessions table(array)
+    //sessions is the entire platform sessions table(array). Filter and get rows that aren't empty:
     sessions => {
-      //sessions filtering through each row and grabbing/getting each row that has non-zero data field
-      //we don't need to unserialize if it doesn't have data
       let newArr = sessions.filter(row => {
         return row.data.length > 0;
       });
 
-      // making a new array that we'll populate with the cleaned data. This is the array that will be used to then populate the
+      //Make new array to populate with the cleaned data:
       let infoArr = [];
-
       let err_count = 0;
-      //looping through the newArr to unserialize the data that's in it
+
+      //Loop through newArr to unserialize the data:
       newArr.forEach((serializedRow, index) => {
-        // we created a variable and now we are unserializing the data that we looped through
+        //Created variable and now are unserializing the data that we looped through:
 
         try {
-          //this line is very critical in that it uses the npm package php-unserialize to take PHP serialized data and turn it into a javascript object
+          //Critical! 'php-unserialize' turns PHP serialized data into javascript object.
           const data = unserializer.unserialize(serializedRow.data);
 
-          //Object.keys turns the set of keys in the data object into an array so we can loop over them with a forEach.
+          //Object.keys turns keys in data object into an array we can loop over:
           Object.keys(data).forEach(key => {
-            //next, we need to take each key in the data object and check to see if it is in the request_types array (line 11) because those are the only keys we are interested in.
+            
+            //Next check keys in data object to see if its in request_types array (line 11):
             request_types.forEach(request_type => {
               if (key === request_type) {
-                const request_value = data[key];
-                // we then check the value for each key. The value is stored in 2 different formats so we have an if/else statement to handle the two formats:
-                // format 1: if request_value is stored as a string
+                let request_value = data[key];
+                
+                if(request_type === 'procedurerequireddocument'){
+                  if(typeof request_value === 'string'){
+                    request_value = {'0': request_value}
+                  } else if(typeof request_value === Object){
+                  for(let obj in request_value){
+                    request_value = {
+                      ...request_value,
+                      [obj]: documentTypes[request_value[obj]]
+                    }
+                  }}
+                } else if(request_type === 'procedurerelevantagency'){                  
+                  for(let obj in request_value){
+                    request_value = {
+                      ...request_value,
+                      [obj]: agencyTypes[request_value[obj]]
+                    
+                  }}
+                }
+
+                //Then check each key's value. Its stored in 2 different formats:
+                //FORMAT 1: request_value is stored as STRING:
                 if (typeof request_value === "string") {
                   infoArr.push({
-                    id: infoArr.length, //incrementing the id by the length of the array
-                    platform_sessions_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
+                    id: infoArr.length, //incrementing id by length of the array
+                    platform_sessions_id: serializedRow.sess_id, // from serialized data in newArr that was created from the sess_id: value
                     cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
                     request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
-                    request_value: data[key] //request_value is receiving its value from the data variable which uses the key element as its index
+                    request_type: request_type,
+                    request_value: data[key] //request_value receiving its value from the data variable which uses the key element as its index
                   });
                 }
-                // format 2: if request_value is stored as an object of several values. Te storage format is {"0": "KEN", "1": "RWA"..}
+
+                //FORMAT 2: request_value is stored as an OBJECT with several values: {"0": "KEN", "1": "RWA"..}
+                
                 else {
-                  Object.values(request_value).forEach(value => {
-                    infoArr.push({
-                      id: infoArr.length, //incrementing the id by the length of the array
-                      platform_sessions_id: serializedRow.sess_id, // from the serialized data in the newArr that was created from the sess_id: value
-                      cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+                  Object.values(request_value).forEach(async value => {
+                    // if(request_types.indexOf(key) + 1 === 4){
+                    //   console.log(request_type)
+                    // }
+
+                    await infoArr.push({
+                      id: infoArr.length, //incrementing id by the length of the array
+                      platform_sessions_id: serializedRow.sess_id, // from serialized data in the newArr created from the sess_id: value
+                      cell_num: serializedRow.cell_num, // from the serialized data in the newArr created from the cell_num: value
                       request_type_id: request_types.indexOf(key) + 1,
-                      request_value: value //request_value is receiving its value from the data variable which uses the key element as its index
+                      request_type: request_type,
+                      request_value: value //receives its value from data variable which uses the key element as its index
                     });
                   });
                 }
@@ -88,37 +141,24 @@ try {
         }
       });
 
-      // now, we add the array of unerialized and correctly sorted data to the information_demand table. The data addition was a manual process due to the rate at which the addition is happening is too quick for the database so it times out. We would've ideally liked to automate this batch processing and we tried several things to make it happen but they didn't work so in interest of time, we manually processed ~3000 rows at a time.
-      for (const info_row of infoArr.slice(52000, infoArr.length)) {
+      for (const info_row of infoArr) {
         try {
+          if(info_row.request_type_id === 5){
+            console.log(info_row.request_value);
+          }
+          
           //see infodemand-model for the function that adds the rows into the information_demand table
-          InfoDemand.add(info_row);
+          // InfoDemand.add(info_row);
         } catch ({ message }) {
-          //
           console.log(message);
         }
       }
-
-      // }
     }
   );
 } catch ({ message }) {
   console.log("message", message);
-} // if we don't successfully retrieve the data we should see an error message
-//to run this script on the command line, type:  node testParser.js
+} // If data retrieval unsuccessful, recieve an error message.
+//To run this script on the command line, type:  node testParser.js
 
 module.exports = Sessions;
-/** 11 if /else statements
- * procedurecommodity
- * procedurecommoditycat
- * proceduredest
- * procedurerequireddocument
- * procedurerelevantagency
- * procedureorigin
- * commoditycountry
- * commoditymarket
- * commoditycat
- * commodityproduct
- * exchangedirection
- *
- */
+

@@ -277,7 +277,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry = async (sessions, arrayWithLanguage) => {
+  getCountry =  (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {
@@ -292,14 +292,15 @@ try {
     });
 
     try {
-      for (let trader of arrayWithCountry) {
+      for (let trader of arrayWithRequestTypes) {
         console.log(trader)
-        await Traders.add(trader);
+        // await Traders.add(trader);
       }
     } catch ({ message }) {
       console.log("Failed to add user", message);
     }
   };
 } catch ({ message }) {
-  console.log("Failed file", message);
+    console.log("Failed file", message);
 }
+   
