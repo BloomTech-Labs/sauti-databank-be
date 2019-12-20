@@ -301,5 +301,6 @@ try {
     }
   };
 } catch ({ message }) {
-  console.log("Failed file", message);
+    console.log("Failed file", message);
 }
+   
