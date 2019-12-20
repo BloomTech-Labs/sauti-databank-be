@@ -277,7 +277,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry =  (sessions, arrayWithLanguage) => {
+  getCountry = async (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {
@@ -294,7 +294,7 @@ try {
     try {
       for (let trader of arrayWithCountry) {
         console.log(trader)
-        Traders.add(trader);
+        await Traders.add(trader);
       }
     } catch ({ message }) {
       console.log("Failed to add user", message);

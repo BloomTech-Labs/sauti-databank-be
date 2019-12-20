@@ -1,4 +1,3 @@
-//this will be used to create the if/else statements for the request types
 require("dotenv").config();
 const Sessions = require("./sessions-model");
 let unserializer = require("php-unserialize");
@@ -77,41 +76,41 @@ try {
                 let request_value = data[key];
                 
                 if(request_type === 'procedurerequireddocument'){
-                  if (typeof request_value === 'string'){
-                    request_value = {'0': request_value}
-                  } else if (typeof request_value === Object){
-                  for (let obj in request_value){
-                    request_value = {
-                      ...request_value,
-                      [obj]: documentTypes[request_value[obj]]
-                    }
-                  }}
+                    for (let obj in request_value){
+                      request_value = {
+                        ...request_value,
+                        [obj]: documentTypes[request_value[obj]]
+                      }
+                  }
                 } else if (request_type === 'procedurerelevantagency'){                  
                   for (let obj in request_value){
                     request_value = {
                       ...request_value,
                       [obj]: agencyTypes[request_value[obj]]
-                  }}
+                    }
+                  }
                 }
 
                 //Then check each key's value. Its stored in 2 different formats:
                 //FORMAT 1: request_value is stored as STRING:
                 if (typeof request_value === "string") {
-                  infoArr.push({
-                    // id: infoArr.length, //incrementing id by length of the array
-                    platform_sessions_id: serializedRow.sess_id, // from serialized data in newArr that was created from the sess_id: value
-                    cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
-                    request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
-                    request_type: request_type,
-                    request_value: data[key] //request_value receiving its value from the data variable which uses the key element as its index
-                  });
+                  if (request_type === 'procedurerequireddocument'){
+                    request_value = {'0': request_value}
+                  } else {
+                    infoArr.push({
+                      platform_sessions_id: serializedRow.sess_id, // from serialized data in newArr that was created from the sess_id: value
+                      cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
+                      request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
+                      request_type: request_type,
+                      request_value: request_value //request_value receiving its value from the data variable which uses the key element as its index
+                    });
+                  }
                 }
 
                 //FORMAT 2: request_value is stored as an OBJECT with several values: {"0": "KEN", "1": "RWA"..}
                 else {
-                  Object.values(request_value).forEach(async value => {
-                    await infoArr.push({
-                      // id: infoArr.length, //incrementing id by the length of the array
+                  Object.values(request_value).forEach(value => {
+                    infoArr.push({
                       platform_sessions_id: serializedRow.sess_id, // from serialized data in the newArr created from the sess_id: value
                       cell_num: serializedRow.cell_num, // from the serialized data in the newArr created from the cell_num: value
                       request_type_id: request_types.indexOf(key) + 1,
@@ -130,19 +129,15 @@ try {
       });
 
       try {
-        for (const info_row of infoArr) {
-          console.log(info_row)
-          InfoDemand.testAdd(info_row);
-        }
+          InfoDemand.batchInsert(infoArr);
       } catch {
-          console.log(message);
+          console.log("Failed to batch insert");
       }
     }
-  );
+  ).catch(err => console.log("FAILED PROMISE", err));
 } catch ({ message }) {
   console.log("message", message);
 } // If data retrieval unsuccessful, recieve an error message.
 //To run this script on the command line, type:  node testParser.js
 
 module.exports = Sessions;
-
