@@ -2,7 +2,6 @@
 require("dotenv").config();
 const Sessions = require("./sessions-model");
 let unserializer = require("php-unserialize");
-const bcrypt = require("bcryptjs");
 const InfoDemand = require("./infodemand-model");
 
 //sessionsDataParser parses info stored in the DATA COLUMN of platform_sessions table in PHP serialized format, and populates it into new tables to enable building a BE/FE for data portal.
@@ -78,21 +77,20 @@ try {
                 let request_value = data[key];
                 
                 if(request_type === 'procedurerequireddocument'){
-                  if(typeof request_value === 'string'){
+                  if (typeof request_value === 'string'){
                     request_value = {'0': request_value}
-                  } else if(typeof request_value === Object){
-                  for(let obj in request_value){
+                  } else if (typeof request_value === Object){
+                  for (let obj in request_value){
                     request_value = {
                       ...request_value,
                       [obj]: documentTypes[request_value[obj]]
                     }
                   }}
-                } else if(request_type === 'procedurerelevantagency'){                  
-                  for(let obj in request_value){
+                } else if (request_type === 'procedurerelevantagency'){                  
+                  for (let obj in request_value){
                     request_value = {
                       ...request_value,
                       [obj]: agencyTypes[request_value[obj]]
-                    
                   }}
                 }
 
@@ -100,7 +98,7 @@ try {
                 //FORMAT 1: request_value is stored as STRING:
                 if (typeof request_value === "string") {
                   infoArr.push({
-                    id: infoArr.length, //incrementing id by length of the array
+                    // id: infoArr.length, //incrementing id by length of the array
                     platform_sessions_id: serializedRow.sess_id, // from serialized data in newArr that was created from the sess_id: value
                     cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
                     request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
@@ -110,15 +108,10 @@ try {
                 }
 
                 //FORMAT 2: request_value is stored as an OBJECT with several values: {"0": "KEN", "1": "RWA"..}
-                
                 else {
                   Object.values(request_value).forEach(async value => {
-                    // if(request_types.indexOf(key) + 1 === 4){
-                    //   console.log(request_type)
-                    // }
-
                     await infoArr.push({
-                      id: infoArr.length, //incrementing id by the length of the array
+                      // id: infoArr.length, //incrementing id by the length of the array
                       platform_sessions_id: serializedRow.sess_id, // from serialized data in the newArr created from the sess_id: value
                       cell_num: serializedRow.cell_num, // from the serialized data in the newArr created from the cell_num: value
                       request_type_id: request_types.indexOf(key) + 1,
@@ -132,26 +125,17 @@ try {
           });
         } catch (err) {
           err_count++;
-          console.log(
-            "err count: ",
-            err_count,
-            "sess_id: ",
-            serializedRow.sess_id
-          );
+          console.log("err count: ", err_count, "sess_id: ", serializedRow.sess_id);
         }
       });
 
-      for (const info_row of infoArr) {
-        try {
-          if(info_row.request_type_id === 5){
-            console.log(info_row.request_value);
-          }
-          
-          //see infodemand-model for the function that adds the rows into the information_demand table
-          // InfoDemand.add(info_row);
-        } catch ({ message }) {
-          console.log(message);
+      try {
+        for (const info_row of infoArr) {
+          console.log(info_row)
+          InfoDemand.testAdd(info_row);
         }
+      } catch {
+          console.log(message);
       }
     }
   );

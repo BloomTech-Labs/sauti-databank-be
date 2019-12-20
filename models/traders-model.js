@@ -1,5 +1,5 @@
 const db = require('../data/dbConfig')
 
-const add = (trader) => db('traders').insert(trader);
+const add = (trader) => db('users').insert(trader);
 
 module.exports = { add }

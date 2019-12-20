@@ -292,9 +292,9 @@ try {
     });
 
     try {
-      for (let trader of arrayWithRequestTypes) {
+      for (let trader of arrayWithCountry) {
         console.log(trader)
-        // await Traders.add(trader);
+        Traders.add(trader);
       }
     } catch ({ message }) {
       console.log("Failed to add user", message);
