@@ -15,15 +15,5 @@ describe("server.js", () => {
         .get("/")
         .expect("Content-Type", "text/html; charset=utf-8");
     });
-
-    // it("should confirm text from graphiQL route", () => {
-    //   return supertest(server)
-    //     .get("/")
-
-    //     .then(res => {
-    //       expect(res.head.title).toBe("GraphiQL");
-    //       done();
-    //     });
-    // });
   });
 });
