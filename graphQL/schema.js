@@ -1,6 +1,6 @@
 const { buildSchema } = require('graphql');
 const schema = buildSchema(`
-    scalar DateTime
+    scalar Date
 
     type Query {
         tradersData(
@@ -43,7 +43,7 @@ const schema = buildSchema(`
         country_of_residence: String
         request_type: String
         request_value: String
-        created_date: DateTime
+        created_date: Date
     }
 
     type User { 
