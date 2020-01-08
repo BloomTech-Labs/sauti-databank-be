@@ -13,10 +13,10 @@ const schema = buildSchema(`
             country_of_residence: String,
             request_type: String,
             request_value: String,
+            created_date: String
         ): [Session]
 
         tradersUsers(
-            limit: Int, 
             id: Int,
             gender: String,
             age: String,
@@ -41,6 +41,8 @@ const schema = buildSchema(`
         country_of_residence: String
         request_type: String
         request_value: String
+        created_date: String
+        cell_num: String
     }
 
     type User { 

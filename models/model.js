@@ -1,15 +1,21 @@
 const db = require('../data/dbConfig')
 
 const getUsers = () => {
-   return db('traders as t');
+   return db('traders as t')
+      .leftJoin("platform_sessions as ps", "t.cell_num", "ps.cell_num")
+      .select(
+         't.gender'
+      );
 }
+
+// .join('platform_sessions', 'ps.cell_num', '=', 't.cell_num')
+// .join('traders as t', 'ps.cell_num', 't.cell_num')
 
 const getSessions = () => {
    return db('traders as t')
-      .join('information_demand as id', 'id.cell_num', 't.cell_num')
-      .select(
-         't.id',
-         't.cell_num',
+   .join('information_demand as id', 'id.cell_num', 't.cell_num')
+   .select(
+      't.id',
          't.gender',
          't.age',
          't.education',
@@ -19,7 +25,7 @@ const getSessions = () => {
          't.language',
          't.country_of_residence',
          'id.request_type',
-         'id.request_value'
+         'id.request_value',
       )
 }
 
@@ -28,7 +34,7 @@ const findLanceData = () => {
  }
 
 const batchInsertTraders = (rows) => {
-   return db.batchInsert('users', rows, 1000);
+   return db.batchInsert('traders', rows, 1000);
 }
 
 const batchInsertInfoDemand = (rows) => {
