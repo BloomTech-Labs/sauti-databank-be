@@ -42,7 +42,6 @@ const schema = buildSchema(`
         request_type: String
         request_value: String
         created_date: String
-        cell_num: String
     }
 
     type User { 

@@ -8,14 +8,11 @@ const getUsers = () => {
       );
 }
 
-// .join('platform_sessions', 'ps.cell_num', '=', 't.cell_num')
-// .join('traders as t', 'ps.cell_num', 't.cell_num')
-
 const getSessions = () => {
    return db('traders as t')
-   .join('information_demand as id', 'id.cell_num', 't.cell_num')
-   .select(
-      't.id',
+      .join('information_demand as id', 'id.cell_num', 't.cell_num')
+      .select(
+         't.id',
          't.gender',
          't.age',
          't.education',
@@ -26,6 +23,7 @@ const getSessions = () => {
          't.country_of_residence',
          'id.request_type',
          'id.request_value',
+         'id.created_date'
       )
 }
 

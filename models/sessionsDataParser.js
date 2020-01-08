@@ -61,7 +61,7 @@ try {
       //Loop through newArr to unserialize the data:
       newArr.forEach((serializedRow, index) => {
         //Created variable and now are unserializing the data that we looped through:
-
+        // console.count(serializedRow)
         try {
           //Critical! 'php-unserialize' turns PHP serialized data into javascript object.
           const data = unserializer.unserialize(serializedRow.data);
@@ -101,7 +101,8 @@ try {
                       cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
                       request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
                       request_type: request_type,
-                      request_value: request_value //request_value receiving its value from the data variable which uses the key element as its index
+                      request_value: request_value,//request_value receiving its value from the data variable which uses the key element as its index
+                      created_date: serializedRow.created_date.toISOString()
                     });
                   }
                 }
@@ -114,7 +115,8 @@ try {
                       cell_num: serializedRow.cell_num, // from the serialized data in the newArr created from the cell_num: value
                       request_type_id: request_types.indexOf(key) + 1,
                       request_type: request_type,
-                      request_value: value //receives its value from data variable which uses the key element as its index
+                      request_value: value, //receives its value from data variable which uses the key element as its index
+                      created_date: serializedRow.created_date.toISOString() 
                     });
                   });
                 }
