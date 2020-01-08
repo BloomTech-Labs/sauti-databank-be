@@ -90,6 +90,8 @@ try {
                   }
                 }
 
+                console.log(typeof serializedRow.created_date.toISOString())
+
                 //Then check each key's value. Its stored in 2 different formats:
                 //FORMAT 1: request_value is stored as STRING:
                 if (typeof request_value === "string") {
@@ -130,7 +132,7 @@ try {
       });
 
       try {
-          db.batchInsertInfoDemand(infoArr);
+          // db.batchInsertInfoDemand(infoArr);
       } catch {
           console.log("Failed to batch insert");
       }
