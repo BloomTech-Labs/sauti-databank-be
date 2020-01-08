@@ -1,11 +1,7 @@
 const db = require('../dbConfig')
 
 const getUsers = () => {
-   return db('traders as t')
-      .leftJoin("platform_sessions as ps", "t.cell_num", "ps.cell_num")
-      .select(
-         't.gender'
-      );
+   return db('traders as t');
 }
 
 const getSessions = () => {
