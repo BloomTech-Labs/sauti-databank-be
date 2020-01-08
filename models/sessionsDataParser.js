@@ -1,7 +1,6 @@
 require("dotenv").config();
-const Sessions = require("./sessions-model");
 let unserializer = require("php-unserialize");
-const InfoDemand = require("./infodemand-model");
+const db = require("./model");
 
 //sessionsDataParser parses info stored in the DATA COLUMN of platform_sessions table in PHP serialized format, and populates it into new tables to enable building a BE/FE for data portal.
 
@@ -48,7 +47,7 @@ const agencyTypes = {
 
 try {
   //Accessing sessions-model and platform_sessions table:
-  Sessions.findLanceData().then(
+  db.findLanceData().then(
     //sessions is the entire platform sessions table(array). Filter and get rows that aren't empty:
     sessions => {
       let newArr = sessions.filter(row => {
@@ -129,7 +128,7 @@ try {
       });
 
       try {
-          InfoDemand.batchInsert(infoArr);
+          db.batchInsertInfoDemand(infoArr);
       } catch {
           console.log("Failed to batch insert");
       }
@@ -139,5 +138,3 @@ try {
   console.log("message", message);
 } // If data retrieval unsuccessful, recieve an error message.
 //To run this script on the command line, type:  node testParser.js
-
-module.exports = Sessions;
