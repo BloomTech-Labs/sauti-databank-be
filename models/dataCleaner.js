@@ -1,11 +1,10 @@
 require("dotenv").config();
 
-const Sessions = require("./sessions-model");
-const Traders = require("./traders-model");
+const db = require("./model");
 
 // First Lance's Data is saved in array = []
 try {
-  Sessions.findLanceData().then(sessions => {
+  db.findLanceData().then(sessions => {
     let array = [];
 
     sessions.map(element => {
@@ -291,13 +290,12 @@ try {
       }
     });
 
+    
     try {
-      for (let trader of arrayWithCountry) {
-        console.log(trader)
-        await Traders.add(trader);
-      }
-    } catch ({ message }) {
-      console.log("Failed to add user", message);
+      db.batchInsertTraders(arrayWithLanguage);
+      // console.log(arrayWithLanguage)
+    } catch {
+      console.log("Failed to batch insert");
     }
   };
 } catch ({ message }) {
