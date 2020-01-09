@@ -9,6 +9,7 @@ const getSessions = () => {
       .join('information_demand as id', 'id.cell_num', 't.cell_num')
       .select(
          't.id',
+         't.cell_num',
          't.gender',
          't.age',
          't.education',
