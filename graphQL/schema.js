@@ -18,6 +18,21 @@ const schema = buildSchema(`
             created_date: String
         ): [Session]
 
+        additionalFilterData(
+            id: Int,
+            gender: String,
+            age: String,
+            education: String,
+            crossing_freq: String,
+            produce: String,
+            primary_income: String,
+            language: String,
+            country_of_residence: String,
+            request_type: String,
+            request_value: String,
+            created_date: String
+        ): [Session]
+
         tradersUsers(
             id: Int,
             gender: String,
