@@ -10,8 +10,7 @@ const server = express();
 
 const root = {
   tradersUsers: getUsers,
-  tradersData: getSessions,
-  additionalFilterData: getSessions
+  tradersData: getSessions
 };
 
 server.use(helmet());
