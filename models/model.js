@@ -25,7 +25,7 @@ const getSessions = () => {
 }
 
 const findLanceData = () => {
-   return db("platform_sessions");
+   return db("platform_sessions2");
  }
 
 const batchInsertTraders = (rows) => {

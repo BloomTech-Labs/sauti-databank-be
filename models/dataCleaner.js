@@ -281,19 +281,20 @@ try {
 
     arrayWithCountry.map(user => {
       let num = user.cell_num;
-      if (num.includes("25400")) {
+      if ((/^254/).test(num)) {
         user.country_of_residence = "KEN";
-      } else if (num.includes("25600")) {
+      } else if ((/^256/).test(num)) {
         user.country_of_residence = "UGA";
-      } else if (num.includes("25000")) {
+      } else if ((/^250/).test(num)) {
         user.country_of_residence = "RWA";
+      } else if ((/^255/).test(num)) {
+        user.country_of_residence = "TZA";
       }
     });
 
     
     try {
-      db.batchInsertTraders(arrayWithLanguage);
-      // console.log(arrayWithLanguage)
+      // db.batchInsertTraders(arrayWithCountry);
     } catch {
       console.log("Failed to batch insert");
     }
@@ -301,4 +302,3 @@ try {
 } catch ({ message }) {
     console.log("Failed file", message);
 }
-   
