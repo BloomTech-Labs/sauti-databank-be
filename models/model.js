@@ -26,27 +26,27 @@ const getSessions = () => {
 
 const findLanceData = () => {
    return db("platform_sessions2");
- }
+}
 
 const batchInsertTraders = (rows) => {
    return db.batchInsert('traders', rows, 1000);
 }
 
- const batchInsertInfoDemand = (rows) => {
-   return db.batchInsert('information_demand', rows, 1000).then(() => {
-     return db('information_demand').count('*').then(res => console.log("ADDED", res));
+const batchInsertInfoDemand = (rows) => {
+   return db.batchInsert('info_demand_test', rows, 1000).then(() => {
+      return db('info_demand_test').count('*').then(res => console.log("ADDED", res));
    });
- }
- 
- const truncateSessions = () => {
-   return db('information_demand').truncate().then(() => {
-     return db('information_demand').count('*').then(res => console.log("DELETED", res))
-   });
- }
- 
+}
 
-module.exports = { 
-   getUsers, 
+const truncateSessions = () => {
+   return db('info_demand_test').truncate().then(() => {
+      return db('info_demand_test').count('*').then(res => console.log("DELETED", res))
+   });
+}
+
+
+module.exports = {
+   getUsers,
    getSessions,
    findLanceData,
    batchInsertTraders,
