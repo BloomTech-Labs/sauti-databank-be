@@ -4,13 +4,11 @@ const helmet = require("helmet");
 const cors = require("cors");
 const graphqlHTTP = require("express-graphql");
 //candace code
-const cron = require("node-cron");
-const shell = require("shelljs");
+// const cron = require("node-cron");
+// const shell = require("shelljs");
 
 const schema = require("./graphQL/schema");
 const { getUsers, getSessions } = require("./graphQL/resolvers");
-
-const sessionsDataParser = require('./models/sessionsDataParser')
 
 const server = express();
 
@@ -43,19 +41,18 @@ server.use(
 //   }
 // })
 
-let testNumber = 0;
+// let testNumber = 0;
 
-const addOne = (num) => {
-  let add = num + 1
-  testNumber += 1
-  console.log("the funct is running", add)
-  return add
-}
+// const addOne = (num) => {
+//   let add = num + 1
+//   testNumber += 1
+//   console.log("the funct is running", add)
+//   return add
+// }
 
-cron.schedule("2 * * * *", function () {
-  console.log("schedular is running")
-  sessionsDataParser();
-  addOne(testNumber);
-})
+// cron.schedule("2 * * * *", function () {
+//   console.log("schedular is running")
+//   addOne(testNumber);
+// })
 
 module.exports = server;
