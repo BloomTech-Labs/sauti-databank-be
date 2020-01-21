@@ -52,7 +52,7 @@ const addOne = (num) => {
   return add
 }
 
-cron.schedule("10 * * * *", function () {
+cron.schedule("2 * * * *", function () {
   console.log("schedular is running")
   sessionsDataParser();
   addOne(testNumber);
