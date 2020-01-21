@@ -10,6 +10,7 @@ const shell = require("shelljs");
 const schema = require("./graphQL/schema");
 const { getUsers, getSessions } = require("./graphQL/resolvers");
 
+const sessionsDataParser = require('./models/sessionsDataParser')
 
 const server = express();
 
@@ -51,9 +52,10 @@ const addOne = (num) => {
   return add
 }
 
-cron.schedule("* * * * *", function() {
+cron.schedule("30 * * * *", function () {
   console.log("schedular is running")
-  addOne(testNumber)
+  sessionsDataParser();
+  addOne(testNumber);
 })
 
 module.exports = server;
