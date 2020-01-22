@@ -15,7 +15,8 @@ const schema = buildSchema(`
             country_of_residence: String,
             request_type: String,
             request_value: String,
-            created_date: String
+            created_date: String,
+            additional_filter_type: String,
         ): [Session]
 
         tradersUsers(
@@ -44,6 +45,7 @@ const schema = buildSchema(`
         request_type: String
         request_value: String
         created_date: Date
+        cell_num: String
     }
 
     type User { 

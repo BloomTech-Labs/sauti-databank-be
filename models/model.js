@@ -9,6 +9,7 @@ const getSessions = () => {
       .join('information_demand as id', 'id.cell_num', 't.cell_num')
       .select(
          't.id',
+         't.cell_num',
          't.gender',
          't.age',
          't.education',
@@ -24,22 +25,31 @@ const getSessions = () => {
 }
 
 const findLanceData = () => {
-   return db("platform_sessions");
- }
+   return db("platform_sessions2");
+}
 
 const batchInsertTraders = (rows) => {
    return db.batchInsert('traders', rows, 1000);
 }
 
 const batchInsertInfoDemand = (rows) => {
-   return db.batchInsert('information_demand', rows, 1000);
- }
+   return db.batchInsert('information_demand', rows, 1000).then(() => {
+      return db('information_demand').count('*').then(res => console.log("ADDED", res));
+   });
+}
+
+const truncateSessions = () => {
+   return db('information_demand').truncate().then(() => {
+      return db('information_demand').count('*').then(res => console.log("DELETED", res))
+   });
+}
 
 
-module.exports = { 
-   getUsers, 
+module.exports = {
+   getUsers,
    getSessions,
    findLanceData,
    batchInsertTraders,
-   batchInsertInfoDemand
+   batchInsertInfoDemand,
+   truncateSessions
 }

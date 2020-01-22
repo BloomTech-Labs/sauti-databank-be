@@ -7,7 +7,8 @@
     "test": "cross-env DB_ENV=staging jest --watch --verbose",
     "server": "nodemon index.js",
     "start": "node index.js",
-    "cleanData": "cd routes/ && node dataCleaner.js"
+    "cronTest": "cd models/ && node cronTest.js",
+    "dataCleaner": "cd models/ && node dataCleaner.js"
   },
   "repository": {
     "type": "git",
@@ -36,8 +37,10 @@
     "knex-csv-seeder": "^0.4.1",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
+    "node-cron": "^2.0.3",
     "pg": "^7.11.0",
     "php-unserialize": "^0.0.1",
+    "shelljs": "^0.8.3",
     "yarn": "^1.19.0"
   },
   "devDependencies": {

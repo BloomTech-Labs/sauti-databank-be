@@ -90,8 +90,6 @@ try {
                   }
                 }
 
-                // console.log(typeof serializedRow.created_date.toISOString())
-
                 //Then check each key's value. Its stored in 2 different formats:
                 //FORMAT 1: request_value is stored as STRING:
                 if (typeof request_value === "string") {
@@ -133,6 +131,8 @@ try {
 
       try {
         console.log(infoArr);
+        // console.log(Date(Date.now().toString()))
+        // db.truncateSessions();
         // db.batchInsertInfoDemand(infoArr);
       } catch {
         console.log("Failed to batch insert");
@@ -141,5 +141,4 @@ try {
   ).catch(err => console.log("FAILED PROMISE", err));
 } catch ({ message }) {
   console.log("message", message);
-} // If data retrieval unsuccessful, recieve an error message.
-//To run this script on the command line, type:  node testParser.js
+}
