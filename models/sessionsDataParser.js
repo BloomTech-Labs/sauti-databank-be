@@ -131,7 +131,7 @@ try {
 
       try {
         // console.log(infoArr);
-        console.log(Date(Date.now().toString()))
+        console.log("\n** INFORMATION DEMAND TABLE **\n", Date(Date.now().toString()))
         db.truncateTable('information_demand');
         db.batchInsert('information_demand', infoArr);
       } catch {
