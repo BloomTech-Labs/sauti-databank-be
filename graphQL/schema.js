@@ -30,6 +30,10 @@ const schema = buildSchema(`
             language: String,
             country_of_residence: String,
         ): [User]
+
+        sessions(
+
+        ): [Session]
     }
 
     type Session {

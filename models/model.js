@@ -24,6 +24,35 @@ const getSessions = () => {
       )
 }
 
+const getDataSessions = () => {
+   return db('traders as t')
+      .join('parsed_data as pd', 'pd.cell_num', 't.cell_num')
+      .select(
+         't.id',
+         't.cell_num',
+         't.gender',
+         't.age',
+         't.education',
+         't.crossing_freq',
+         't.produce',
+         't.primary_income',
+         't.language',
+         't.country_of_residence',
+         'pd.procedurecommodity',
+         'pd.procedurecommoditycat',
+         'pd.proceduredest',
+         'pd.procedurerequireddocument',
+         'pd.procedurerelevantagency',
+         'pd.procedureorigin',
+         'pd.commoditycountry',
+         'pd.commoditymarket',
+         'pd.commoditycat',
+         'pd.commodityproduct',
+         'pd.exchangedirection',
+         'pd.created_date'
+      )
+}
+
 const findLanceData = () => {
    return db("platform_sessions2");
 }
@@ -46,5 +75,6 @@ module.exports = {
    getSessions,
    findLanceData,
    batchInsert,
-   truncateTable
+   truncateTable,
+   getDataSessions
 }
