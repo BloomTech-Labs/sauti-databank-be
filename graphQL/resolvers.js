@@ -1,8 +1,8 @@
 const data = require("../models/model");
 
 // Used to get data from "traders" table only
-const getUsers = async args => {
-    const traderUsers = await data.getUsers();
+const getTraders = async args => {
+    const traderUsers = await data.getTraders();
 
     let filtered = traderUsers;
 
@@ -44,7 +44,7 @@ const getDataSessions = async args => {
 
 
 module.exports = {
-    getUsers,
+    getTraders,
     getSessions,
     getDataSessions
 }
