@@ -2,7 +2,9 @@ require("dotenv").config();
 let unserializer = require("php-unserialize");
 const db = require("./model");
 
-// sessionsDataParser parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data"
+// sessionsDataParser.js parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data" table
+// To run the file during testing, run: node ./models/sessionsDataParser.js
+// SEE BOTTOM OF FILE BEFORE RUNNING
 
 // Documents and Agencies are stored as numbers (Ex: "1", "4") in Lance's database. documentsTypes and agencyTypes are used to pair that number value with appropriate string value
 const documentTypes = {
@@ -121,8 +123,10 @@ try {
 
       try {
         // console.log(parsedArray.length)
-        console.log("\n** INFORMATION DEMAND TABLE **\n", Date(Date.now().toString()))
+        console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()))
+        // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
         db.truncateTable('parsed_data');
+        // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
         db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
