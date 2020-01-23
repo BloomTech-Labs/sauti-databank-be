@@ -24,7 +24,7 @@ try {
         distinctUsers.push({
           cell_num: item.cell_num,
           gender: null,
-          age: null, //set gender to null inside every object so that every object has a gender property.
+          age: null,
           education: null,
           crossing_freq: null,
           produce: null,
@@ -35,10 +35,10 @@ try {
       }
     }
     getGender(sessions, distinctUsers);
-    // console.log(sessions);
   });
 
-  // These functions do the updating for the categories
+  // These functions fill in the 'null' values in the user object:
+  // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
   getGender = (sessions, distinctUsers) => {
     let arrayWithGender = distinctUsers;
 
@@ -58,8 +58,6 @@ try {
         });
       }
     });
-
-    //console.log(arrayWithGender)
 
     getAge(sessions, arrayWithGender);
   };
