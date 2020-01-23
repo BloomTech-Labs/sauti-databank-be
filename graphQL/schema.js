@@ -31,9 +31,29 @@ const schema = buildSchema(`
             country_of_residence: String,
         ): [User]
 
-        sessions(
-
-        ): [Session]
+        sessionsData(
+            id: Int
+            gender: String
+            age: String
+            education: String
+            crossing_freq: String
+            produce: String
+            primary_income: String
+            language: String
+            country_of_residence: String
+            procedurecommodity: String
+            procedurecommoditycat: String
+            proceduredest: String
+            procedurerequireddocument: String
+            procedurerelevantagency: String
+            procedureorigin: String
+            commoditycountry: String
+            commoditymarket: String
+            commoditycat: String
+            commodityproduct: String
+            exchangedirection: String
+            created_date: Date
+        ): [TraderSession]
     }
 
     type Session {
@@ -62,6 +82,30 @@ const schema = buildSchema(`
         primary_income: String
         language: String
         country_of_residence: String
+    }
+
+    type TraderSession {
+        id: Int
+        gender: String
+        age: String
+        education: String
+        crossing_freq: String
+        produce: String
+        primary_income: String
+        language: String
+        country_of_residence: String
+        procedurecommodity: String
+        procedurecommoditycat: String
+        proceduredest: String
+        procedurerequireddocument: String
+        procedurerelevantagency: String
+        procedureorigin: String
+        commoditycountry: String
+        commoditymarket: String
+        commoditycat: String
+        commodityproduct: String
+        exchangedirection: String
+        created_date: Date
     }
 `);
 
