@@ -12,8 +12,9 @@ try {
       object.cell_num = element.cell_num;
       array.push(object);
     });
-    // Then a new array is created with unique phone numbers for filtering out unique users
-    // Data for each category is set to null to begin with
+
+    // At this point, "array" contains a bunch of phone numbers, some that appear multiple times
+    // The loop below removes all duplicate phone numbers, so they only appear once, and form the skeleton of what the object will look like
     const distinctUsers = [];
     const map = new Map();
     for (const item of array) {

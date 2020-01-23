@@ -2,10 +2,9 @@ require("dotenv").config();
 let unserializer = require("php-unserialize");
 const db = require("./model");
 
-// sessionsDataParser parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "information_demand" 
-// When code is refactored it should parse data into "parsed_data" table, NOT "information_demand"
+// sessionsDataParser parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data"
 
-// Documents and Agencies are stored as numers (Ex: "1", "4") in Lance's database. Objects are used to pair number value with appropriate string value
+// Documents and Agencies are stored as numbers (Ex: "1", "4") in Lance's database. documentsTypes and agencyTypes are used to pair that number value with appropriate string value
 const documentTypes = {
   '1': 'Import Permit',
   '2': 'Valid Invoice',
@@ -37,15 +36,16 @@ try {
   //Get all un-parsed sessions data information from "platform_sessions2"
   db.findLanceData().then(
     sessions => {
+      //Make new array to populate with the cleaned data:
+      const parsedArray = [];
+      let err_count = 0;
+      
+      // 'data' is the PHP serialized string
       // Filter out any rows where the 'data' column is empty
       let newArr = sessions.filter(row => {
         return row.data.startsWith("a:");
       });
 
-      //Make new array to populate with the cleaned data:
-      const parsedArray = [];
-      let err_count = 0;
-      
       //Loop through newArr to unserialize the data:
       newArr.forEach(serializedRow => {
         try {
@@ -57,7 +57,8 @@ try {
           // Loop through the data object and format the values appropriately
           for (let key in data) {
             
-            // If the Document or Agency is a STRING, change the number value to it's appropriate string value  
+            // If the Document or Agency is a STRING, change the number value to it's appropriate string value
+            // Ex: { procedurerequireddocument: "1" } turns into { procedurerequireddocument: "Import Permit" }  
             if (key === "procedurerequireddocument" && typeof data[key] === "string") {
               data[key] = documentTypes[+data[key]]
             }
@@ -65,11 +66,12 @@ try {
             if (key === "procedurerelevantagency" && typeof data[key] === "string") {
               data[key] = agencyTypes[+data[key]]
             } else if (typeof data[key] === "object") {
-              // If the value is an OBJECT, set the value to the values of that object
+              // If the value is an OBJECT, set the value of that key:value pair (data[key]) to the values of that object
               // Ex: { procedurecommodity: { "0": "Maize", "1": "Carrots" } } turns into { procedurecommodity: ["Maize", "Carrots"] } 
               data[key] = Object.values(data[key]);
 
               // If the Document or Agency is a OBJECT, change the number value to it's appropriate string value  
+              // Ex: { procedurerequireddocument: { "0": "1" } } turns into { procedurerequireddocument: "Import Permit" } 
               if (key === "procedurerequireddocument") {
                 data[key] = data[key].map(num => documentTypes[+num])
               }
@@ -85,7 +87,7 @@ try {
             }
           }
 
-          // Object skeleton that is being placed into database table
+          // Object that is being sent into database table
           const sessionObj = {
             platform_sessions_id: serializedRow.sess_id, 
             cell_num: serializedRow.cell_num, 
@@ -104,7 +106,7 @@ try {
           }
 
           // There's a lot of extra information in the parsed data we don't use. If the array's values only contain:
-          // 'platform_sessions_id', 'cell_num', and 'created_date' then we don't put it into the database, as it will never be used
+          // 'platform_sessions_id', 'cell_num', and 'created_date' (a length of 3), then we don't put it into the database, as it will never be used
           if (Object.values(sessionObj).filter(val => val !== undefined).length > 3){
             parsedArray.push(sessionObj)
           }
