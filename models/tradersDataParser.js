@@ -294,7 +294,7 @@ try {
 
     
     try {
-      console.log(Date(Date.now().toString()))
+      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()))
       db.truncateTable('traders');
       db.batchInsert('traders', arrayWithCountry);
     } catch {
