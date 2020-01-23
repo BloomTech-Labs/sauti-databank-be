@@ -29,7 +29,7 @@ const findLanceData = () => {
 }
 
 const batchInsert = (table, rows) => {
-   return db.batchInsert(table, rows, 1000).then(() => {
+   return db.batchInsert(table, rows, 500).then(() => {
       return db(table).count('*').then(res => console.log("ADDED", res));
    });
 }
