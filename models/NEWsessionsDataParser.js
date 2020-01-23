@@ -121,8 +121,10 @@ try {
 
       try {
         // console.log(parsedArray.length)
-        console.log("\n** INFORMATION DEMAND TABLE **\n", Date(Date.now().toString()))
+        console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()))
+        // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
         db.truncateTable('parsed_data');
+        // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
         db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
