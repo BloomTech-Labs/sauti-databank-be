@@ -7,8 +7,6 @@
     "test": "cross-env DB_ENV=staging jest --watch --verbose",
     "server": "nodemon index.js",
     "start": "node index.js",
-    "cronTest": "cd models/ && node cronTest.js",
-    "dataCleaner": "cd models/ && node dataCleaner.js"
   },
   "repository": {
     "type": "git",
