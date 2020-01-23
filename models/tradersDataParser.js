@@ -294,7 +294,9 @@ try {
 
     
     try {
-      // db.batchInsertTraders(arrayWithCountry);
+      console.log(Date(Date.now().toString()))
+      db.truncateTable('traders');
+      db.batchInsert('traders', arrayWithCountry);
     } catch {
       console.log("Failed to batch insert");
     }

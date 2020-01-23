@@ -130,10 +130,10 @@ try {
       });
 
       try {
-        console.log(infoArr);
-        // console.log(Date(Date.now().toString()))
-        // db.truncateSessions();
-        // db.batchInsertInfoDemand(infoArr);
+        // console.log(infoArr);
+        console.log(Date(Date.now().toString()))
+        db.truncateTable('information_demand');
+        db.batchInsert('information_demand', infoArr);
       } catch {
         console.log("Failed to batch insert");
       }
