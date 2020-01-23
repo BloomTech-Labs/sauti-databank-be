@@ -28,19 +28,15 @@ const findLanceData = () => {
    return db("platform_sessions2");
 }
 
-const batchInsertTraders = (rows) => {
-   return db.batchInsert('traders', rows, 1000);
-}
-
-const batchInsertInfoDemand = (rows) => {
-   return db.batchInsert('information_demand', rows, 1000).then(() => {
-      return db('information_demand').count('*').then(res => console.log("ADDED", res));
+const batchInsert = (table, rows) => {
+   return db.batchInsert(table, rows, 1000).then(() => {
+      return db(table).count('*').then(res => console.log("ADDED", res));
    });
 }
 
-const truncateSessions = () => {
-   return db('information_demand').truncate().then(() => {
-      return db('information_demand').count('*').then(res => console.log("DELETED", res))
+const truncateTable = (table) => {
+   return db(table).truncate().then(() => {
+      return db(table).count('*').then(res => console.log("DELETED", res))
    });
 }
 
@@ -49,7 +45,6 @@ module.exports = {
    getUsers,
    getSessions,
    findLanceData,
-   batchInsertTraders,
-   batchInsertInfoDemand,
-   truncateSessions
+   batchInsert,
+   truncateTable
 }
