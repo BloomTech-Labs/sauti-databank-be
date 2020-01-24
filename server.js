@@ -4,13 +4,14 @@ const cors = require("cors");
 const graphqlHTTP = require("express-graphql");
 
 const schema = require("./graphQL/schema");
-const { getUsers, getSessions } = require("./graphQL/resolvers");
+const { getTraders, getSessions, getDataSessions } = require("./graphQL/resolvers");
 
 const server = express();
 
 const root = {
-  tradersUsers: getUsers,
-  tradersData: getSessions
+  tradersUsers: getTraders,
+  tradersData: getSessions,
+  sessionsData: getDataSessions
 };
 
 server.use(helmet());

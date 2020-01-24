@@ -2,6 +2,12 @@ require("dotenv").config();
 
 const db = require("./model");
 
+// tradersDataParser.js withdraws user information from PHP serialized data in `platform_sessions2` table in database
+// Many users have submit more than one request so there are ~80,000 entries in `platform_sessions2` but only ~11,000 users in `traders` table
+// This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc. 
+// To run the file during testing, run: node ./models/tradersDataParser.js
+// SEE BOTTOM OF FILE BEFORE RUNNING
+
 // First Lance's Data is saved in array = []
 try {
   db.findLanceData().then(sessions => {
@@ -12,8 +18,9 @@ try {
       object.cell_num = element.cell_num;
       array.push(object);
     });
-    // Then a new array is created with unique phone numbers for filtering out unique users
-    // Data for each category is set to null to begin with
+
+    // At this point, "array" contains a bunch of phone numbers, some that appear multiple times
+    // The loop below removes all duplicate phone numbers, so they only appear once, and form the skeleton of what the object will look like
     const distinctUsers = [];
     const map = new Map();
     for (const item of array) {
@@ -24,7 +31,7 @@ try {
         distinctUsers.push({
           cell_num: item.cell_num,
           gender: null,
-          age: null, //set gender to null inside every object so that every object has a gender property.
+          age: null,
           education: null,
           crossing_freq: null,
           produce: null,
@@ -35,10 +42,10 @@ try {
       }
     }
     getGender(sessions, distinctUsers);
-    // console.log(sessions);
   });
 
-  // These functions do the updating for the categories
+  // These functions fill in the 'null' values in the user object:
+  // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
   getGender = (sessions, distinctUsers) => {
     let arrayWithGender = distinctUsers;
 
@@ -58,8 +65,6 @@ try {
         });
       }
     });
-
-    //console.log(arrayWithGender)
 
     getAge(sessions, arrayWithGender);
   };
@@ -295,7 +300,9 @@ try {
     
     try {
       console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()))
+      // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
       db.truncateTable('traders');
+      // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
       db.batchInsert('traders', arrayWithCountry);
     } catch {
       console.log("Failed to batch insert");
