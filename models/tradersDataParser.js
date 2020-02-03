@@ -5,8 +5,9 @@ const db = require("./model");
 // tradersDataParser.js withdraws user information from PHP serialized data in `platform_sessions2` table in database
 // Many users have submit more than one request so there are ~80,000 entries in `platform_sessions2` but only ~11,000 users in `traders` table
 // This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc. 
+
+// ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
 // To run the file during testing, run: node ./models/tradersDataParser.js
-// SEE BOTTOM OF FILE BEFORE RUNNING
 
 // First Lance's Data is saved in array = []
 try {
@@ -281,7 +282,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry = async (sessions, arrayWithLanguage) => {
+  getCountry = (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {

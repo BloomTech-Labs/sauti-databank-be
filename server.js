@@ -10,7 +10,6 @@ const server = express();
 
 const root = {
   tradersUsers: getTraders,
-  tradersData: getSessions,
   sessionsData: getDataSessions
 };
 
