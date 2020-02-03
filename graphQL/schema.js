@@ -3,22 +3,6 @@ const schema = buildSchema(`
     scalar Date
 
     type Query {
-        tradersData(
-            id: Int,
-            gender: String,
-            age: String,
-            education: String,
-            crossing_freq: String,
-            produce: String,
-            primary_income: String,
-            language: String,
-            country_of_residence: String,
-            request_type: String,
-            request_value: String,
-            created_date: String,
-            additional_filter_type: String,
-        ): [Session]
-
         tradersUsers(
             id: Int,
             gender: String,
@@ -54,22 +38,6 @@ const schema = buildSchema(`
             exchangedirection: String
             created_date: Date
         ): [TraderSession]
-    }
-
-    type Session {
-        id: Int
-        gender: String
-        age: String
-        education: String
-        crossing_freq: String
-        produce: String
-        primary_income: String
-        language: String
-        country_of_residence: String
-        request_type: String
-        request_value: String
-        created_date: Date
-        cell_num: String
     }
 
     type User { 
