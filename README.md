@@ -20,22 +20,13 @@ We built our backend, using Node, Express, GraphQL, and Knex to work with a MySQ
 - [Express](https://expressjs.com/): We added a bit more usability to Node for our project using Express, a web application framework that lets us build a bit more rapidly.
 - [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries.
 - [GraphQL](https://graphql.org/): We used GraphQL as a server to the database to assert specific data points through queries which allow fetching a lot of data in a single request to a single API endpoint.
-- [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 5k users and 40k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
-
-_Note: every time we say users, we're referring to the traders who log on and use the Sauti Databan platform, not the users (often researchers) who view Sauti's data_.
-
-## Endpoint
-
-It is necessary to understand that all of the data depicted on the deployed site is being retrieved through one single API endpoint. Through our usage of the GraphQL framework, we are able to send our database specific queries that retrieve appropriated data through this endpoint. Please see the endpoint and its Description below. Continue to see the specific data points available, which are all able to be compared in a cross filtration graph.
-
+- [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 11k users and 115k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
+ 
 ### GraphQL Route
 
-| Method | Endpoint   | Access Control | Description                                                        |
-| ------ | ---------- | -------------- | ------------------------------------------------------------------ |
-| GET    | `/graphql` | public         | Returns a bar graph defaulted to display data for Gender of users. |
-|        |            |                | Upon application of the dropdown options, users have               |
-|        |            |                | access to all public Sauti Databank records which are current and  |
-|        |            |                | can be cross filtered amongst eachother with additional selection. |
+**Endpoint:** `deployed URL/graphql`
+
+**Description:** It is necessary to understand that all of the data depicted on the deployed site is being retrieved through one single API endpoint. Through our usage of the GraphQL framework, we are able to send our database specific queries that retrieve appropriated data through this endpoint. The deployed URL is hidden behind an environment variable accessible to participants of this project. 
 
 ## Schemas
 
@@ -45,6 +36,157 @@ We used schemas types that organize the requests needed to retrieve specific dat
 ## Queries
 
 Queries are interactive, changable requests. Queries can traverse related objects and their fields which allows fetching a lot of data in a single request. The Query structure similarly reflect the GraphQL schema structure, and the results are based on what is indicated in the schema.
+
+## Schema Types
+
+      type Query {
+        tradersUsers(
+            id: Int,
+            gender: String,
+            age: String,
+            education: String,
+            crossing_freq: String,
+            produce: String,
+            primary_income: String,
+            language: String,
+            country_of_residence: String,
+        ): [User]
+
+        sessionsData(
+            id: Int
+            gender: String
+            age: String
+            education: String
+            crossing_freq: String
+            produce: String
+            primary_income: String
+            language: String
+            country_of_residence: String
+            procedurecommodity: String
+            procedurecommoditycat: String
+            proceduredest: String
+            procedurerequireddocument: String
+            procedurerelevantagency: String
+            procedureorigin: String
+            commoditycountry: String
+            commoditymarket: String
+            commoditycat: String
+            commodityproduct: String
+            exchangedirection: String
+            created_date: Date
+        ): [TraderSession]
+    }
+
+    type User { 
+        id: Int
+        gender: String
+        age: String
+        education: String
+        crossing_freq: String
+        produce: String
+        primary_income: String
+        language: String
+        country_of_residence: String
+    }
+
+    type TraderSession {
+        id: Int
+        gender: String
+        age: String
+        education: String
+        crossing_freq: String
+        produce: String
+        primary_income: String
+        language: String
+        country_of_residence: String
+        procedurecommodity: String
+        procedurecommoditycat: String
+        proceduredest: String
+        procedurerequireddocument: String
+        procedurerelevantagency: String
+        procedureorigin: String
+        commoditycountry: String
+        commoditymarket: String
+        commoditycat: String
+        commodityproduct: String
+        exchangedirection: String
+        created_date: Date
+    }
+
+## Database Schema
+
+#### platform_sessions2
+
+```
+{
+  sess_id: int(10) PK
+  cell_num: varchar(25)
+  created_date: datetime
+  udate: timestamp
+  data: text
+  platform_id: int(2)
+  notes: varchar(400)
+}
+```
+
+
+#### traders
+
+```
+{
+  id: UUID PK
+  cell_num: varchar(25)
+  gender: varchar(45)
+  age: varchar(45)
+  education: varchar(45)
+  crossing_freq: varchar(45)
+  produce: varchar(45)
+  primary_income: varchar(45)
+  language: varchar(45)
+  country_of_residence: varchar(45)
+}
+```
+
+#### parsed_data
+
+```
+
+{
+  id: int(128) PK 
+  platform_sessions_id: int(128)
+  procedurecommodity: text
+  procedurecommoditycat: text
+  proceduredest: text
+  procedurerequireddocument: text
+  procedurerelevantagency: text
+  procedureorigin: text
+  commoditycountry: text
+  commoditymarket: text
+  commoditycat: text
+  commodityproduct: text
+  exchangedirection: text
+  created_date: datetime
+}
+
+```
+
+### Data parsers:
+
+- The file `tradersDataParser.js` in the `models` folder has the script that cleans the data from platform_sessions2 table and populates the trader demographic info in the traders table every 24 hours.
+
+- The file `sessionsDataParser.js` in the `models` folder has the script that cleans the data from platform_sessions2 table and populates the trader's sessions info in the `parsed_data` table every 24 hours. 
+
+## Environment Variables
+
+In order for the app to function correctly, the user must set up the proper environment variables on their local machines. 
+
+To populate an .env file with appropriate variables, reach out to Sauti for access for the following:
+
+- username
+- password
+- database 
+- host
+- deployed URL 
 
 #### Accessing Gender
 
@@ -152,127 +294,6 @@ Queries are interactive, changable requests. Queries can traverse related object
 
 - Returns origin of traders' goods.
 
-## Schema Types
-
-      type Query {
-        tradersData(
-            id: Int,
-            gender: String,
-            age: String,
-            education: String,
-            crossing_freq: String,
-            produce: String,
-            primary_income: String,
-            language: String,
-            country_of_residence: String,
-            request_type: String,
-            request_value: String,
-        ): [Session]
-
-        tradersUsers(
-            limit: Int,
-            id: Int,
-            gender: String,
-            age: String,
-            education: String,
-            crossing_freq: String,
-            produce: String,
-            primary_income: String,
-            language: String,
-            country_of_residence: String,
-        ): [User]
-      }
-
-      type Session {
-        id: Int
-        gender: String
-        age: String
-        education: String
-        crossing_freq: String
-        produce: String
-        primary_income: String
-        language: String
-        country_of_residence: String
-        request_type: String
-        request_value: String
-      }
-
-      type User {
-        id: Int
-        gender: String
-        age: String
-        education: String
-        crossing_freq: String
-        produce: String
-        primary_income: String
-        language: String
-        country_of_residence: String
-      }
-
-## Database Schema
-
-#### Platform sessions
-
-```
-{
-  sess_id: UUID
-  cell_num: varchar(25)
-  created_date: datetime
-  udate: timestamp
-  data: STRING
-  platform_id:  int(2)
-  notes: varchar(400)
-}
-```
-
-
-#### Traders
-
-```
-{
-  id: UUID
-  cell_num: varchar(45)
-  gender: varchar(45)
-  age: varchar(45)
-  education: varchar(45)
-  crossing_freq: varchar(45)
-  produce: varchar(45)
-  primary_income: varchar(45)
-  language: varchar(45)
-  country_of_residence: varchar(45)
-}
-```
-
-#### Information demand
-
-```
-
-{
-"id": int(128),
-"platform_sessions_id": int(128),
-"cell_num": varchar(255),
-"request_type_id": int(128),
-"request_type": varchar(255),
-"request_value": varchar(5000)
-}
-
-```
-
-### Data parsers:
-
-- the file dataCleaner.js in the routes folder has the script that cleaned the data from platform_sessions table and poppulated the trader demographic info in the Users table (labs14)
-
-- the file sessionsDataParser.js in the root back-end directory has the script that cleaned the data from platform_sessions table and poppulated the trader demographic info in the Users table (labs16)
-
-## Environment Variables
-
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-- username: Reach out to Sauti for access.
-- password: Reach out to Sauti for access.
-
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -310,5 +331,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](https://github.com/sauti-databank/front-end/blob/master/README.md) for details on the frontend of our project.
-```
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/sauti-databank-fe/blob/master/README.md) for details on the frontend of our project.
