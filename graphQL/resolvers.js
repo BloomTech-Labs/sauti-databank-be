@@ -29,6 +29,5 @@ const getDataSessions = async args => {
 
 module.exports = {
     getTraders,
-    getSessions,
     getDataSessions
 }
