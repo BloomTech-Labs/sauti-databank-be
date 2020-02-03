@@ -281,7 +281,7 @@ try {
     getCountry(sessions, arrayWithLanguage);
   };
 
-  getCountry = async (sessions, arrayWithLanguage) => {
+  getCountry = (sessions, arrayWithLanguage) => {
     let arrayWithCountry = arrayWithLanguage;
 
     arrayWithCountry.map(user => {
