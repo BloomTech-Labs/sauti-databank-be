@@ -59,7 +59,6 @@ const truncateTable = (table) => {
 
 module.exports = {
    getTraders,
-   getSessions,
    findLanceData,
    batchInsert,
    truncateTable,
