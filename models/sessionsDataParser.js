@@ -1,24 +1,13 @@
-  
 require("dotenv").config();
 let unserializer = require("php-unserialize");
 const db = require("./model");
 
-//sessionsDataParser parses info stored in the DATA COLUMN of platform_sessions table in PHP serialized format, and populates it into new tables to enable building a BE/FE for data portal.
+// sessionsDataParser.js parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data" table
 
-// List of all request_types traders make that we want to parse from the data and put inside the tables
-const request_types = [
-  "procedurecommodity",
-  "procedurecommoditycat",
-  "proceduredest",
-  "procedurerequireddocument",
-  "procedurerelevantagency",
-  "procedureorigin",
-  "commoditycountry",
-  "commoditymarket",
-  "commoditycat",
-  "commodityproduct",
-  "exchangedirection"
-];
+// ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
+// To run the file during testing, run: node ./models/sessionsDataParser.js
+
+// Documents and Agencies are stored as numbers (Ex: "1", "4") in Lance's database. documentsTypes and agencyTypes are used to pair that number value with appropriate string value
 const documentTypes = {
   '1': 'Import Permit',
   '2': 'Valid Invoice',
@@ -47,96 +36,99 @@ const agencyTypes = {
 };
 
 try {
-  //Accessing sessions-model and platform_sessions table:
+  //Get all un-parsed sessions data information from "platform_sessions2"
   db.findLanceData().then(
-    //sessions is the entire platform sessions table(array). Filter and get rows that aren't empty:
     sessions => {
+      //Make new array to populate with the cleaned data:
+      const parsedArray = [];
+      let err_count = 0;
+      
+      // 'data' is the PHP serialized string
+      // Filter out any rows where the 'data' column is empty
       let newArr = sessions.filter(row => {
-        return row.data.length > 0;
+        return row.data.startsWith("a:");
       });
 
-      //Make new array to populate with the cleaned data:
-      let infoArr = [];
-      let err_count = 0;
-
       //Loop through newArr to unserialize the data:
-      newArr.forEach((serializedRow, index) => {
-        //Created variable and now are unserializing the data that we looped through:
-        // console.count(serializedRow)
+      newArr.forEach(serializedRow => {
         try {
-          //Critical! 'php-unserialize' turns PHP serialized data into javascript object.
+          // CRITICAL! 'php-unserialize' turns PHP serialized data into javascript object.
+          // Ex: "a:1:{s:16:"commoditycountry";s:3:"KEN";}" turns into { commoditycountry: KEN }
           const data = unserializer.unserialize(serializedRow.data);
 
-          //Object.keys turns keys in data object into an array we can loop over:
-          Object.keys(data).forEach(key => {
+          // Some of the parsed data values come back as Objects, NOT strings like they should be
+          // Loop through the data object and format the values appropriately
+          for (let key in data) {
+            
+            // If the Document or Agency is a STRING, change the number value to it's appropriate string value
+            // Ex: { procedurerequireddocument: "1" } turns into { procedurerequireddocument: "Import Permit" }  
+            if (key === "procedurerequireddocument" && typeof data[key] === "string") {
+              data[key] = documentTypes[+data[key]]
+            }
 
-            //Next check keys in data object to see if its in request_types array (line 11):
-            request_types.forEach(request_type => {
-              if (key === request_type) {
-                let request_value = data[key];
+            if (key === "procedurerelevantagency" && typeof data[key] === "string") {
+              data[key] = agencyTypes[+data[key]]
+            } else if (typeof data[key] === "object") {
+              // If the value is an OBJECT, set the value of that key:value pair (data[key]) to the values of that object
+              // Ex: { procedurecommodity: { "0": "Maize", "1": "Carrots" } } turns into { procedurecommodity: ["Maize", "Carrots"] } 
+              data[key] = Object.values(data[key]);
 
-                if (request_type === 'procedurerequireddocument') {
-                  for (let obj in request_value) {
-                    request_value = {
-                      ...request_value,
-                      [obj]: documentTypes[request_value[obj]]
-                    }
-                  }
-                } else if (request_type === 'procedurerelevantagency') {
-                  for (let obj in request_value) {
-                    request_value = {
-                      ...request_value,
-                      [obj]: agencyTypes[request_value[obj]]
-                    }
-                  }
-                }
-
-                //Then check each key's value. Its stored in 2 different formats:
-                //FORMAT 1: request_value is stored as STRING:
-                if (typeof request_value === "string") {
-                  if (request_type === 'procedurerequireddocument') {
-                    request_value = { '0': request_value }
-                  } else {
-                    infoArr.push({
-                      platform_sessions_id: serializedRow.sess_id, // from serialized data in newArr that was created from the sess_id: value
-                      cell_num: serializedRow.cell_num, // from the serialized data in the newArr that was created from the cell_num: value
-                      request_type_id: request_types.indexOf(key) + 1, //foreign key equivalence
-                      request_type: request_type,
-                      request_value: request_value,//request_value receiving its value from the data variable which uses the key element as its index
-                      created_date: serializedRow.created_date.toISOString()
-                    });
-                  }
-                }
-
-                //FORMAT 2: request_value is stored as an OBJECT with several values: {"0": "KEN", "1": "RWA"..}
-                else {
-                  Object.values(request_value).forEach(value => {
-                    infoArr.push({
-                      platform_sessions_id: serializedRow.sess_id, // from serialized data in the newArr created from the sess_id: value
-                      cell_num: serializedRow.cell_num, // from the serialized data in the newArr created from the cell_num: value
-                      request_type_id: request_types.indexOf(key) + 1,
-                      request_type: request_type,
-                      request_value: value, //receives its value from data variable which uses the key element as its index
-                      created_date: serializedRow.created_date.toISOString()
-                    });
-                  });
-                }
+              // If the Document or Agency is a OBJECT, change the number value to it's appropriate string value  
+              // Ex: { procedurerequireddocument: { "0": "1" } } turns into { procedurerequireddocument: "Import Permit" } 
+              if (key === "procedurerequireddocument") {
+                data[key] = data[key].map(num => documentTypes[+num])
               }
-            });
-          });
+
+              if (key === "procedurerelevantagency") {
+                data[key] = data[key].map(num => agencyTypes[+num])
+              }
+
+              // Turn the value into a string, before it's sent into database table
+              // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
+              // ["Maize", "Carrots"] turns into "Maize,Carrots"
+              data[key] = data[key].toString()
+            }
+          }
+
+          // Object that is being sent into database table
+          const sessionObj = {
+            platform_sessions_id: serializedRow.sess_id, 
+            cell_num: serializedRow.cell_num, 
+            procedurecommodity: data.procedurecommodity,
+            procedurecommoditycat: data.procedurecommoditycat,
+            proceduredest: data.proceduredest,
+            procedurerequireddocument: data.procedurerequireddocument,
+            procedurerelevantagency: data.procedurerelevantagency,
+            procedureorigin: data.procedureorigin,
+            commoditycountry: data.commoditycountry,
+            commoditymarket: data.commoditymarket,
+            commoditycat: data.commoditycat,
+            commodityproduct: data.commodityproduct,
+            exchangedirection: data.exchangedirection,
+            created_date: serializedRow.created_date.toISOString()
+          }
+
+          // There's a lot of extra information in the parsed data we don't use. If the array's values only contain:
+          // 'platform_sessions_id', 'cell_num', and 'created_date' (a length of 3), then we don't put it into the database, as it will never be used
+          if (Object.values(sessionObj).filter(val => val !== undefined).length > 3){
+            parsedArray.push(sessionObj)
+          }
+          
         } catch (err) {
+          // There are 5 database entries that have incorrect PHP format, so they fail the "php-unserialize" prompt, and hit this error catch statement
+          // This is on Lance's side, nothing that can be done to change the entries
           err_count++;
           console.log("err count: ", err_count, "sess_id: ", serializedRow.sess_id);
         }
       });
 
       try {
-        // console.log(infoArr);
-        console.log("\n** INFORMATION DEMAND TABLE **\n", Date(Date.now().toString()))
+        // console.log(parsedArray.length)
+        console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()))
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        db.truncateTable('information_demand');
+        db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        db.batchInsert('information_demand', infoArr);
+        db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
       }
@@ -145,3 +137,7 @@ try {
 } catch ({ message }) {
   console.log("message", message);
 }
+
+
+
+
