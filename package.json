@@ -37,6 +37,11 @@
     "nodemon": "^2.0.2",
     "supertest": "^4.0.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "jest": {
     "testEnvironment": "node"
   }
