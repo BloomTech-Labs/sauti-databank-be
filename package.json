@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env DB_ENV=staging jest --watch --verbose",
-    "server": "nodemon index.js",
+    "server": "nodemon server.js",
     "start": "node index.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sauti-databank/back-end#readme",
   "dependencies": {
+    "apollo-server": "^2.10.1",
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
