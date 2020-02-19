@@ -7,6 +7,7 @@ const port = process.env.PORT || 2500;
 const model = require("./models/model")
 const cors = require("cors")
 
+
 const server = new ApolloServer({
   cors: {
     origin: "*",
@@ -19,6 +20,7 @@ const server = new ApolloServer({
     return model
   }
 })
+
 
 server.listen(port).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);

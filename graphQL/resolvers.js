@@ -4,7 +4,7 @@ module.exports = {
       // Used to get data from "traders" table only
       async tradersUsers(_,args, ctx){
         const keys = Object.keys(args)  
-        console.log(keys)
+      
         if (!keys.length) {
           return ctx.getTraders()
         }
