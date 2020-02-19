@@ -1,20 +1,27 @@
 require("dotenv").config();
 const helmet = require("helmet");
 const { ApolloServer } = require("apollo-server")
-const cors = require("cors");
 const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
 const port = process.env.PORT || 2500;
 const model = require("./models/model")
 
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "OPTIONS"],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With', 'Accept'],
-};
 
 const server = new ApolloServer({
-  corsOptions,
+  cors: {
+    credentials: true,
+    origin: (origin, callback) => {
+        const whitelist = [
+            "https://sauti.now.sh/",
+        ];
+
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    }
+},
   helmet,
   typeDefs,
   resolvers,
