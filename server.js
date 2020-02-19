@@ -5,9 +5,13 @@ const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
 const port = process.env.PORT || 2500;
 const model = require("./models/model")
+const cors = require("cors")
 
 const server = new ApolloServer({
-  cors: true,
+  cors: {
+    origin: "*",
+    credentials: true
+  },
   helmet,
   typeDefs,
   resolvers,
@@ -19,4 +23,5 @@ const server = new ApolloServer({
 server.listen(port).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 })
+
 
