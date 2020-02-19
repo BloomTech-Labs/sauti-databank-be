@@ -7,7 +7,9 @@ const port = process.env.PORT || 2500;
 const model = require("./models/model")
 
 
+
 const server = new ApolloServer({
+
   helmet,
   typeDefs,
   resolvers,
@@ -16,7 +18,9 @@ const server = new ApolloServer({
   }
 })
 
+
 server.listen(port).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 })
+
 
