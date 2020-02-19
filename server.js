@@ -10,7 +10,7 @@ const cors = require("cors")
 
 const server = new ApolloServer({
   cors: {
-    origin: "*",
+    origin: "https://sauti.now.sh",
     credentials: true
   },
   helmet,
