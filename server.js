@@ -5,10 +5,9 @@ const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
 const port = process.env.PORT || 2500;
 const model = require("./models/model")
-const cors = require("cors")
+
 
 const server = new ApolloServer({
-  cors: true,
   helmet,
   typeDefs,
   resolvers,
