@@ -1,4 +1,4 @@
-const { JWT_SECRET } = require("../config/secrets");
+const { JWT_SECRET: secret } = require("../config/secrets");
 
 const jwt = require("jsonwebtoken");
 
