@@ -1,12 +1,12 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const generateToken = require("../middleware/generateToken");
 const validateLogin = require("../middleware/validateLogin.js");
 const Users = require("../models/databankUsers.js");
+const jwt = require("jsonwebtoken");
+const { JWT_SECRET: secret } = require("../config/secrets");
 
 router.post("/register", (req, res, next) => {
   let user = req.body;
-  console.log("user", user);
   const hashedPassword = bcrypt.hashSync(user.password, 8);
   Users.create({ ...user, password: hashedPassword })
     .then(newUser => res.status(201).json(newUser))
@@ -14,11 +14,29 @@ router.post("/register", (req, res, next) => {
 });
 
 router.post("/login", validateLogin, (req, res) => {
+  const token = generateToken(req.body);
+  console.log("tok", token);
   res.status(200).json({
     welcomeMessage: `Logged in as ${req.body.email}`,
     userID: req.req_id,
-    token: req.body.token
+    token: token
   });
 });
+
+// Helper
+function generateToken(user) {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    password: user.password,
+    tier: user.tier
+  };
+
+  const options = {
+    expiresIn: "12h"
+  };
+
+  return jwt.sign(payload, secret, options);
+}
 
 module.exports = router;
