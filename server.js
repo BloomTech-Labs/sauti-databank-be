@@ -4,7 +4,6 @@ const { ApolloServer } = require("apollo-server-express");
 const helmet = require("helmet");
 const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
-const port = process.env.PORT || 2500;
 const model = require("./models/model");
 const cors = require("cors");
 
@@ -45,7 +44,4 @@ server.applyMiddleware({
   cors: false // disabling the apollo-server-express cors to allow the cors middleware use
 });
 
-app.listen(port),
-  () => {
-    console.log(`🚀 Server ready at ${port}`);
-  };
+module.exports = app;
