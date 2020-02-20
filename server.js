@@ -1,26 +1,51 @@
 require("dotenv").config();
+const express = require("express");
+const { ApolloServer } = require("apollo-server-express");
 const helmet = require("helmet");
-const { ApolloServer } = require("apollo-server")
 const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
 const port = process.env.PORT || 2500;
-const model = require("./models/model")
-
-
+const model = require("./models/model");
+const cors = require("cors");
 
 const server = new ApolloServer({
-
   helmet,
   typeDefs,
   resolvers,
-  context(){
-    return model
-  }
-})
+  context() {
+    return model;
+  },
+  introspection: true,
+  playground: true
+});
 
+const app = express();
 
-server.listen(port).then(({ url }) => {
-  console.log(`🚀 Server ready at ${url}`);
-})
+const corsOptions = {
+  origin: "*",
+  methods: ["GET", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Content-Length",
+    "X-Requested-With",
+    "Accept"
+  ]
+};
 
+app.get("/", function ping(req, res) {
+  res.status(200).json({ api: "Running." });
+});
 
+app.use(cors(corsOptions));
+
+server.applyMiddleware({
+  app,
+  path: "/graphql",
+  cors: false // disabling the apollo-server-express cors to allow the cors middleware use
+});
+
+app.listen(port),
+  () => {
+    console.log(`🚀 Server ready at ${port}`);
+  };
