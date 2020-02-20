@@ -21,8 +21,9 @@ const server = new ApolloServer({
 const app = express();
 
 const corsOptions = {
+  // switch to https://sauti.now.sh/ when ready for lance
   origin: "*",
-  methods: ["GET", "OPTIONS"],
+  methods: ["GET", "OPTIONS", "POST"],
   allowedHeaders: [
     "Content-Type",
     "Authorization",
