@@ -38,10 +38,15 @@ app.get("/", function ping(req, res) {
   res.status(200).json({ api: "Running." });
 });
 
-// app.use(morgan("tiny"));
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use("/api/auth", authRouter);
+
+server.applyMiddleware({
+  app,
+  path: "/graphql",
+  cors: false // disabling the apollo-server-express cors to allow the cors middleware use
+});
 
 app.use(function notFound(req, res, next) {
   const error = new Error("Not found");
@@ -71,12 +76,6 @@ app.use(function catchAll(error, req, res, next) {
       status: error.status
     }
   });
-});
-
-server.applyMiddleware({
-  app,
-  path: "/graphql",
-  cors: false // disabling the apollo-server-express cors to allow the cors middleware use
 });
 
 module.exports = app;
