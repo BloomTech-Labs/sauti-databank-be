@@ -6,6 +6,7 @@ const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
 const model = require("./models/model");
 const cors = require("cors");
+const authRouter = require("./routes/auth-router");
 
 const server = new ApolloServer({
   helmet,
@@ -37,7 +38,9 @@ app.get("/", function ping(req, res) {
   res.status(200).json({ api: "Running." });
 });
 
+app.use("/api/auth", authRouter);
 app.use(cors(corsOptions));
+app.use(express.json());
 
 server.applyMiddleware({
   app,
