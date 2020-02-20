@@ -38,9 +38,40 @@ app.get("/", function ping(req, res) {
   res.status(200).json({ api: "Running." });
 });
 
-app.use("/api/auth", authRouter);
-app.use(cors(corsOptions));
+// app.use(morgan("tiny"));
 app.use(express.json());
+app.use(cors(corsOptions));
+app.use("/api/auth", authRouter);
+
+app.use(function notFound(req, res, next) {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+app.use(function catchUnhandledPromiseRejections(error, req, res, next) {
+  if (error instanceof Promise) {
+    error.catch(err => {
+      next(error);
+    });
+  } else {
+    next(error);
+  }
+});
+
+app.use(function catchAll(error, req, res, next) {
+  error.status = error.status || 500;
+  error.message = error.message || "Internal server error";
+
+  console.error(error);
+
+  res.status(error.status).json({
+    error: {
+      message: error.message,
+      status: error.status
+    }
+  });
+});
 
 server.applyMiddleware({
   app,
