@@ -30,14 +30,11 @@ app.use(cors(corsOptions));
 
 server.applyMiddleware({
   app,
-  path: '/',
   cors: false, // disabling the apollo-server-express cors to allow the cors middleware use
 })
 
-// server.listen(port).then(({ url }) => {
-//   console.log(`🚀 Server ready at ${url}`);
-// })
+app.listen(port), () => {
+  console.log(`🚀 Server ready at ${port}`);
+}
 
-app.listen({ port }, () => 
-console.log(`🚀 Port ${port}`))
 
