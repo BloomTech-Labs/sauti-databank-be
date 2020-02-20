@@ -1,29 +1,49 @@
 const db = require("../dbConfig");
 
 module.exports = {
-  findAll() {
-    return db("databank_users");
-  },
-
-  findyBy(filter) {
-    return db("databank_users").where(filter);
-  },
-
-  findOne(id) {
-    return db("databank_users")
-      .where({ id })
-      .first();
-  },
-
-  updateById(id, body) {
-    return db("databank_users")
-      .where({ id })
-      .update(body);
-  },
-
-  removeById(id) {
-    return db("databank_users")
-      .where({ id })
-      .delete();
-  }
+  findAll,
+  findBy,
+  findOne,
+  findByEmail,
+  create,
+  updateById,
+  removeById
 };
+
+function findAll() {
+  return db("databank_users");
+}
+
+function findOne(filter) {
+  return db("databank_users")
+    .where(filter)
+    .first();
+}
+
+function findBy(filter) {
+  return db("databank_users").where(filter);
+}
+
+function findByEmail(email) {
+  return db("databank_users")
+    .where({ email })
+    .first();
+}
+
+function create(user) {
+  return db("databank_users")
+    .insert(user)
+    .then(([id]) => findBy({ id }));
+}
+
+function updateById(id, body) {
+  return db("databank_users")
+    .where({ id })
+    .update(body);
+}
+
+function removeById(id) {
+  return db("databank_users")
+    .where({ id })
+    .delete();
+}
