@@ -4,16 +4,16 @@ const { ApolloServer } = require("apollo-server-express");
 const helmet = require("helmet");
 const typeDefs = require("./graphQL/schema");
 const resolvers = require("./graphQL/resolvers");
-const model = require("./models/model");
+const Traders = require("./models/model");
+const Users = require("./models/databankUsers");
 const cors = require("cors");
 const authRouter = require("./routes/auth-router");
-
 const server = new ApolloServer({
   helmet,
   typeDefs,
   resolvers,
   context() {
-    return model;
+    return { Traders, Users };
   },
   introspection: true,
   playground: true

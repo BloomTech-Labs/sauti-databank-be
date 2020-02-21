@@ -33,7 +33,8 @@ function findByEmail(email) {
 function create(user) {
   return db("databank_users")
     .insert(user)
-    .then(([id]) => findBy({ id }));
+    .then(([id]) => findBy({ id }))
+    .catch(err => console.log(err));
 }
 
 function updateById(id, body) {

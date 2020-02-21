@@ -9,7 +9,7 @@ router.post("/register", (req, res, next) => {
   let user = req.body;
   const hashedPassword = bcrypt.hashSync(user.password, 8);
   Users.create({ ...user, password: hashedPassword })
-    .then(newUser => res.status(201).json(newUser))
+    .then(([newUser]) => res.status(201).json(newUser))
     .catch(err => next(err));
 });
 

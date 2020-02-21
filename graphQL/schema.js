@@ -38,6 +38,29 @@ const typeDefs = gql`
     exchangedirection: String
     created_date: Date
   }
+
+  type databankUser {
+    id: Int
+    email: String
+    password: String
+    tier: String
+    interest: String
+    organization: String
+    job_position: String
+    country: String
+  }
+
+  # input newUserRegisterInput {
+  #   id: Int
+  #   email: String!
+  #   password: String!
+  #   tier: String!
+  #   interest: String
+  #   organization: String
+  #   job_position: String
+  #   country: String
+  # }
+
   # input NewTradersUsersInput {
   #     id: Int
   #     gender: String
@@ -49,6 +72,7 @@ const typeDefs = gql`
   #     language: String
   #     country_of_residence: String
   #   }
+
   # input newSessionsDataInput {
   #     id: Int
   #     gender: String
@@ -71,7 +95,6 @@ const typeDefs = gql`
   #     commodityproduct: String
   #     exchangedirection: String
   #     created_date: Date
-  #   }
 
   type Query {
     tradersUsers(
@@ -97,6 +120,7 @@ const typeDefs = gql`
       exchangedirection: String
       created_date: Date
     ): [TraderUser]
+
     sessionsData(
       id: Int
       gender: String
@@ -120,6 +144,32 @@ const typeDefs = gql`
       exchangedirection: String
       created_date: Date
     ): [TraderSession]
+
+    databankUser: [databankUser]
+  }
+
+  type Mutation {
+    register(
+      id: Int
+      email: String!
+      password: String!
+      tier: String!
+      interest: String
+      organization: String
+      job_position: String
+      country: String
+    ): databankUser!
+
+    login(
+      id: Int
+      email: String!
+      password: String!
+      tier: String
+      interest: String
+      organization: String
+      job_position: String
+      country: String
+    ): databankUser!
   }
 `;
 
