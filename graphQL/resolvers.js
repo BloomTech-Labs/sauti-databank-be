@@ -8,11 +8,11 @@ module.exports = {
     async tradersUsers(_, args, ctx) {
       const keys = Object.keys(args);
 
-      if (!keys.length) return ctx.getTraders();
+      if (!keys.length) return ctx.Traders.getTraders();
 
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
-        if (i === 0) dataFromDataBase = await ctx.tradersModel.getTraders();
+        if (i === 0) dataFromDataBase = await ctx.Traders.getTraders();
         dataFromDataBase = dataFromDataBase.filter(
           filterBy => filterBy[keys[i]] === args[keys[i]]
         );
@@ -22,10 +22,10 @@ module.exports = {
     // Used to get data from "traders" AND "parsed_data" table joined together
     async sessionsData(_, args, ctx) {
       const keys = Object.keys(args);
-      if (!keys.length) return ctx.tradersModel.getDataSessions();
+      if (!keys.length) return ctx.Traders.getDataSessions();
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
-        if (i === 0) dataFromDataBase = await ctx.getDataSessions();
+        if (i === 0) dataFromDataBase = await ctx.Traders.getDataSessions();
         dataFromDataBase = dataFromDataBase.filter(
           filterBy => filterBy[keys[i]] === args[keys[i]]
         );
