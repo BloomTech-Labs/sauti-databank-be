@@ -73,11 +73,9 @@ function generateToken(user) {
     email: user.email,
     tier: user.tier
   };
-
   const options = {
     expiresIn: "12h"
   };
-
   return jwt.sign(payload, secret, options);
 }
 
