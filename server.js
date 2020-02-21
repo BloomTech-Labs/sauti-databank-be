@@ -7,7 +7,7 @@ const resolvers = require("./graphQL/resolvers");
 const Traders = require("./models/model");
 const Users = require("./models/databankUsers");
 const cors = require("cors");
-const authRouter = require("./routes/auth-router");
+
 const server = new ApolloServer({
   helmet,
   typeDefs,
@@ -40,7 +40,6 @@ app.get("/", function ping(req, res) {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.use("/api/auth", authRouter);
 
 server.applyMiddleware({
   app,
