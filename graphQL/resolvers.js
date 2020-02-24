@@ -5,49 +5,46 @@ const { JWT_SECRET: secret } = require("../config/secrets");
 module.exports = {
   Query: {
     // Used to get data from "traders" table only
-    async tradersUsers(_, args, ctx) {
-      const keys = Object.keys(args);
-
-      if (!keys.length) return ctx.Traders.getTraders();
-
+    async tradersUsers(_, { input }, ctx) {
+      if (!input) return ctx.Traders.getTraders();
+      const keys = Object.keys(input);
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getTraders();
         dataFromDataBase = dataFromDataBase.filter(
-          filterBy => filterBy[keys[i]] === args[keys[i]]
+          filterBy => filterBy[keys[i]] === input[keys[i]]
         );
       }
       return dataFromDataBase;
     },
-    // Used to get data from "traders" AND "parsed_data" table joined together
-    async sessionsData(_, args, ctx) {
-      const keys = Object.keys(args);
-      if (!keys.length) return ctx.Traders.getDataSessions();
+    // Used to get data from "parsed_data" and "traders" table joined
+    async sessionsData(_, { input }, ctx) {
+      if (!input) return ctx.Traders.getDataSessions();
+      const keys = Object.keys(input);
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getDataSessions();
         dataFromDataBase = dataFromDataBase.filter(
-          filterBy => filterBy[keys[i]] === args[keys[i]]
+          filterBy => filterBy[keys[i]] === input[keys[i]]
         );
       }
       return dataFromDataBase;
     },
-
     databankUser(_, args, ctx) {
       return ctx.Users.findAll();
     }
   },
   Mutation: {
-    async register(_, args, ctx) {
+    async register(_, { input }, ctx) {
       const users = await ctx.Users.findAll();
-      const emailTaken = users.some(user => user.email === args.email);
+      const emailTaken = users.some(user => user.email === input.email);
       if (emailTaken) {
         // This should return an email with the following message. All other requested fields are returned as null
         return { email: "Sorry, this email has already been taken." };
       } else {
-        const hashedPassword = bcrypt.hashSync(args.password, 8);
+        const hashedPassword = bcrypt.hashSync(input.password, 8);
         const [newlyCreatedUser] = await ctx.Users.create({
-          ...args,
+          ...input,
           password: hashedPassword
         });
         // leave out the stored password when returning the user object.
@@ -58,8 +55,8 @@ module.exports = {
         return newlyCreatedUserWithoutPassword;
       }
     },
-    async login(_, args, ctx) {
-      let user = args;
+    async login(_, { input }, ctx) {
+      let user = input;
       // if their login is valid
       if (await validPassword(user, ctx)) {
         const token = generateToken(user);

@@ -7,6 +7,7 @@ const resolvers = require("./graphQL/resolvers");
 const Traders = require("./models/model");
 const Users = require("./models/databankUsers");
 const cors = require("cors");
+const morgan = require("morgan")
 
 const server = new ApolloServer({
   helmet,
@@ -38,6 +39,7 @@ app.get("/", function ping(req, res) {
   res.status(200).json({ api: "Running." });
 });
 
+// app.use(morgan("dev"))
 app.use(express.json());
 app.use(cors(corsOptions));
 
