@@ -39,12 +39,6 @@ const typeDefs = gql`
     created_date: Date
   }
 
-  enum UserTier {
-    FREE
-    PAID
-    ADMIN
-  }
-
   type databankUser {
     id: Int
     email: String
@@ -56,6 +50,11 @@ const typeDefs = gql`
     country: String
     token: String
     organization_type: String
+  }
+  enum UserTier {
+    FREE
+    PAID
+    ADMIN
   }
 
   input newTraderInput {
@@ -107,15 +106,8 @@ const typeDefs = gql`
   }
 
   input newLoginInput {
-    id: Int
     email: String!
     password: String!
-    tier: String
-    interest: String
-    organization: String
-    job_position: String
-    country: String
-    organization_type: String
   }
 
   type Query {
