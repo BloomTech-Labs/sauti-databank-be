@@ -62,7 +62,7 @@ const typeDefs = gql`
   enum OrganizationType {
     GOVERNMENT
     NGO
-    RESEARCHER
+    RESEARCH
     OTHER
   }
 
