@@ -39,7 +39,7 @@ const typeDefs = gql`
     created_date: Date
   }
 
-  type databankUser {
+  type DatabankUser {
     id: Int
     email: String
     password: String
@@ -65,6 +65,12 @@ const typeDefs = gql`
     RESEARCH
     OTHER
   }
+
+  type Error {
+    message: String
+  }
+
+  union EditedUserOrError = DatabankUser | Error
 
   input newTraderInput {
     id: Int
@@ -102,6 +108,18 @@ const typeDefs = gql`
     created_date: Date
   }
 
+  input newEditUserInput {
+    id: Int!
+    email: String
+    password: String
+    tier: UserTier
+    interest: String
+    organization: String
+    job_position: String
+    country: String
+    organization_type: OrganizationType
+  }
+
   input newRegisterInput {
     id: Int
     email: String!
@@ -122,12 +140,13 @@ const typeDefs = gql`
   type Query {
     tradersUsers(input: newTraderInput): [TraderUser]!
     sessionsData(input: newTraderSessionInput): [TraderSession]!
-    databankUser: [databankUser]!
+    DatabankUser: [DatabankUser]!
   }
 
   type Mutation {
-    register(input: newRegisterInput!): databankUser!
-    login(input: newLoginInput!): databankUser!
+    register(input: newRegisterInput!): DatabankUser!
+    login(input: newLoginInput!): DatabankUser!
+    editUser(input: newEditUserInput!): EditedUserOrError!
   }
 `;
 
