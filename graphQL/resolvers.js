@@ -54,6 +54,7 @@ module.exports = {
       if (await validPassword(user, ctx)) {
         const token = generateToken(user);
         const registeredUser = await ctx.Users.findByEmail(user.email);
+        delete registeredUser.password;
         return { ...registeredUser, token };
       } else {
         return "Invalid email or password.";
