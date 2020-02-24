@@ -35,15 +35,25 @@ module.exports = {
     }
   },
   Mutation: {
-    async register(_, { input }, ctx) {
-      const hashedPassword = bcrypt.hashSync(input.password, 8);
-      const [newlyCreatedUser] = await ctx.Users.create({
-        ...input,
-        password: hashedPassword
-      });
-      // leave out the stored password when returning the user object.
-      const { password, ...newlyCreatedUserWithoutPassword } = newlyCreatedUser;
-      return newlyCreatedUserWithoutPassword;
+    async register(_, args, ctx) {
+      const users = await ctx.Users.findAll();
+      const emailTaken = users.some(user => user.email === args.email);
+      if (emailTaken) {
+        // This should return an email with the following message. All other requested fields are returned as null
+        return { email: "Sorry, this email has already been taken." };
+      } else {
+        const hashedPassword = bcrypt.hashSync(args.password, 8);
+        const [newlyCreatedUser] = await ctx.Users.create({
+          ...args,
+          password: hashedPassword
+        });
+        // leave out the stored password when returning the user object.
+        const {
+          password,
+          ...newlyCreatedUserWithoutPassword
+        } = newlyCreatedUser;
+        return newlyCreatedUserWithoutPassword;
+      }
     },
     async login(_, { input }, ctx) {
       let user = input;
@@ -51,6 +61,7 @@ module.exports = {
       if (await validPassword(user, ctx)) {
         const token = generateToken(user);
         const registeredUser = await ctx.Users.findByEmail(user.email);
+        delete registeredUser.password;
         return { ...registeredUser, token };
       } else {
         return "Invalid email or password.";
