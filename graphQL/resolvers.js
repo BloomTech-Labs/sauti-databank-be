@@ -6,7 +6,7 @@ module.exports = {
   Query: {
     // Used to get data from "traders" table only
     async tradersUsers(_, { input }, ctx) {
-      if (!input) return ctx.Traders.getTraders()
+      if (!input) return ctx.Traders.getTraders();
       const keys = Object.keys(input);
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
@@ -35,16 +35,16 @@ module.exports = {
     }
   },
   Mutation: {
-    async register(_, args, ctx) {
+    async register(_, { input }, ctx) {
       const users = await ctx.Users.findAll();
-      const emailTaken = users.some(user => user.email === args.email);
+      const emailTaken = users.some(user => user.email === input.email);
       if (emailTaken) {
         // This should return an email with the following message. All other requested fields are returned as null
         return { email: "Sorry, this email has already been taken." };
       } else {
-        const hashedPassword = bcrypt.hashSync(args.password, 8);
+        const hashedPassword = bcrypt.hashSync(input.password, 8);
         const [newlyCreatedUser] = await ctx.Users.create({
-          ...args,
+          ...input,
           password: hashedPassword
         });
         // leave out the stored password when returning the user object.
