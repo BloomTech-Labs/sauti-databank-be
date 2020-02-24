@@ -30,7 +30,7 @@ module.exports = {
       }
       return dataFromDataBase;
     },
-    databankUser(_, args, ctx) {
+    DatabankUser(_, args, ctx) {
       return ctx.Users.findAll();
     }
   },
@@ -66,8 +66,26 @@ module.exports = {
       } else {
         return "Invalid email or password.";
       }
+    },
+    // edit user resolver chain
+    async editUser(_, { input }, ctx) {
+      // The first arg to EditedUserOrError becomes the returned input value
+      return input;
+    }
+  },
+  EditedUserOrError: {
+    async __resolveType(user, ctx, info) {
+      const updated = await ctx.Users.updateById(user.id, user);
+      if (updated) {
+        return "DatabankUser";
+      } else {
+        let error = user;
+        error.message = `There was an issue updating the user with id ${user.id}`;
+        return "Error";
+      }
     }
   }
+  // TODO: Add a DatabankUser resolver to return the updated fields
 };
 
 /**
