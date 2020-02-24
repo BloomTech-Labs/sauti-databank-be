@@ -49,12 +49,21 @@ const typeDefs = gql`
     job_position: String
     country: String
     token: String
-    organization_type: String
+    organization_type: OrganizationType
   }
+
   enum UserTier {
     FREE
     PAID
     ADMIN
+    GOV_ROLE
+  }
+
+  enum OrganizationType {
+    GOVERNMENT
+    NGO
+    RESEARCHER
+    OTHER
   }
 
   input newTraderInput {
@@ -102,7 +111,7 @@ const typeDefs = gql`
     organization: String
     job_position: String
     country: String
-    organization_type: String
+    organization_type: OrganizationType
   }
 
   input newLoginInput {
