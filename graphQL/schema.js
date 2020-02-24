@@ -106,7 +106,7 @@ const typeDefs = gql`
     id: Int
     email: String!
     password: String!
-    tier: UserTier!
+    tier: UserTier
     interest: String
     organization: String
     job_position: String
