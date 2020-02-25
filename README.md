@@ -332,3 +332,5 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 ## Documentation
 
 See [Frontend Documentation](https://github.com/Lambda-School-Labs/sauti-databank-fe/blob/master/README.md) for details on the frontend of our project.
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/ada6b5b5e303d199d699/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/sauti-databank-be/maintainability)
