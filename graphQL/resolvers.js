@@ -63,26 +63,25 @@ module.exports = {
       // make token using the tier and other user stuff
       // return user and token
       if (await validPassword(user, ctx)) {
-        const token = generateToken(user);
         const registeredUser = await ctx.Users.findByEmail(user.email);
         delete registeredUser.password;
+        const token = generateToken(registeredUser);
         return { ...registeredUser, token };
       } else {
         return "Invalid email or password.";
       }
     },
-    // edit user resolver chain
     async editUser(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
       return input;
     },
 
     async deleteUser(_, { input }) {
+      // The first arg to DeletedUserOrError becomes the returned input value
       return input;
     }
   },
   EditedUserOrError: {
-    // it somehow knows which is which
     async __resolveType(user, ctx, info) {
       const updated = await ctx.Users.updateById(user.id, user);
       if (updated) {
