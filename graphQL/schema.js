@@ -70,7 +70,8 @@ const typeDefs = gql`
     message: String
   }
 
-  union UnionErrorHandler = DatabankUser | Error
+  union EditedUserOrError = DatabankUser | Error
+  union DeletedUserOrError = DatabankUser | Error
 
   input newTraderInput {
     id: Int
@@ -121,8 +122,8 @@ const typeDefs = gql`
   }
 
   input newDeleteUserInput {
-    id: Int
-    email: String!
+    id: Int!
+    email: String
   }
 
   input newRegisterInput {
@@ -151,8 +152,8 @@ const typeDefs = gql`
   type Mutation {
     register(input: newRegisterInput!): DatabankUser!
     login(input: newLoginInput!): DatabankUser!
-    editUser(input: newEditUserInput!): UnionErrorHandler!
-    deleteUser(input: newDeleteUserInput!): UnionErrorHandler!
+    editUser(input: newEditUserInput!): EditedUserOrError!
+    deleteUser(input: newDeleteUserInput!): DeletedUserOrError!
   }
 `;
 
