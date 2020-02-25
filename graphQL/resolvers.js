@@ -30,7 +30,7 @@ module.exports = {
       }
       return dataFromDataBase;
     },
-    databankUser(_, args, ctx) {
+    DatabankUser(_, args, ctx) {
       return ctx.Users.findAll();
     }
   },
@@ -57,7 +57,11 @@ module.exports = {
     },
     async login(_, { input }, ctx) {
       let user = input;
-      // if their login is valid
+
+      // if password is okay
+      // get user
+      // make token using the tier and other user stuff
+      // return user and token
       if (await validPassword(user, ctx)) {
         const token = generateToken(user);
         const registeredUser = await ctx.Users.findByEmail(user.email);
@@ -66,8 +70,43 @@ module.exports = {
       } else {
         return "Invalid email or password.";
       }
+    },
+    // edit user resolver chain
+    async editUser(_, { input }, ctx) {
+      // The first arg to EditedUserOrError becomes the returned input value
+      return input;
+    },
+
+    async deleteUser(_, { input }) {
+      return input;
+    }
+  },
+  EditedUserOrError: {
+    // it somehow knows which is which
+    async __resolveType(user, ctx, info) {
+      const updated = await ctx.Users.updateById(user.id, user);
+      if (updated) {
+        return "DatabankUser";
+      } else {
+        let error = user;
+        error.message = `There was an issue updating the user with id ${user.id}`;
+        return "Error";
+      }
+    }
+  },
+  DeletedUserOrError: {
+    async __resolveType(user, ctx) {
+      const deleted = await ctx.Users.removeById(user.id, user);
+      if (deleted) {
+        return "DatabankUser";
+      } else {
+        let error = user;
+        error.message = `There was an issue deleting user with id ${user.id}`;
+        return "Error";
+      }
     }
   }
+  // TODO: Add a DatabankUser resolver to return the updated fields
 };
 
 /**

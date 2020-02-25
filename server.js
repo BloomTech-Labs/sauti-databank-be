@@ -7,7 +7,7 @@ const resolvers = require("./graphQL/resolvers");
 const Traders = require("./models/model");
 const Users = require("./models/databankUsers");
 const cors = require("cors");
-const morgan = require("morgan")
+const morgan = require("morgan");
 
 const server = new ApolloServer({
   helmet,

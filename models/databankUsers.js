@@ -7,7 +7,8 @@ module.exports = {
   findByEmail,
   create,
   updateById,
-  removeById
+  removeById,
+  removeByEmail
 };
 
 function findAll() {
@@ -46,5 +47,11 @@ function updateById(id, body) {
 function removeById(id) {
   return db("databank_users")
     .where({ id })
+    .delete();
+}
+
+function removeByEmail(email) {
+  return db("databank_users")
+    .where({ email })
     .delete();
 }
