@@ -30,7 +30,7 @@ module.exports = {
       }
       return dataFromDataBase;
     },
-    DatabankUser(_, args, ctx) {
+    databankUsers(_, args, ctx) {
       return ctx.Users.findAll();
     }
   },

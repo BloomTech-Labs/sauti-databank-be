@@ -146,7 +146,7 @@ const typeDefs = gql`
   type Query {
     tradersUsers(input: newTraderInput): [TraderUser]!
     sessionsData(input: newTraderSessionInput): [TraderSession]!
-    DatabankUser: [DatabankUser]!
+    databankUsers: [DatabankUser]!
   }
 
   type Mutation {
