@@ -135,7 +135,7 @@ const typeDefs = gql`
     organization: String
     job_position: String
     country: String
-    organization_type: OrganizationType
+    organization_type: OrganizationType!
   }
 
   input newLoginInput {
@@ -146,7 +146,7 @@ const typeDefs = gql`
   type Query {
     tradersUsers(input: newTraderInput): [TraderUser]!
     sessionsData(input: newTraderSessionInput): [TraderSession]!
-    DatabankUser: [DatabankUser]!
+    databankUsers: [DatabankUser]!
   }
 
   type Mutation {
