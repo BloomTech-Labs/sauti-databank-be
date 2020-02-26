@@ -114,7 +114,6 @@ module.exports = {
 
 function generateToken(user) {
   const payload = {
-    subject: user.id,
     id: user.id,
     email: user.email,
     tier: user.tier
