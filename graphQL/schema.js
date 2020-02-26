@@ -135,7 +135,7 @@ const typeDefs = gql`
     organization: String
     job_position: String
     country: String
-    organization_type: OrganizationType
+    organization_type: OrganizationType!
   }
 
   input newLoginInput {
