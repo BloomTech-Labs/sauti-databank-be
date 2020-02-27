@@ -12,41 +12,24 @@ const db = require("./model");
 // First Lance's Data is saved in array = []
 try {
   db.findLanceData().then(sessions => {
-    let array = [];
-
-    sessions.map(element => {
-      let object = {};
-      object.cell_num = element.cell_num;
-      array.push(object);
-    });
-
-    const allCellNums = sessions.map(session => session.cellNum);
+    const allCellNums = sessions.map(session => session.cell_num);
     const uniqueCellNums = removeDuplicates(allCellNums);
 
-    // At this point, "array" contains a bunch of phone numbers, some that appear multiple times
-    // The loop below removes all duplicate phone numbers, so they only appear once, and form the skeleton of what the object will look like
-    const distinctUsers = [];
-    const map = new Map();
-    for (const item of array) {
-      // for each element of the array that contains duplicates
-      if (!map.has(item.cell_num)) {
-        //if map does not contain an object with the cell_num (userid), it includes it and pushes it to result
-        map.set(item.cell_num, true);
-        distinctUsers.push({
-          cell_num: item.cell_num,
-          gender: null,
-          age: null,
-          education: null,
-          crossing_freq: null,
-          produce: null,
-          primary_income: null,
-          language: null,
-          country_of_residence: null
-        });
-      }
-    }
-    // console.log(distinctUsers);
-    // console.log(map)
+    // initialize a new trader object for each unique cell_num with the cell_num field auto-populated.
+    const distinctUsers = uniqueCellNums.map(cellNum => {
+      return new Trader({
+        cell_num: cellNum,
+        gender: null,
+        age: null,
+        education: null,
+        crossing_freq: null,
+        produce: null,
+        primary_income: null,
+        language: null,
+        country_of_residence: null
+      });
+    });
+
     getGender(sessions, distinctUsers);
   });
 
@@ -56,7 +39,6 @@ try {
     let arrayWithGender = distinctUsers;
 
     sessions.map(session => {
-      console.log(session);
       let num = session.cell_num;
       if (session.data.includes("Male")) {
         arrayWithGender.map(user => {
@@ -304,15 +286,9 @@ try {
       }
     });
 
-    try {
-      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
-      // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      // db.truncateTable('traders');
-      // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      // db.batchInsert('traders', arrayWithCountry);
-    } catch {
-      console.log("Failed to batch insert");
-    }
+    // Clear the db of all traders' entries and repopulate it with unique values.
+    // This function will run every 24 hours via a cron job.
+    DANGER_PERFORM_IO();
   };
 } catch ({ message }) {
   console.log("Failed file", message);
@@ -322,11 +298,61 @@ try {
  * Helpers
  */
 
+function Trader(newTrader) {
+  this.cell_num = newTrader.cell_num;
+  this.gender = newTrader.gender;
+  this.age = newTrader.age;
+  this.education = newTrader.education;
+  this.crossing_freq = newTrader.crossing_freq;
+  this.produce = newTrader.e;
+  this.primary_income = newTrader.primary_income;
+  this.language = newTrader.language;
+  this.country_of_residence = newTrader.country_of_residence;
+}
+
 // Remove any duplicate indexes in an array
 function removeDuplicates(array) {
   return Array.from(new Set(array));
 }
 
+// Polyfill for Object.fromEntries (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
+function objectFromEntries(entries = []) {
+  return Object.assign({}, ...entries.map(([key, val]) => ({ [key]: val })));
+}
+
+// Array.prototype.map, but applied to objects
+function objMap(mapperFn, obj) {
+  return objectFromEntries(
+    Object.entries(obj).map(([key, val]) => {
+      return [key, mapperFn(val)];
+    })
+  );
+}
+
+// function applyField(field = "") {
+//   return function reducerFn(accumulator = {}, value = "") {
+//     const copyObj = { ...accumulator };
+//     copyObj[field] = value;
+//     return copyObj;
+//   };
+// }
+// function applyField(field) {
+//   return function reducer(distinctUsers) {};
+// }
+
+function DANGER_PERFORM_IO() {
+  try {
+    console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
+    // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
+    // db.truncateTable('traders');
+    // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
+    // db.batchInsert('traders', arrayWithCountry);
+  } catch {
+    console.log("Failed to batch insert");
+  }
+}
+
 module.exports = {
-  removeDuplicates
+  removeDuplicates,
+  objMap
 };
