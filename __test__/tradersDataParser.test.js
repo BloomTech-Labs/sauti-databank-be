@@ -19,4 +19,17 @@ describe("helpers", () => {
     // assert
     expect(arrayWithoutDuplicates).toEqual([1, 2, 3, 4, 5]);
   });
+
+  test("objMap() should work the same as Array.prototype.map, but applied to an object", () => {
+    // import dependency
+    const { objMap } = require("../models/tradersDataParser");
+    // arrange
+    const numbers = { a: 1, b: 2, c: 3 };
+    const expected = { a: "1", b: "2", c: "3" };
+    const stringify = val => String(val);
+    // act
+    const stringifiedNumbers = objMap(stringify, numbers);
+    // assert
+    expect(stringifiedNumbers).toEqual(expected);
+  });
 });
