@@ -4,7 +4,7 @@ const db = require("./model");
 
 // tradersDataParser.js withdraws user information from PHP serialized data in `platform_sessions2` table in database
 // Many users have submit more than one request so there are ~80,000 entries in `platform_sessions2` but only ~11,000 users in `traders` table
-// This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc. 
+// This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc.
 
 // ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
 // To run the file during testing, run: node ./models/tradersDataParser.js
@@ -19,6 +19,9 @@ try {
       object.cell_num = element.cell_num;
       array.push(object);
     });
+
+    const allCellNums = sessions.map(session => session.cellNum);
+    const uniqueCellNums = removeDuplicates(allCellNums);
 
     // At this point, "array" contains a bunch of phone numbers, some that appear multiple times
     // The loop below removes all duplicate phone numbers, so they only appear once, and form the skeleton of what the object will look like
@@ -42,6 +45,8 @@ try {
         });
       }
     }
+    // console.log(distinctUsers);
+    // console.log(map)
     getGender(sessions, distinctUsers);
   });
 
@@ -50,15 +55,16 @@ try {
   getGender = (sessions, distinctUsers) => {
     let arrayWithGender = distinctUsers;
 
-    sessions.map(element => {
-      let num = element.cell_num;
-      if (element.data.includes("Male")) {
+    sessions.map(session => {
+      console.log(session);
+      let num = session.cell_num;
+      if (session.data.includes("Male")) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Male";
           }
         });
-      } else if (element.data.includes("Female")) {
+      } else if (session.data.includes("Female")) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Female";
@@ -287,28 +293,40 @@ try {
 
     arrayWithCountry.map(user => {
       let num = user.cell_num;
-      if ((/^254/).test(num)) {
+      if (/^254/.test(num)) {
         user.country_of_residence = "KEN";
-      } else if ((/^256/).test(num)) {
+      } else if (/^256/.test(num)) {
         user.country_of_residence = "UGA";
-      } else if ((/^250/).test(num)) {
+      } else if (/^250/.test(num)) {
         user.country_of_residence = "RWA";
-      } else if ((/^255/).test(num)) {
+      } else if (/^255/.test(num)) {
         user.country_of_residence = "TZA";
       }
     });
 
-    
     try {
-      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()))
+      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
       // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      db.truncateTable('traders');
+      // db.truncateTable('traders');
       // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      db.batchInsert('traders', arrayWithCountry);
+      // db.batchInsert('traders', arrayWithCountry);
     } catch {
       console.log("Failed to batch insert");
     }
   };
 } catch ({ message }) {
-    console.log("Failed file", message);
+  console.log("Failed file", message);
 }
+
+/**
+ * Helpers
+ */
+
+// Remove any duplicate indexes in an array
+function removeDuplicates(array) {
+  return Array.from(new Set(array));
+}
+
+module.exports = {
+  removeDuplicates
+};
