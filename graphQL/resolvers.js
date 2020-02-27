@@ -47,12 +47,10 @@ module.exports = {
           ...input,
           password: hashedPassword
         });
+        const token = generateToken(newlyCreatedUser)
         // leave out the stored password when returning the user object.
-        const {
-          password,
-          ...newlyCreatedUserWithoutPassword
-        } = newlyCreatedUser;
-        return newlyCreatedUserWithoutPassword;
+        const { password, ...newlyCreatedUserWithoutPassword } = newlyCreatedUser;
+        return { ...newlyCreatedUserWithoutPassword, token }
       }
     },
     async login(_, { input }, ctx) {
