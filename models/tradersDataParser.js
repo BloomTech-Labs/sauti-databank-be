@@ -35,9 +35,7 @@ db.findLanceData()
   // The following promise chain fills in the 'null' values in the user object:
   // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
   .then(applyGenders)
-  .then(function applyAges([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyAges)
   .then(function applyEducation([sessions, traders]) {
     return [sessions, traders];
   })
@@ -82,74 +80,38 @@ function applyGenders([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-function getGender(sessions, distinctUsers) {
-  let arrayWithGender = distinctUsers;
+function applyAges([sessions, traders]) {
+  const ageGroups = ["10-20", "20-30", "30-40", "40-50", "50-60", "60-70"];
+  const transformedTraders = traders.map(function determineTradersAge(trader) {
+    const sessionIncludingTradersAge = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (ageGroup of ageGroups) {
+          if (session.data.includes(ageGroup)) {
+            return true;
+          }
+        }
+        return null;
+      });
 
-  sessions.map(session => {
-    let num = session.cell_num;
-    if (session.data.includes("Male")) {
-      arrayWithGender.map(user => {
-        if (user.cell_num === num) {
-          user.gender = "Male";
-        }
-      });
-    } else if (session.data.includes("Female")) {
-      arrayWithGender.map(user => {
-        if (user.cell_num === num) {
-          user.gender = "Female";
-        }
-      });
+    if (!sessionIncludingTradersAge) {
+      return { ...trader, age: "Unknown" };
+    } else if (sessionIncludingTradersAge.data.includes("10-20")) {
+      return { ...trader, age: "10-20" };
+    } else if (sessionIncludingTradersAge.data.includes("20-30")) {
+      return { ...trader, age: "20-30" };
+    } else if (sessionIncludingTradersAge.data.includes("30-40")) {
+      return { ...trader, age: "30-40" };
+    } else if (sessionIncludingTradersAge.data.includes("40-50")) {
+      return { ...trader, age: "30-40" };
+    } else if (sessionIncludingTradersAge.data.includes("50-60")) {
+      return { ...trader, age: "50-60" };
+    } else {
+      return { ...trader, age: "60-70" };
     }
   });
 
-  getAge(sessions, arrayWithGender);
-}
-
-function getAge(sessions, arrayWithGender) {
-  let arrayWithAge = arrayWithGender;
-
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (element.data.includes("10-20")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "10-20";
-        }
-      });
-    } else if (element.data.includes("20-30")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "20-30";
-        }
-      });
-    } else if (element.data.includes("30-40")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "30-40";
-        }
-      });
-    } else if (element.data.includes("40-50")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "40-50";
-        }
-      });
-    } else if (element.data.includes("50-60")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "50-60";
-        }
-      });
-    } else if (element.data.includes("60-70")) {
-      arrayWithAge.map(user => {
-        if (user.cell_num === num) {
-          user.age = "60-70";
-        }
-      });
-    }
-  });
-
-  getEducation(sessions, arrayWithAge);
+  return [sessions, transformedTraders];
 }
 
 getEducation = (sessions, arrayWithAge) => {
@@ -382,6 +344,11 @@ function transformTraderData(sessions, traders, mapperFn) {
   );
 
   return transformedTraders;
+}
+
+function trace(val) {
+  console.log(val);
+  return val;
 }
 
 function DANGER_PERFORM_IO() {
