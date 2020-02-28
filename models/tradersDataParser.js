@@ -11,31 +11,48 @@ const db = require("./model");
 
 // First Lance's Data is saved in array = []
 try {
-  db.findLanceData().then(sessions => {
-    const allCellNums = sessions.map(session => session.cell_num);
-    const uniqueCellNums = removeDuplicates(allCellNums);
+  db.findLanceData()
+    .then(function getDistinctUsers(sessions) {
+      const allCellNums = sessions.map(session => session.cell_num);
+      const uniqueCellNums = removeDuplicates(allCellNums);
 
-    // initialize a new trader object for each unique cell_num with the cell_num field auto-populated.
-    const distinctUsers = uniqueCellNums.map(cellNum => {
-      return new Trader({
-        cell_num: cellNum,
-        gender: null,
-        age: null,
-        education: null,
-        crossing_freq: null,
-        produce: null,
-        primary_income: null,
-        language: null,
-        country_of_residence: null
+      // initialize a new trader object for each unique cell_num with the cell_num field auto-populated.
+      const distinctTraders = uniqueCellNums.map(cellNum => {
+        return new Trader({
+          cell_num: cellNum,
+          gender: null,
+          age: null,
+          education: null,
+          crossing_freq: null,
+          produce: null,
+          primary_income: null,
+          language: null,
+          country_of_residence: null
+        });
       });
-    });
 
-    getGender(sessions, distinctUsers);
-  });
+      return [sessions, distinctTraders];
+    })
+    // The following promise chain fills in the 'null' values in the user object:
+    // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
+    .then(function applyGenders([sessions, traders]) {
+      const tradersWithGenderApplied = transformTraderData(
+        sessions,
+        traders,
+        applyGender
+      );
+      return [sessions, tradersWithGenderApplied];
+    })
+    .then(console.log)
+    .then(function applyAges([sessions, traders]) {})
+    .then(function applyEducation([sessions, traders]) {})
+    .then(function applyCrossingFrequencies([sessions, traders]) {})
+    .then(function applyProduce([sessions, traders]) {})
+    .then(function applyPrimaryIncomes([sessions, traders]) {})
+    .then(function applyLanguages([sessions, traders]) {})
+    .then(function applyCountries([sessions, traders]) {});
 
-  // These functions fill in the 'null' values in the user object:
-  // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
-  getGender = (sessions, distinctUsers) => {
+  function applyGender(trader, index) {
     let arrayWithGender = distinctUsers;
 
     sessions.map(session => {
@@ -56,7 +73,7 @@ try {
     });
 
     getAge(sessions, arrayWithGender);
-  };
+  }
 
   getAge = (sessions, arrayWithGender) => {
     let arrayWithAge = arrayWithGender;
@@ -323,22 +340,24 @@ function objectFromEntries(entries = []) {
 // Array.prototype.map, but applied to objects
 function objMap(mapperFn, obj) {
   return objectFromEntries(
-    Object.entries(obj).map(([key, val]) => {
-      return [key, mapperFn(val)];
+    Object.entries(obj).map(([key, val], i, arr) => {
+      return [key, mapperFn(val, i, arr)];
     })
   );
 }
 
-// function applyField(field = "") {
-//   return function reducerFn(accumulator = {}, value = "") {
-//     const copyObj = { ...accumulator };
-//     copyObj[field] = value;
-//     return copyObj;
-//   };
-// }
-// function applyField(field) {
-//   return function reducer(distinctUsers) {};
-// }
+function transformTraderData(sessions, traders, mapperFn) {
+  const transformedTraders = traders.reduce(
+    (allTraders, currentTrader, index) => {
+      return sessions[index].cell_num === currentTrader.cell_num
+        ? [...allTraders, objMap(mapperFn, currentTrader)]
+        : [...allTraders, currentTrader];
+    },
+    []
+  );
+
+  return transformedTraders;
+}
 
 function DANGER_PERFORM_IO() {
   try {
