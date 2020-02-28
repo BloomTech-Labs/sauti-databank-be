@@ -22,13 +22,13 @@ describe("helpers", () => {
 
   test("objMap() should work the same as Array.prototype.map, but applied to an object", () => {
     // import dependency
-    const { objMap } = require("../models/tradersDataParser");
+    const { mapObj } = require("../models/tradersDataParser");
     // arrange
     const numbers = { a: 1, b: 2, c: 3 };
     const expected = { a: "1", b: "2", c: "3" };
     const stringify = val => String(val);
     // act
-    const stringifiedNumbers = objMap(stringify, numbers);
+    const stringifiedNumbers = mapObj(stringify, numbers);
     // assert
     expect(stringifiedNumbers).toEqual(expected);
   });
