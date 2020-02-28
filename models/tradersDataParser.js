@@ -36,9 +36,7 @@ db.findLanceData()
   // gender, age, education, crossing frequency, produce, primary income, language, and country of residence
   .then(applyGenders)
   .then(applyAges)
-  .then(function applyEducation([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyEducation)
   .then(function applyCrossingFrequencies([sessions, traders]) {
     return [sessions, traders];
   })
@@ -114,40 +112,42 @@ function applyAges([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getEducation = (sessions, arrayWithAge) => {
-  let arrayWithEducation = arrayWithAge;
+function applyEducation([sessions, traders]) {
+  const possibleEducation = [
+    "No formal education",
+    "Primary",
+    "Secondary",
+    "University/College"
+  ];
+  const transformedTraders = traders.map(trader => {
+    const sessionIncludingTradersEducation = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (education of possibleEducation) {
+          if (session.data.includes(education)) {
+            return true;
+          }
+        }
+        return null;
+      });
 
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (element.data.includes("No formal education")) {
-      arrayWithEducation.map(user => {
-        if (user.cell_num === num) {
-          user.education = "No formal education";
-        }
-      });
-    } else if (element.data.includes("Primary")) {
-      arrayWithEducation.map(user => {
-        if (user.cell_num === num) {
-          user.education = "Primary";
-        }
-      });
-    } else if (element.data.includes("Secondary")) {
-      arrayWithEducation.map(user => {
-        if (user.cell_num === num) {
-          user.education = "Secondary";
-        }
-      });
-    } else if (element.data.includes("University/College")) {
-      arrayWithEducation.map(user => {
-        if (user.cell_num === num) {
-          user.education = "University/College";
-        }
-      });
+    if (!sessionIncludingTradersEducation) {
+      return { ...trader, education: "Unknown" };
+    } else if (
+      sessionIncludingTradersEducation.data.includes("No formal education")
+    ) {
+      return { ...trader, education: "No formal education" };
+    } else if (sessionIncludingTradersEducation.data.includes("Primary")) {
+      return { ...trader, education: "Primary" };
+    } else if (sessionIncludingTradersEducation.data.includes("Secondary")) {
+      return { ...trader, education: "Secondary" };
+    } else {
+      return { ...trader, education: "University/College" };
     }
   });
 
-  getCrossingFreq(sessions, arrayWithEducation);
-};
+  return [sessions, transformedTraders];
+}
 
 getCrossingFreq = (sessions, arrayWithEducation) => {
   let arrayWithCrossingFreq = arrayWithEducation;
