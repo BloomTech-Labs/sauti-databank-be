@@ -37,9 +37,7 @@ db.findLanceData()
   .then(applyGenders)
   .then(applyAges)
   .then(applyEducation)
-  .then(function applyCrossingFrequencies([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyCrossingFrequencies)
   .then(function applyProduce([sessions, traders]) {
     return [sessions, traders];
   })
@@ -149,40 +147,42 @@ function applyEducation([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getCrossingFreq = (sessions, arrayWithEducation) => {
-  let arrayWithCrossingFreq = arrayWithEducation;
+function applyCrossingFrequencies([sessions, traders]) {
+  const possibleCrossingFrequencies = ["Never", "Monthly", "Weekly", "Daily"];
 
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (element.data.includes("Never")) {
-      arrayWithCrossingFreq.map(user => {
-        if (user.cell_num === num) {
-          user.crossing_freq = "Never";
+  const transformedTraders = traders.map(trader => {
+    const sessionIncludingTradersCrossingFrequency = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (possibleCrossingFrequency of possibleCrossingFrequencies) {
+          if (session.data.includes(possibleCrossingFrequency)) {
+            return true;
+          }
         }
+        return null;
       });
-    } else if (element.data.includes("Monthly")) {
-      arrayWithCrossingFreq.map(user => {
-        if (user.cell_num === num) {
-          user.crossing_freq = "Monthly";
-        }
-      });
-    } else if (element.data.includes("Weekly")) {
-      arrayWithCrossingFreq.map(user => {
-        if (user.cell_num === num) {
-          user.crossing_freq = "Weekly";
-        }
-      });
-    } else if (element.data.includes("Daily")) {
-      arrayWithCrossingFreq.map(user => {
-        if (user.cell_num === num) {
-          user.crossing_freq = "Daily";
-        }
-      });
+
+    if (!sessionIncludingTradersCrossingFrequency) {
+      return { ...trader, crossing_freq: "Unknown" };
+    } else if (
+      sessionIncludingTradersCrossingFrequency.data.includes("Never")
+    ) {
+      return { ...trader, crossing_freq: "Never" };
+    } else if (
+      sessionIncludingTradersCrossingFrequency.data.includes("Monthly")
+    ) {
+      return { ...trader, crossing_freq: "Monthly" };
+    } else if (
+      sessionIncludingTradersCrossingFrequency.data.includes("Weekly")
+    ) {
+      return { ...trader, crossing_freq: "Weekly" };
+    } else {
+      return { ...trader, crossing_freq: "Daily" };
     }
   });
 
-  getProduce(sessions, arrayWithCrossingFreq);
-};
+  return [sessions, transformedTraders];
+}
 
 getProduce = (sessions, arrayWithCrossingFreq) => {
   let arrayWithProduce = arrayWithCrossingFreq;
