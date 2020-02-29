@@ -38,9 +38,7 @@ db.findLanceData()
   .then(applyAges)
   .then(applyEducation)
   .then(applyCrossingFrequencies)
-  .then(function applyProduce([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyProduce)
   .then(function applyPrimaryIncomes([sessions, traders]) {
     return [sessions, traders];
   })
@@ -51,6 +49,7 @@ db.findLanceData()
     return [sessions, traders];
   })
   .then(console.log)
+  // .then(DANGER_PERFORM_IO)
   .catch(error => {
     console.error("Failure: ", error);
   });
@@ -184,31 +183,33 @@ function applyCrossingFrequencies([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getProduce = (sessions, arrayWithCrossingFreq) => {
-  let arrayWithProduce = arrayWithCrossingFreq;
+function applyProduce([sessions, traders]) {
+  return [sessions, transformedTraders];
 
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (
-      element.data.includes(`survey-2-produce\";a:1:{i:0;s:3`) ||
-      element.data.includes(`survey-2-produce\";a:1:{i:0;s:4`)
-    ) {
-      arrayWithProduce.map(user => {
-        if (user.cell_num === num) {
-          user.produce = "Yes";
-        }
-      });
-    } else if (element.data.includes(`survey-2-produce\";a:1:{i:0;s:2`)) {
-      arrayWithProduce.map(user => {
-        if (user.cell_num === num) {
-          user.produce = "No";
-        }
-      });
-    }
-  });
+  // let arrayWithProduce = arrayWithCrossingFreq;
 
-  getPrimaryIncome(sessions, arrayWithProduce);
-};
+  // sessions.map(element => {
+  //   let num = element.cell_num;
+  //   if (
+  //     element.data.includes(`survey-2-produce\";a:1:{i:0;s:3`) ||
+  //     element.data.includes(`survey-2-produce\";a:1:{i:0;s:4`)
+  //   ) {
+  //     arrayWithProduce.map(user => {
+  //       if (user.cell_num === num) {
+  //         user.produce = "Yes";
+  //       }
+  //     });
+  //   } else if (element.data.includes(`survey-2-produce\";a:1:{i:0;s:2`)) {
+  //     arrayWithProduce.map(user => {
+  //       if (user.cell_num === num) {
+  //         user.produce = "No";
+  //       }
+  //     });
+  //   }
+  // });
+
+  // getPrimaryIncome(sessions, arrayWithProduce);
+}
 
 getPrimaryIncome = (sessions, arrayWithProduce) => {
   let arrayWithPrimaryIncome = arrayWithProduce;
