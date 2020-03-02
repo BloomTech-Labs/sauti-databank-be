@@ -191,7 +191,7 @@ function applyProduce([sessions, traders]) {
   // sessions.map(element => {
   //   let num = element.cell_num;
   //   if (
-  //     element.data.includes(`survey-2-produce\";a:1:{i:0;s:3`) ||
+  //  element.data.includes(`survey-2-produce\";a:1:{i:0;s:3`) ||
   //     element.data.includes(`survey-2-produce\";a:1:{i:0;s:4`)
   //   ) {
   //     arrayWithProduce.map(user => {
@@ -293,10 +293,6 @@ getCountry = (sessions, arrayWithLanguage) => {
       user.country_of_residence = "TZA";
     }
   });
-
-  // Clear the db of all traders' entries and repopulate it with unique values.
-  // This function will run every 24 hours via a cron job.
-  DANGER_PERFORM_IO();
 };
 
 /**
@@ -352,6 +348,8 @@ function trace(val) {
   return val;
 }
 
+// Clear the db of all traders' entries and repopulate it with unique values.
+// This function will run every 24 hours via a cron job.
 function DANGER_PERFORM_IO() {
   try {
     console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
