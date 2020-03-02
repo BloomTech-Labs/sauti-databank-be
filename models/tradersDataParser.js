@@ -184,31 +184,27 @@ function applyCrossingFrequencies([sessions, traders]) {
 }
 
 function applyProduce([sessions, traders]) {
+  const possibleProduce = [
+    `survey-2-produce\";a:1:{i:0;s:3`,
+    `survey-2-produce\";a:1:{i:0;s:4`
+  ];
+  const transformedTraders = traders.map(trader => {
+    const sessionIncludingTradersProduce = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (pp of possibleProduce) {
+          if (session.data.includes(pp)) return true;
+        }
+      });
+
+    if (!sessionIncludingTradersProduce) {
+      return { ...trader, produce: "No" };
+    } else {
+      return { ...trader, produce: "Yes" };
+    }
+  });
+
   return [sessions, transformedTraders];
-
-  // let arrayWithProduce = arrayWithCrossingFreq;
-
-  // sessions.map(element => {
-  //   let num = element.cell_num;
-  //   if (
-  //  element.data.includes(`survey-2-produce\";a:1:{i:0;s:3`) ||
-  //     element.data.includes(`survey-2-produce\";a:1:{i:0;s:4`)
-  //   ) {
-  //     arrayWithProduce.map(user => {
-  //       if (user.cell_num === num) {
-  //         user.produce = "Yes";
-  //       }
-  //     });
-  //   } else if (element.data.includes(`survey-2-produce\";a:1:{i:0;s:2`)) {
-  //     arrayWithProduce.map(user => {
-  //       if (user.cell_num === num) {
-  //         user.produce = "No";
-  //       }
-  //     });
-  //   }
-  // });
-
-  // getPrimaryIncome(sessions, arrayWithProduce);
 }
 
 getPrimaryIncome = (sessions, arrayWithProduce) => {
