@@ -40,9 +40,7 @@ db.findLanceData()
   .then(applyCrossingFrequencies)
   .then(applyProduce)
   .then(applyPrimaryIncomes)
-  .then(function applyLanguages([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyLanguages)
   .then(function applyCountries([sessions, traders]) {
     return [sessions, traders];
   })
@@ -229,46 +227,40 @@ function applyPrimaryIncomes([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getLanguage = (sessions, arrayWithPrimaryIncome) => {
-  let arrayWithLanguage = arrayWithPrimaryIncome;
+function applyLanguages([sessions, traders]) {
+  const possibleLanguages = [
+    "English",
+    "Swahili",
+    "Luganda",
+    "Kinyarwanda",
+    "Lukiga"
+  ];
+  const transformedTraders = traders.map(trader => {
+    const sessionIncludingTradersLanguage = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (pl of possibleLanguages) {
+          if (session.data.includes(pl)) return true;
+        }
+      });
 
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (element.data.includes("English")) {
-      arrayWithLanguage.map(user => {
-        if (user.cell_num === num) {
-          user.language = "English";
-        }
-      });
-    } else if (element.data.includes("Swahili")) {
-      arrayWithLanguage.map(user => {
-        if (user.cell_num === num) {
-          user.language = "Swahili";
-        }
-      });
-    } else if (element.data.includes("Luganda")) {
-      arrayWithLanguage.map(user => {
-        if (user.cell_num === num) {
-          user.language = "Luganda";
-        }
-      });
-    } else if (element.data.includes("Kinyarwanda")) {
-      arrayWithLanguage.map(user => {
-        if (user.cell_num === num) {
-          user.language = "Kinyarwanda";
-        }
-      });
-    } else if (element.data.includes("Lukiga")) {
-      arrayWithLanguage.map(user => {
-        if (user.cell_num === num) {
-          user.language = "Lukiga";
-        }
-      });
+    if (!sessionIncludingTradersLanguage) {
+      return { ...trader, language: "Unknown" };
+    } else if (sessionIncludingTradersLanguage.data.includes("English")) {
+      return { ...trader, language: "English" };
+    } else if (sessionIncludingTradersLanguage.data.includes("Swahili")) {
+      return { ...trader, language: "Swahili" };
+    } else if (sessionIncludingTradersLanguage.data.includes("Luganda")) {
+      return { ...trader, language: "Luganda" };
+    } else if (sessionIncludingTradersLanguage.data.includes("Kinyarwanda")) {
+      return { ...trader, language: "Kinyarwanda" };
+    } else if (sessionIncludingTradersLanguage.data.includes("Lukiga")) {
+      return { ...trader, language: "Lukiga" };
     }
   });
 
-  getCountry(sessions, arrayWithLanguage);
-};
+  return [sessions, transformedTraders];
+}
 
 getCountry = (sessions, arrayWithLanguage) => {
   let arrayWithCountry = arrayWithLanguage;
