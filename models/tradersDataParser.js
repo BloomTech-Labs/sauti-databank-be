@@ -299,38 +299,6 @@ function removeDuplicates(array) {
   return Array.from(new Set(array));
 }
 
-// Polyfill for Object.fromEntries (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
-function objectFromEntries(entries = []) {
-  return Object.assign({}, ...entries.map(([key, val]) => ({ [key]: val })));
-}
-
-// Array.prototype.map, but applied to objects
-function mapObj(mapperFn, obj) {
-  return objectFromEntries(
-    Object.entries(obj).map(([key, val], i, arr) => {
-      return [key, mapperFn(val, i, arr)];
-    })
-  );
-}
-
-function transformTraderData(sessions, traders, mapperFn) {
-  const transformedTraders = traders.reduce(
-    (allTraders, currentTrader, index) => {
-      return sessions[index].cell_num === currentTrader.cell_num
-        ? [...allTraders, objMap(mapperFn, currentTrader)]
-        : [...allTraders, currentTrader];
-    },
-    []
-  );
-
-  return transformedTraders;
-}
-
-function trace(val) {
-  console.log(val);
-  return val;
-}
-
 // Clear the db of all traders' entries and repopulate it with unique values.
 // This function will run every 24 hours via a cron job.
 function DANGER_PERFORM_IO() {
@@ -344,8 +312,3 @@ function DANGER_PERFORM_IO() {
     console.log("Failed to batch insert");
   }
 }
-
-module.exports = {
-  removeDuplicates,
-  mapObj
-};
