@@ -41,9 +41,7 @@ db.findLanceData()
   .then(applyProduce)
   .then(applyPrimaryIncomes)
   .then(applyLanguages)
-  .then(function applyCountries([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyCountries)
   .then(console.log)
   // .then(DANGER_PERFORM_IO)
   .catch(error => {
@@ -262,22 +260,23 @@ function applyLanguages([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getCountry = (sessions, arrayWithLanguage) => {
-  let arrayWithCountry = arrayWithLanguage;
-
-  arrayWithCountry.map(user => {
-    let num = user.cell_num;
-    if (/^254/.test(num)) {
-      user.country_of_residence = "KEN";
-    } else if (/^256/.test(num)) {
-      user.country_of_residence = "UGA";
-    } else if (/^250/.test(num)) {
-      user.country_of_residence = "RWA";
-    } else if (/^255/.test(num)) {
-      user.country_of_residence = "TZA";
+function applyCountries([sessions, traders]) {
+  const transformedTraders = traders.map(trader => {
+    if (/^254/.test(trader.cell_num)) {
+      return { ...trader, country_of_residence: "KEN" };
+    } else if (/^256/.test(trader.cell_num)) {
+      return { ...trader, country_of_residence: "UGA" };
+    } else if (/^250/.test(trader.cell_num)) {
+      return { ...trader, country_of_residence: "RWA" };
+    } else if (/^255/.test(trader.cell_num)) {
+      return { ...trader, country_of_residence: "TZA" };
+    } else {
+      return { ...trader, country_of_residence: "Unknown" };
     }
   });
-};
+
+  return [sessions, transformedTraders];
+}
 
 /**
  * Helpers
