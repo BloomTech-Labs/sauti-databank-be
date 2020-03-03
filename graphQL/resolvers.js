@@ -1,11 +1,8 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET: secret } = require("../config/secrets");
-const axios = require("axios")
-// axios.defaults.baseURL = 'https://api.sandbox.paypal.com/';
-// let token = 'A21AAF03vIoh2jLxs6HiryG-p64pIS1wS8s8H61q3shC-j7LUHfutJciuJdAjp_J7FwcOibdlPS9LbBkFErndpbQ3hVLVGqgw';
-// axios.defaults.headers.common = { 'Authorization': `Bearer ${token}` };
-const qs = require("qs")
+const axios = require("axios");
+const qs = require("qs");
 
 module.exports = {
   Query: {
@@ -81,7 +78,7 @@ module.exports = {
 
     deleteUser(_, { input }) {
       // The first arg to DeletedUserOrError becomes the returned input value
-      return input;
+      return input; innacurate
     },
     updateUserToFree(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
@@ -90,16 +87,18 @@ module.exports = {
   },
   UpdateUserToFree: {
     async __resolveType(user, ctx) {
-      const theUser = await ctx.Users.findByEmail(user.email)
-      const { subscription_id } = theUser
+      const theUser = await ctx.Users.findByEmail(user.email);
+      const { subscription_id, id } = theUser;
       const url = 'https://api.sandbox.paypal.com/v1/oauth2/token';
       const oldData = {
         grant_type: 'client_credentials'
-      };
+      }
       const auth = {
-        username: 'AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM',
-        password: 'ELoDKQ_s6rSZ4WQTlN2eUFOGsapYZJNGJBHpqe4RX3i9M95_kSoW8j1TZBUBnRXHu6oVnv7I6fD9KkSW'
-      };
+        username: `${process.env.PAYPAL_AUTH_USERNAME}`,
+        password: `${process.env.PAYPAL_AUTH_SECRET}`
+        // username: 'AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM',
+        // password: 'ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA'
+      }
       const options = {
         method: 'post',
         headers: {
@@ -109,31 +108,32 @@ module.exports = {
         data: qs.stringify(oldData),
         auth: auth,
         url,
-      };
+      }
 
-      const { data } = await axios(options)
-      const { access_token } = data
+      const { data } = await axios(options);
+      const { access_token } = data;
       axios.defaults.headers.common = { 'Authorization': `Bearer ${access_token}` };
 
       if (access_token) {
         const config = {
           headers: { Authorization: `Bearer ${access_token}` }
-        };
-        // const bodyParameters = {
-        //    key: "value"
-        // };
-        axios.post(
-          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/suspend`,
-          // bodyParameters,
-          config
-        ).then(console.log).catch(console.log);
+        }
+        const requestToSuspend = await axios.post(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/suspend`, config)
+        if (requestToSuspend) {
+          try {
+            theUser.tier = "FREE"
+            const updatedUser = await ctx.Users.updateById(id, theUser)
+          }
+          catch (err) {
+            console.log('error', err)
+          }
+        }
         return "DatabankUser"
       } else {
         let error = user;
         error.message = `problemo with auth stuff`;
         return "Error";
       }
-
     }
   },
   EditedUserOrError: {
@@ -161,7 +161,8 @@ module.exports = {
     }
   }
   // TODO: Add a DatabankUser resolver to return the updated fields
-};
+}
+
 
 /**
  * Helpers
