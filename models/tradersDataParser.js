@@ -39,9 +39,7 @@ db.findLanceData()
   .then(applyEducation)
   .then(applyCrossingFrequencies)
   .then(applyProduce)
-  .then(function applyPrimaryIncomes([sessions, traders]) {
-    return [sessions, traders];
-  })
+  .then(applyPrimaryIncomes)
   .then(function applyLanguages([sessions, traders]) {
     return [sessions, traders];
   })
@@ -207,31 +205,29 @@ function applyProduce([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
-getPrimaryIncome = (sessions, arrayWithProduce) => {
-  let arrayWithPrimaryIncome = arrayWithProduce;
+function applyPrimaryIncomes([sessions, traders]) {
+  const primaryIncomes = [
+    `survey-1-primaryincome\";a:1:{i:0;s:3`,
+    `survey-1-primaryincome\";a:1:{i:0;s:4`
+  ];
+  const transformedTraders = traders.map(trader => {
+    const sessionIncludingTradersPrimaryIncome = sessions
+      .filter(session => session.cell_num === trader.cell_num)
+      .find(session => {
+        for (pi of primaryIncomes) {
+          if (session.data.includes(pi)) return true;
+        }
+      });
 
-  sessions.map(element => {
-    let num = element.cell_num;
-    if (
-      element.data.includes(`survey-1-primaryincome\";a:1:{i:0;s:3`) ||
-      element.data.includes(`survey-1-primaryincome\";a:1:{i:0;s:4`)
-    ) {
-      arrayWithPrimaryIncome.map(user => {
-        if (user.cell_num === num) {
-          user.primary_income = "Yes";
-        }
-      });
-    } else if (element.data.includes(`survey-1-primaryincome\";a:1:{i:0;s:2`)) {
-      arrayWithPrimaryIncome.map(user => {
-        if (user.cell_num === num) {
-          user.primary_income = "No";
-        }
-      });
+    if (!sessionIncludingTradersPrimaryIncome) {
+      return { ...trader, primary_income: "No" };
+    } else {
+      return { ...trader, primary_income: "Yes" };
     }
   });
 
-  getLanguage(sessions, arrayWithPrimaryIncome);
-};
+  return [sessions, transformedTraders];
+}
 
 getLanguage = (sessions, arrayWithPrimaryIncome) => {
   let arrayWithLanguage = arrayWithPrimaryIncome;
