@@ -50,6 +50,8 @@ const typeDefs = gql`
     country: String
     token: String
     organization_type: OrganizationType
+    subscription_id: String
+
   }
 
   enum UserTier {
@@ -72,6 +74,7 @@ const typeDefs = gql`
 
   union EditedUserOrError = DatabankUser | Error
   union DeletedUserOrError = DatabankUser | Error
+  union UpdateUserToFree = DatabankUser | Error
 
   input newTraderInput {
     id: Int
@@ -119,6 +122,13 @@ const typeDefs = gql`
     job_position: String
     country: String
     organization_type: OrganizationType
+    subscription_id: String
+  }
+
+  input newUpdateUserToFreeInput {
+    id: Int
+    email: String!
+    subscription_id: String
   }
 
   input newDeleteUserInput {
@@ -154,6 +164,7 @@ const typeDefs = gql`
     login(input: newLoginInput!): DatabankUser!
     editUser(input: newEditUserInput!): EditedUserOrError!
     deleteUser(input: newDeleteUserInput!): DeletedUserOrError!
+    updateUserToFree(input: newUpdateUserToFreeInput!): UpdateUserToFree!
   }
 `;
 
