@@ -42,8 +42,7 @@ db.findLanceData()
   .then(applyPrimaryIncomes)
   .then(applyLanguages)
   .then(applyCountries)
-  .then(console.log)
-  // .then(DANGER_PERFORM_IO)
+  .then(PRUNE_TRADERS_TABLE)
   .catch(error => {
     console.error("Failure: ", error);
   });
@@ -278,6 +277,20 @@ function applyCountries([sessions, traders]) {
   return [sessions, transformedTraders];
 }
 
+// Clear the db of all traders' entries and repopulate it with unique values.
+// This function will run every 24 hours via a cron job.
+function PRUNE_TRADERS_TABLE() {
+  try {
+    console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
+    // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
+    db.truncateTable("traders");
+    // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
+    db.batchInsert("traders", arrayWithCountry);
+  } catch {
+    console.log("Failed to batch insert");
+  }
+}
+
 /**
  * Helpers
  */
@@ -288,7 +301,7 @@ function Trader(newTrader) {
   this.age = newTrader.age;
   this.education = newTrader.education;
   this.crossing_freq = newTrader.crossing_freq;
-  this.produce = newTrader.e;
+  this.produce = newTrader.produce;
   this.primary_income = newTrader.primary_income;
   this.language = newTrader.language;
   this.country_of_residence = newTrader.country_of_residence;
@@ -297,18 +310,4 @@ function Trader(newTrader) {
 // Remove any duplicate indexes in an array
 function removeDuplicates(array) {
   return Array.from(new Set(array));
-}
-
-// Clear the db of all traders' entries and repopulate it with unique values.
-// This function will run every 24 hours via a cron job.
-function DANGER_PERFORM_IO() {
-  try {
-    console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
-    // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-    // db.truncateTable('traders');
-    // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-    // db.batchInsert('traders', arrayWithCountry);
-  } catch {
-    console.log("Failed to batch insert");
-  }
 }
