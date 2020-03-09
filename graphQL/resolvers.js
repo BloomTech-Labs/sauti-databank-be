@@ -8,8 +8,15 @@ module.exports = {
   Query: {
     // Used to get data from "traders" table only
     async tradersUsers(_, { input }, ctx) {
-      if (!input) return ctx.Traders.getTraders();
+      console.log("traders", input)
+      let meObject = typeof 'object';
+      if (!input) {
+        return ctx.Traders.getDataSessions();
+      }
       const keys = Object.keys(input);
+      if (meObject && !keys.length) {
+        return ctx.Traders.getTraders();
+      }
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getTraders();
@@ -21,8 +28,18 @@ module.exports = {
     },
     // Used to get data from "parsed_data" and "traders" table joined
     async sessionsData(_, { input }, ctx) {
-      if (!input) return ctx.Traders.getDataSessions();
+      console.log("sessions", input)
+      let meObject = typeof 'object';
+      if (!input) {
+        console.log("NO INPUT", input)
+        return ctx.Traders.getDataSessions();
+      }
       const keys = Object.keys(input);
+      if (meObject && !keys.length) {
+        console.log("OBJECT", input)
+        return ctx.Traders.getDataSessions();
+      }
+      console.log("FINISHER", input)
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getDataSessions();
