@@ -51,7 +51,6 @@ const typeDefs = gql`
     token: String
     organization_type: OrganizationType
     subscription_id: String
-
   }
 
   enum UserTier {
@@ -128,7 +127,7 @@ const typeDefs = gql`
   input newUpdateUserToFreeInput {
     id: Int
     email: String!
-    subscription_id: String
+    subscription_id: String!
   }
 
   input newDeleteUserInput {
