@@ -8,8 +8,8 @@ module.exports = {
   Query: {
     // Used to get data from "traders" table only
     async tradersUsers(_, { input }, ctx) {
-      console.log("traders", input)
-      let meObject = typeof 'object';
+      console.log("traders", input);
+      let meObject = typeof "object";
       if (!input) {
         return ctx.Traders.getDataSessions();
       }
@@ -28,18 +28,18 @@ module.exports = {
     },
     // Used to get data from "parsed_data" and "traders" table joined
     async sessionsData(_, { input }, ctx) {
-      console.log("sessions", input)
-      let meObject = typeof 'object';
+      console.log("sessions", input);
+      let meObject = typeof "object";
       if (!input) {
-        console.log("NO INPUT", input)
+        console.log("NO INPUT", input);
         return ctx.Traders.getDataSessions();
       }
       const keys = Object.keys(input);
       if (meObject && !keys.length) {
-        console.log("OBJECT", input)
+        console.log("OBJECT", input);
         return ctx.Traders.getDataSessions();
       }
-      console.log("FINISHER", input)
+      console.log("FINISHER", input);
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getDataSessions();
@@ -66,15 +66,18 @@ module.exports = {
           ...input,
           password: hashedPassword
         });
-        const token = generateToken(newlyCreatedUser)
+        const token = generateToken(newlyCreatedUser);
         // leave out the stored password when returning the user object.
-        const { password, ...newlyCreatedUserWithoutPassword } = newlyCreatedUser;
-        return { ...newlyCreatedUserWithoutPassword, token }
+        const {
+          password,
+          ...newlyCreatedUserWithoutPassword
+        } = newlyCreatedUser;
+        return { ...newlyCreatedUserWithoutPassword, token };
       }
     },
     async login(_, { input }, ctx) {
       let user = input;
-      console.log("ctx", ctx)
+      console.log("ctx", ctx);
       // if password is okay
       // get user
       // make token using the tier and other user stuff
@@ -95,57 +98,62 @@ module.exports = {
 
     deleteUser(_, { input }) {
       // The first arg to DeletedUserOrError becomes the returned input value
-      return input; innacurate
+      return input;
+      innacurate;
     },
     updateUserToFree(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
-      return input
+      return input;
     }
   },
   UpdateUserToFree: {
     async __resolveType(user, ctx) {
       const theUser = await ctx.Users.findByEmail(user.email);
       const { subscription_id, id } = theUser;
-      const url = 'https://api.sandbox.paypal.com/v1/oauth2/token';
+      const url = "https://api.sandbox.paypal.com/v1/oauth2/token";
       const oldData = {
-        grant_type: 'client_credentials'
-      }
+        grant_type: "client_credentials"
+      };
       const auth = {
         username: `${process.env.PAYPAL_AUTH_USERNAME}`,
         password: `${process.env.PAYPAL_AUTH_SECRET}`
         // username: 'AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM',
         // password: 'ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA'
-      }
+      };
       const options = {
-        method: 'post',
+        method: "post",
         headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Access-Control-Allow-Credentials': true
+          "content-type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Credentials": true
         },
         data: qs.stringify(oldData),
         auth: auth,
-        url,
-      }
-
+        url
+      };
       const { data } = await axios(options);
       const { access_token } = data;
-      axios.defaults.headers.common = { 'Authorization': `Bearer ${access_token}` };
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${access_token}`
+      };
 
       if (access_token) {
         const config = {
           headers: { Authorization: `Bearer ${access_token}` }
-        }
-        const requestToSuspend = await axios.post(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/suspend`, config)
-        if (requestToSuspend) {
+        };
+        const requestToCancel = await axios.post(
+          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/cancel`,
+          config
+        );
+        if (requestToCancel) {
           try {
-            theUser.tier = "FREE"
-            const updatedUser = await ctx.Users.updateById(id, theUser)
-          }
-          catch (err) {
-            console.log('error', err)
+            theUser.tier = "FREE";
+            theUser.subscription_id = null;
+            const updatedUser = await ctx.Users.updateById(id, theUser);
+          } catch (err) {
+            console.log("error", err);
           }
         }
-        return "DatabankUser"
+        return "DatabankUser";
       } else {
         let error = user;
         error.message = `problemo with auth stuff`;
@@ -178,8 +186,7 @@ module.exports = {
     }
   }
   // TODO: Add a DatabankUser resolver to return the updated fields
-}
-
+};
 
 /**
  * Helpers
