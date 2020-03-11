@@ -152,10 +152,15 @@ const typeDefs = gql`
     password: String!
   }
 
+  input Email {
+    email: String
+  }
+
   type Query {
     tradersUsers(input: newTraderInput): [TraderUser]!
     sessionsData(input: newTraderSessionInput): [TraderSession]!
     databankUsers: [DatabankUser]!
+    databankUser(input: Email!): DatabankUser!
   }
 
   type Mutation {
