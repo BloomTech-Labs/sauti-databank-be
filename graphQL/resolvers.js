@@ -115,9 +115,8 @@ module.exports = {
       const auth = {
         username: `${process.env.PAYPAL_AUTH_USERNAME}`,
         password: `${process.env.PAYPAL_AUTH_SECRET}`
-        // username: 'AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM',
-        // password: 'ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA'
       };
+
       const options = {
         method: "post",
         headers: {
@@ -138,15 +137,33 @@ module.exports = {
         const config = {
           headers: { Authorization: `Bearer ${access_token}` }
         };
+
+        const users_subscription = await axios.get(
+          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}`
+        );
+        console.log(
+          "succesfully retrieved users sub",
+          users_subscription.data.billing_info.next_billing_time
+        );
+
         const requestToCancel = await axios.post(
           `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/cancel`,
           config
         );
+
         if (requestToCancel) {
           try {
             theUser.tier = "FREE";
-            theUser.subscription_id = null;
-            const updatedUser = await ctx.Users.updateById(id, theUser);
+            theUser.subscription_id = "cancelled";
+
+            let nextBillingDate = formatDate(
+              users_subscription.data.billing_info.next_billing_time
+            );
+            let todaysDate = formatDate(new Date());
+
+            if (nextBillingDate === todaysDate) {
+              const updatedUser = await ctx.Users.updateById(id, theUser);
+            }
           } catch (err) {
             console.log("error", err);
           }
@@ -219,4 +236,8 @@ function validPassword(user, ctx) {
     console.error("You did not specify an email and/or password.");
     return false;
   }
+}
+
+function formatDate(date) {
+  return new Date(date).toDateString();
 }
