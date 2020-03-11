@@ -51,6 +51,10 @@ module.exports = {
     },
     databankUsers(_, args, ctx) {
       return ctx.Users.findAll();
+    },
+
+    databankUser(_, args, ctx) {
+      return ctx.Users.findOne({ email: args.input.email });
     }
   },
   Mutation: {
