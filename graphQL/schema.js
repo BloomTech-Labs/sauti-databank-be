@@ -127,7 +127,7 @@ const typeDefs = gql`
   input newUpdateUserToFreeInput {
     id: Int
     email: String!
-    subscription_id: String!
+    subscription_id: String
   }
 
   input newDeleteUserInput {
