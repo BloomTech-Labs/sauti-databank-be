@@ -53,6 +53,7 @@ const typeDefs = gql`
     subscription_id: String
     registration_date: String
     updated: String
+    p_next_billing_time: String
   }
 
   enum UserTier {
