@@ -244,7 +244,3 @@ function validPassword(user, ctx) {
 function formatDate(date) {
   return new Date(date).toDateString();
 }
-
-module.exports = {
-  formatDate
-};
