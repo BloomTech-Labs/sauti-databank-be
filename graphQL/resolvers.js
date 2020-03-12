@@ -8,7 +8,6 @@ module.exports = {
   Query: {
     // Used to get data from "traders" table only
     async tradersUsers(_, { input }, ctx) {
-      console.log("traders", input);
       let meObject = typeof "object";
       if (!input) {
         return ctx.Traders.getDataSessions();
@@ -28,18 +27,14 @@ module.exports = {
     },
     // Used to get data from "parsed_data" and "traders" table joined
     async sessionsData(_, { input }, ctx) {
-      console.log("sessions", input);
       let meObject = typeof "object";
       if (!input) {
-        console.log("NO INPUT", input);
         return ctx.Traders.getDataSessions();
       }
       const keys = Object.keys(input);
       if (meObject && !keys.length) {
-        console.log("OBJECT", input);
         return ctx.Traders.getDataSessions();
       }
-      console.log("FINISHER", input);
       let dataFromDataBase;
       for (let i = 0; i < keys.length; i++) {
         if (i === 0) dataFromDataBase = await ctx.Traders.getDataSessions();
@@ -81,7 +76,6 @@ module.exports = {
     },
     async login(_, { input }, ctx) {
       let user = input;
-      console.log("ctx", ctx);
       // if password is okay
       // get user
       // make token using the tier and other user stuff
@@ -121,9 +115,8 @@ module.exports = {
       const auth = {
         username: `${process.env.PAYPAL_AUTH_USERNAME}`,
         password: `${process.env.PAYPAL_AUTH_SECRET}`
-        // username: 'AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM',
-        // password: 'ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA'
       };
+
       const options = {
         method: "post",
         headers: {
@@ -144,19 +137,17 @@ module.exports = {
         const config = {
           headers: { Authorization: `Bearer ${access_token}` }
         };
-        const requestToCancel = await axios.post(
-          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/cancel`,
-          config
+
+        const users_subscription = await axios.get(
+          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}`
         );
-        if (requestToCancel) {
-          try {
-            theUser.tier = "FREE";
-            theUser.subscription_id = null;
-            const updatedUser = await ctx.Users.updateById(id, theUser);
-          } catch (err) {
-            console.log("error", err);
-          }
-        }
+
+        // Set the user's next_billing_time so that the cron job can cancel the user's subscription
+        // once their paid period ends.
+        theUser.p_next_billing_time =
+          users_subscription.data.billing_info.next_billing_time;
+        await ctx.Users.updateById(id, theUser);
+
         return "DatabankUser";
       } else {
         let error = user;
@@ -225,4 +216,8 @@ function validPassword(user, ctx) {
     console.error("You did not specify an email and/or password.");
     return false;
   }
+}
+
+function formatDate(date) {
+  return new Date(date).toDateString();
 }
