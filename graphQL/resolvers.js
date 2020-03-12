@@ -153,16 +153,19 @@ module.exports = {
 
         if (requestToCancel) {
           try {
-            theUser.tier = "FREE";
-            theUser.subscription_id = "cancelled";
-
             let nextBillingDate = formatDate(
               users_subscription.data.billing_info.next_billing_time
             );
             let todaysDate = formatDate(new Date());
 
             if (nextBillingDate === todaysDate) {
+              theUser.tier = "FREE";
+              theUser.subscription_id = "cancelled";
               const updatedUser = await ctx.Users.updateById(id, theUser);
+            } else {
+              theUser.p_next_billing_time =
+                users_subscription.data.billing_info.next_billing_time;
+              await ctx.Users.updateById(id, theUser);
             }
           } catch (err) {
             console.log("error", err);
@@ -241,3 +244,7 @@ function validPassword(user, ctx) {
 function formatDate(date) {
   return new Date(date).toDateString();
 }
+
+module.exports = {
+  formatDate
+};
