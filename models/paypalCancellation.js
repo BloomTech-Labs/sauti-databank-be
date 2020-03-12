@@ -1,32 +1,46 @@
 const CronJob = require("cron").CronJob;
 const axios = require("axios");
 const DatabankUsers = require("../models/databankUsers");
-const { formatDate } = require("../graphQL/resolvers");
+const qs = require("qs");
 
+// This cron job checks all users that have deleted their subscriptions.
+// If thier subscription period is equal to the current date, this cron job will revert their account back to free.
 const job = new CronJob(
   // every 24 hours
   "0 */24 * * *",
-  //   "13 * * * *",
   async function() {
-    console.log("You will see this message every 24 hours");
-    const nextBillngDatesForCancelledSubs = (await DatabankUsers.findAll())
+    console.log("This cron job will run every 24 hours.");
+    const cancelledSubs = (await DatabankUsers.findAll())
       // When the user cancels their subscription through our app, we set thte p_next_billing_time field
-      // to their next tbilling date. If this field is null, it means that the user hasn't cancelled their subsription.
+      // to their next billing date. If this field is null, it means that the user hasn't cancelled their subsription.
       .filter(user => user.p_next_billing_time !== null)
-      .map(user => formatDate(user.p_next_billing_time));
+      .map(user => {
+        return {
+          ...user,
+          p_next_billing_time: formatDate(user.p_next_billing_time)
+        };
+      });
 
-    let todaysDate = formatDate(new Date());
+    let todaysDateFormatted = formatDate(new Date());
 
-    nextBillngDatesForCancelledSubs.forEach(function changeUsersTiersToFree(
-      billingDate
-    ) {
-      if (billingDate === todaysDate) {
-        console.log("nextBillingDate === todaysDate");
-        theUser.tier = "FREE";
-        theUser.subscription_id = "cancelled";
-        ctx.Users.updateById(id, theUser)
-          .then(() => console.log("UPDATED USER SUCCESSFULLY"))
-          .catch(err => console.error("ERROR UPDATING THE USER", err));
+    cancelledSubs.forEach(async function changeUsersTiersToFree(subscriber) {
+      if (subscriber.p_next_billing_time === todaysDateFormatted) {
+        // Cancel the user's subscription
+        try {
+          const authCreds = await getAuthCreds();
+          await axios.post(
+            `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriber.subscription_id}/cancel`,
+            authCreds
+          );
+        } catch (err) {
+          console.error("Error cancelling the subscription", err);
+        }
+        subscriber.tier = "FREE";
+        subscriber.subscription_id = "cancelled";
+        subscriber.p_next_billing_time = null;
+        DatabankUsers.updateById(subscriber.id, subscriber)
+          .then(() => console.log("updated user successfully"))
+          .catch(err => console.error("error updating the user", err));
       }
     });
   },
@@ -36,7 +50,42 @@ const job = new CronJob(
 );
 job.start();
 
-// Helpers
+/**
+ *  Helpers
+ *  */
+
 function formatDate(date) {
   return new Date(date).toDateString();
+}
+
+async function getAuthCreds() {
+  const url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+  const oldData = {
+    grant_type: "client_credentials"
+  };
+  const auth = {
+    username: `${process.env.PAYPAL_AUTH_USERNAME}`,
+    password: `${process.env.PAYPAL_AUTH_SECRET}`
+  };
+
+  const options = {
+    method: "post",
+    headers: {
+      "content-type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Credentials": true
+    },
+    data: qs.stringify(oldData),
+    auth: auth,
+    url
+  };
+  const { data } = await axios(options);
+  const { access_token } = data;
+  axios.defaults.headers.common = {
+    Authorization: `Bearer ${access_token}`
+  };
+  const config = {
+    headers: { Authorization: `Bearer ${access_token}` }
+  };
+
+  return config;
 }
