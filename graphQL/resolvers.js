@@ -141,36 +141,13 @@ module.exports = {
         const users_subscription = await axios.get(
           `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}`
         );
-        console.log(
-          "succesfully retrieved users sub",
-          users_subscription.data.billing_info.next_billing_time
-        );
 
-        const requestToCancel = await axios.post(
-          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}/cancel`,
-          config
-        );
+        // Set the user's next_billing_time so that the cron job can cancel the user's subscription
+        // once their paid period ends.
+        theUser.p_next_billing_time =
+          users_subscription.data.billing_info.next_billing_time;
+        await ctx.Users.updateById(id, theUser);
 
-        if (requestToCancel) {
-          try {
-            let nextBillingDate = formatDate(
-              users_subscription.data.billing_info.next_billing_time
-            );
-            let todaysDate = formatDate(new Date());
-
-            if (nextBillingDate === todaysDate) {
-              theUser.tier = "FREE";
-              theUser.subscription_id = "cancelled";
-              const updatedUser = await ctx.Users.updateById(id, theUser);
-            } else {
-              theUser.p_next_billing_time =
-                users_subscription.data.billing_info.next_billing_time;
-              await ctx.Users.updateById(id, theUser);
-            }
-          } catch (err) {
-            console.log("error", err);
-          }
-        }
         return "DatabankUser";
       } else {
         let error = user;
