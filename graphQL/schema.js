@@ -51,6 +51,8 @@ const typeDefs = gql`
     token: String
     organization_type: OrganizationType
     subscription_id: String
+    registration_date: String
+    updated: String
   }
 
   enum UserTier {
