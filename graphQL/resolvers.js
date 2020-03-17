@@ -97,7 +97,6 @@ module.exports = {
     deleteUser(_, { input }) {
       // The first arg to DeletedUserOrError becomes the returned input value
       return input;
-      innacurate;
     },
     updateUserToFree(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
@@ -116,7 +115,6 @@ module.exports = {
         username: `${process.env.PAYPAL_AUTH_USERNAME}`,
         password: `${process.env.PAYPAL_AUTH_SECRET}`
       };
-
       const options = {
         method: "post",
         headers: {
@@ -159,6 +157,7 @@ module.exports = {
   EditedUserOrError: {
     async __resolveType(user, ctx, info) {
       const updated = await ctx.Users.updateById(user.id, user);
+      console.log("edit")
       if (updated) {
         return "DatabankUser";
       } else {
