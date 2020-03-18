@@ -54,6 +54,14 @@ const typeDefs = gql`
     registration_date: String
     updated: String
     p_next_billing_time: String
+    found_by: FoundBy
+  }
+
+  enum FoundBy {
+    CROSS_BORDER_ASSOCIATION
+    UNIVERSITY
+    SAUTI_STAFF
+    OTHER
   }
 
   enum UserTier {
@@ -148,6 +156,7 @@ const typeDefs = gql`
     job_position: String
     country: String
     organization_type: OrganizationType!
+    found_by: FoundBy
   }
 
   input newLoginInput {
