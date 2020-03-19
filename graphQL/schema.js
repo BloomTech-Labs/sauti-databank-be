@@ -55,6 +55,7 @@ const typeDefs = gql`
     updated: String
     p_next_billing_time: String
     found_by: FoundBy
+    paypal_plan: String
   }
 
   enum FoundBy {
@@ -85,6 +86,7 @@ const typeDefs = gql`
   union EditedUserOrError = DatabankUser | Error
   union DeletedUserOrError = DatabankUser | Error
   union UpdateUserToFree = DatabankUser | Error
+  union AddPaypalPlanOrError = DatabankUser | Error
 
   input newTraderInput {
     id: Int
@@ -141,6 +143,12 @@ const typeDefs = gql`
     subscription_id: String
   }
 
+  input newAddPaypalPlanInput {
+    id: Int
+    email: String!
+    subscription_id: String
+  }
+
   input newDeleteUserInput {
     id: Int!
     email: String
@@ -181,6 +189,7 @@ const typeDefs = gql`
     editUser(input: newEditUserInput!): EditedUserOrError!
     deleteUser(input: newDeleteUserInput!): DeletedUserOrError!
     updateUserToFree(input: newUpdateUserToFreeInput!): UpdateUserToFree!
+    addPaypalPlan(input: newAddPaypalPlanInput!): AddPaypalPlanOrError!
   }
 `;
 
