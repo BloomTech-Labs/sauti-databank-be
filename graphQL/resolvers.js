@@ -102,6 +102,9 @@ module.exports = {
     updateUserToFree(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
       return input;
+    },
+    addPaypalPlan(_, { input }, ctx) {
+      return input;
     }
   },
   UpdateUserToFree: {
@@ -179,6 +182,68 @@ module.exports = {
         return "Error";
       }
     }
+  },
+  AddPaypalPlanOrError: {
+    async __resolveType(user, ctx) {
+      const theUser = await ctx.Users.findByEmail(user.email);
+      const { subscription_id, id } = theUser;
+
+      console.log(theUser, "THE USER");
+
+      const url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+      const oldData = {
+        grant_type: "client_credentials"
+      };
+      const auth = {
+        username: `${process.env.PAYPAL_AUTH_USERNAME}`,
+        password: `${process.env.PAYPAL_AUTH_SECRET}`
+      };
+
+      const options = {
+        method: "post",
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "Access-Control-Allow-Credentials": true
+        },
+        data: qs.stringify(oldData),
+        auth: auth,
+        url
+      };
+
+      const { data } = await axios(options);
+      const { access_token } = data;
+      axios.defaults.headers.common = {
+        Authorization: `Bearer ${access_token}`
+      };
+
+      if (access_token) {
+        const config = {
+          headers: { Authorization: `Bearer ${access_token}` }
+        };
+
+        const users_subscription = await axios.get(
+          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscription_id}`
+        );
+
+        const userPlanID = users_subscription.data.plan_id;
+
+        const users_planIdInformation = await axios.get(
+          `https://api.sandbox.paypal.com/v1/billing/plans/${userPlanID}`
+        );
+
+        const planIDName = users_planIdInformation.data.name;
+
+        console.log(planIDName, "PLAN ID NAME");
+        // Adding plan id name into the DB
+        theUser.paypal_plan = planIDName;
+        await ctx.Users.updateById(id, theUser);
+        return "DatabankUser";
+      } else {
+        let error = user;
+        error.message = "There has been a problem";
+        return "Error";
+      }
+    }
   }
   // TODO: Add a DatabankUser resolver to return the updated fields
 };
@@ -217,4 +282,3 @@ function validPassword(user, ctx) {
     return false;
   }
 }
-
