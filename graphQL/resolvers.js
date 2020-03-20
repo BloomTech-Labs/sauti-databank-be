@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET: secret } = require("../config/secrets");
+const { JWT_SECRET_REFRESH: secretRefresh } = require("../config/secrets");
 const axios = require("axios");
 const qs = require("qs");
 
@@ -259,9 +260,21 @@ function generateToken(user) {
     tier: user.tier
   };
   const options = {
-    expiresIn: "12h"
+    expiresIn: "1m"
   };
   return jwt.sign(payload, secret, options);
+}
+
+function refreshToken(user) {
+  const payload = {
+    id: user.id,
+    email: user.email,
+    tier: user.tier
+  };
+  const options = {
+    expiresIn: "7d"
+  };
+  return jwt.sign(payload, secretRefresh, options);
 }
 
 function validPassword(user, ctx) {
