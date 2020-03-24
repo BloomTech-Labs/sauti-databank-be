@@ -231,13 +231,13 @@ module.exports = {
         const users_planIdInformation = await axios.get(
           `https://api.sandbox.paypal.com/v1/billing/plans/${userPlanID}`
         );
-
         const planIDName = users_planIdInformation.data.name;
-
         console.log(planIDName, "PLAN ID NAME");
         // Adding plan id name into the DB
+
         theUser.paypal_plan = planIDName;
         await ctx.Users.updateById(id, theUser);
+
         return "DatabankUser";
       } else {
         let error = user;
@@ -260,21 +260,9 @@ function generateToken(user) {
     tier: user.tier
   };
   const options = {
-    expiresIn: "1m"
+    expiresIn: "12h"
   };
   return jwt.sign(payload, secret, options);
-}
-
-function refreshToken(user) {
-  const payload = {
-    id: user.id,
-    email: user.email,
-    tier: user.tier
-  };
-  const options = {
-    expiresIn: "7d"
-  };
-  return jwt.sign(payload, secretRefresh, options);
 }
 
 function validPassword(user, ctx) {
