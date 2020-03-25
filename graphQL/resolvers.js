@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET: secret } = require("../config/secrets");
+const { JWT_SECRET_REFRESH: secretRefresh } = require("../config/secrets");
 const axios = require("axios");
 const qs = require("qs");
 
@@ -229,13 +230,13 @@ module.exports = {
         const users_planIdInformation = await axios.get(
           `https://api.sandbox.paypal.com/v1/billing/plans/${userPlanID}`
         );
-
         const planIDName = users_planIdInformation.data.name;
-
         console.log(planIDName, "PLAN ID NAME");
         // Adding plan id name into the DB
+
         theUser.paypal_plan = planIDName;
         await ctx.Users.updateById(id, theUser);
+
         return "DatabankUser";
       } else {
         let error = user;
