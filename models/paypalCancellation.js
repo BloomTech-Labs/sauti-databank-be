@@ -9,30 +9,39 @@ const job = new CronJob(
   // every 24 hours
   // "0 */24 * * *",
   "0 * * * *",
-  async function () {
+  async function() {
     console.log("This cron job will run every 24 hours.");
     // When the user cancels their subscription through our app, we set thte p_next_billing_time field
     // to their next billing date. If this field is null, it means that the user hasn't cancelled their subsription.
     const cancelledSubs = (await DatabankUsers.findAll())
       .filter(user => user.p_next_billing_time !== null)
-    // .map(user => {
-    //   return {
-    //     ...user,
-    //     p_next_billing_time: formatDate(user.p_next_billing_time)
-    //   };
-    // });
-    console.log("cancelled", cancelledSubs.length)
+      .map(user => {
+        return {
+          ...user,
+          p_next_billing_time: formatDate(user.p_next_billing_time)
+        };
+      });
+
+    console.log("cancelled subs", cancelledSubs.length);
     let todaysDateFormatted = formatDate(new Date());
 
     cancelledSubs.forEach(async function changeUsersTiersToFree(subscriber) {
-      try {
-        var { data: { access_token }, config: authCreds } = await getAccessTokenAndAuthCreds("https://api.sandbox.paypal.com/v1/oauth2/token");
-        var { data: { billing_info: { next_billing_time } } } = await axios.get(`https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriber.subscription_id}`)
-      } catch (err) {
-        console.log("err", err)
-      }
-      console.log("next", access_token)
-      console.log("next_billing_time", formatDate(next_billing_time))
+      const { access_token, config: authCreds } = await catchErrors(
+        getAccessTokenAndAuthCreds()
+      );
+
+      const {
+        data: {
+          billing_info: { next_billing_time }
+        }
+      } = await catchErrors(
+        axios.get(
+          `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriber.subscription_id}`
+        )
+      );
+
+      console.log("next_billing_time", formatDate(next_billing_time));
+
       if (subscriber.p_next_billing_time === todaysDateFormatted) {
         // Cancel the users' subscriptions
         try {
@@ -66,10 +75,13 @@ function formatDate(date) {
   return new Date(date).toDateString();
 }
 
-async function getAccessTokenAndAuthCreds(url) {
+async function getAccessTokenAndAuthCreds() {
+  const url = "https://api.sandbox.paypal.com/v1/oauth2/token";
+
   const oldData = {
     grant_type: "client_credentials"
   };
+
   const auth = {
     username: `${process.env.PAYPAL_AUTH_USERNAME}`,
     password: `${process.env.PAYPAL_AUTH_SECRET}`
@@ -85,8 +97,9 @@ async function getAccessTokenAndAuthCreds(url) {
     auth: auth,
     url
   };
-  const { data } = await axios(options);
-  const { access_token } = data;
+  const {
+    data: { access_token }
+  } = await axios(options);
   axios.defaults.headers.common = {
     Authorization: `Bearer ${access_token}`
   };
@@ -94,5 +107,9 @@ async function getAccessTokenAndAuthCreds(url) {
     headers: { Authorization: `Bearer ${access_token}` }
   };
 
-  return { config, data };
+  return { config, access_token };
+}
+
+function catchErrors(promise, errorHandler = console.error) {
+  return promise.then(data => data).catch(errorHandler);
 }
