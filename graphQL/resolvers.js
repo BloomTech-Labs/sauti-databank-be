@@ -116,8 +116,8 @@ module.exports = {
         grant_type: "client_credentials"
       };
       const auth = {
-        username: `${process.env.PAYPAL_AUTH_USERNAME}`,
-        password: `${process.env.PAYPAL_AUTH_SECRET}`
+        username: `AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM`,
+        password: `ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA`
       };
 
       const options = {
