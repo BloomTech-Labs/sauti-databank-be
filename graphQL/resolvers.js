@@ -98,7 +98,6 @@ module.exports = {
     deleteUser(_, { input }) {
       // The first arg to DeletedUserOrError becomes the returned input value
       return input;
-      innacurate;
     },
     updateUserToFree(_, { input }, ctx) {
       // The first arg to EditedUserOrError becomes the returned input value
