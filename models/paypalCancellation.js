@@ -26,8 +26,11 @@ const job = new CronJob(
     let todaysDateFormatted = formatDate(new Date());
 
     cancelledSubs.forEach(async function changeUsersTiersToFree(subscriber) {
-      const { access_token, config: authCreds } = await catchErrors(
-        getAccessTokenAndAuthCreds()
+      const {
+        access_token,
+        config: authCreds
+      } = await catchErrors(getAccessTokenAndAuthCreds(), err =>
+        console.error("error retrieving the access token and auth creds:", err)
       );
 
       const {
@@ -37,21 +40,22 @@ const job = new CronJob(
       } = await catchErrors(
         axios.get(
           `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriber.subscription_id}`
-        )
+        ),
+        err =>
+          console.error("error retrieving thte user's subscription info:", err)
       );
 
       console.log("next_billing_time", formatDate(next_billing_time));
 
       if (subscriber.p_next_billing_time === todaysDateFormatted) {
         // Cancel the users' subscriptions
-        try {
-          await axios.post(
+        await catchErrors(
+          axios.post(
             `https://api.sandbox.paypal.com/v1/billing/subscriptions/${subscriber.subscription_id}/cancel`,
             authCreds
-          );
-        } catch (err) {
-          console.error("Error cancelling the subscription", err);
-        }
+          ),
+          err => console.error("Error cancelling the subscription", err)
+        );
         subscriber.tier = "FREE";
         subscriber.subscription_id = "cancelled";
         subscriber.p_next_billing_time = null;
@@ -111,5 +115,5 @@ async function getAccessTokenAndAuthCreds() {
 }
 
 function catchErrors(promise, errorHandler = console.error) {
-  return promise.then(data => data).catch(errorHandler);
+  return promise.then(data => data).catch(err => errorHandler(err));
 }
