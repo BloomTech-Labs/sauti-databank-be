@@ -160,6 +160,7 @@ module.exports = {
   },
   EditedUserOrError: {
     async __resolveType(user, ctx, info) {
+
       const updated = await ctx.Users.updateById(user.id, user);
       console.log("edit")
       if (updated) {
