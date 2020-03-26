@@ -161,6 +161,9 @@ module.exports = {
   },
   EditedUserOrError: {
     async __resolveType(user, ctx, info) {
+      if(user.password){
+        user.password = bcrypt.hashSync(user.password, 8)
+      }
       const updated = await ctx.Users.updateById(user.id, user);
       if (updated) {
         return "DatabankUser";
