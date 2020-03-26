@@ -119,7 +119,6 @@ module.exports = {
         username: `AeMzQ9LYW7d4_DAzYdeegCYOCdsIDuI0nWfno1vGi4tsKp5VBQq893hDSU6FIn47md30k4jC5QDq33xM`,
         password: `ECeUwnnTkSqjK6NIycSLp8joMLgOpof1rQdA4W8NvHqgKQNuNqwgySgGEJr_fq_JFHtzM6Je9Kj8fClA`
       };
-
       const options = {
         method: "post",
         headers: {
@@ -161,7 +160,11 @@ module.exports = {
   },
   EditedUserOrError: {
     async __resolveType(user, ctx, info) {
+      if (user.password) {
+        user.password = bcrypt.hashSync(user.password, 8)
+      }
       const updated = await ctx.Users.updateById(user.id, user);
+      console.log("edit")
       if (updated) {
         return "DatabankUser";
       } else {
