@@ -26,7 +26,8 @@ const job = async function() {
     // they cancelled it).
     let {
       data: {
-        billing_info: { next_billing_time }
+        billing_info: { next_billing_time, failed_payments_count },
+        status
       }
     } = await catchErrors(
       axios.get(
@@ -36,6 +37,16 @@ const job = async function() {
       err =>
         console.error("error retrieving thte user's subscription info:", err)
     );
+
+    if (status !== "ACTIVE" || failed_payments_count > 1) {
+      subscriber.tier = "FREE";
+      subscriber.subscription_id = null;
+      subscriber.p_next_billing_time = null;
+      DatabankUsers.updateById(subscriber.id, subscriber)
+        .then(() => console.log("updated user successfully", subscriber))
+        .catch(err => console.error("error updating the user", err));
+    }
+
     if (formatDate(subscriber.p_next_billing_time) !== todaysDateFormatted) {
       // update the user's next billing time from today to whatever was returned from the GET request for that user.
       // When the user first cancels their account, their next billing time is automatically set to today (the same day they cancelled it).
@@ -53,7 +64,7 @@ const job = async function() {
         err => console.error("Error cancelling the subscription", err)
       );
       subscriber.tier = "FREE";
-      subscriber.subscription_id = "cancelled";
+      subscriber.subscription_id = null;
       subscriber.p_next_billing_time = null;
       DatabankUsers.updateById(subscriber.id, subscriber)
         .then(() => console.log("updated user successfully", subscriber))
