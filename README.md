@@ -7,24 +7,23 @@
 To get the server running locally:
 
 - Clone this repo, then, cd into the repo in Terminal and:
-- **yarn install** to install all required dependencies.
-- **yarn server** to start the local server.
-- **yarn test** to start server using testing environment.
+- **npm install** to install all required dependencies.
+- **npm run server** to start the local server.
 - **update .env** store SQL server connection info there.
 
 ### Backend framework
 
 We built our backend, using Node, Express, GraphQL, and Knex to work with a MySQL database.
 
-- [Node](https://nodejs.org/en/): We all learned Node.js, and since we were taking on a lot of new libraries in this project, learning MySQL, Nivo, and more, we decided Node.js would meet our needs for building our API and free us up to learn new tools. We also see potential for realtime data updating in the future, and know Node is particularly useful in those applications.
-- [Express](https://expressjs.com/): We added a bit more usability to Node for our project using Express, a web application framework that lets us build a bit more rapidly.
+- [Node](https://nodejs.org/en/): We all learned Node.js, and since we were taking on a lot of new libraries in this project, learning MySQL, Apollo-Server, Nivo, and more, we decided Node.js would meet our needs for building our API and free us up to learn new tools. We also see potential for realtime data updating in the future, and know Node is particularly useful in those applications.
+- [Apollo-Server-Express](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express): We added a bit more usability to Node for our project using Express, a web application framework that lets us build a bit more rapidly.
 - [Knex](http://knexjs.org/): We used Knex to help us more efficiently build our queries.
 - [GraphQL](https://graphql.org/): We used GraphQL as a server to the database to assert specific data points through queries which allow fetching a lot of data in a single request to a single API endpoint.
 - [MySQL](https://www.mysql.com/): Sauti has a lot of data to work with: over 11k users and 115k sessions. In order to best meet their needs and visualize their data, we used their existing and preferred MySQL database to eliminate migration issues and complexity.
  
 ### GraphQL Route
 
-**Endpoint:** `deployed URL/graphql`
+**Endpoint:** `https://sauti-databank.herokuapp.com/graphql`
 
 **Description:** It is necessary to understand that all of the data depicted on the deployed site is being retrieved through one single API endpoint. Through our usage of the GraphQL framework, we are able to send our database specific queries that retrieve appropriated data through this endpoint. The deployed URL is hidden behind an environment variable accessible to participants of this project. 
 
@@ -39,79 +38,197 @@ Queries are interactive, changable requests. Queries can traverse related object
 
 ## Schema Types
 
-      type Query {
-        tradersUsers(
-            id: Int,
-            gender: String,
-            age: String,
-            education: String,
-            crossing_freq: String,
-            produce: String,
-            primary_income: String,
-            language: String,
-            country_of_residence: String,
-        ): [User]
+      scalar Date
 
-        sessionsData(
-            id: Int
-            gender: String
-            age: String
-            education: String
-            crossing_freq: String
-            produce: String
-            primary_income: String
-            language: String
-            country_of_residence: String
-            procedurecommodity: String
-            procedurecommoditycat: String
-            proceduredest: String
-            procedurerequireddocument: String
-            procedurerelevantagency: String
-            procedureorigin: String
-            commoditycountry: String
-            commoditymarket: String
-            commoditycat: String
-            commodityproduct: String
-            exchangedirection: String
-            created_date: Date
-        ): [TraderSession]
-    }
+  type TraderUser {
+    id: Int
+    gender: String
+    age: String
+    education: String
+    crossing_freq: String
+    produce: String
+    primary_income: String
+    language: String
+    country_of_residence: String
+  }
 
-    type User { 
-        id: Int
-        gender: String
-        age: String
-        education: String
-        crossing_freq: String
-        produce: String
-        primary_income: String
-        language: String
-        country_of_residence: String
-    }
+  type TraderSession {
+    id: Int
+    gender: String
+    age: String
+    education: String
+    crossing_freq: String
+    produce: String
+    primary_income: String
+    language: String
+    country_of_residence: String
+    procedurecommodity: String
+    procedurecommoditycat: String
+    proceduredest: String
+    procedurerequireddocument: String
+    procedurerelevantagency: String
+    procedureorigin: String
+    commoditycountry: String
+    commoditymarket: String
+    commoditycat: String
+    commodityproduct: String
+    exchangedirection: String
+    created_date: Date
+  }
 
-    type TraderSession {
-        id: Int
-        gender: String
-        age: String
-        education: String
-        crossing_freq: String
-        produce: String
-        primary_income: String
-        language: String
-        country_of_residence: String
-        procedurecommodity: String
-        procedurecommoditycat: String
-        proceduredest: String
-        procedurerequireddocument: String
-        procedurerelevantagency: String
-        procedureorigin: String
-        commoditycountry: String
-        commoditymarket: String
-        commoditycat: String
-        commodityproduct: String
-        exchangedirection: String
-        created_date: Date
-    }
+  type DatabankUser {
+    id: Int
+    email: String
+    password: String
+    tier: UserTier
+    interest: String
+    organization: String
+    job_position: String
+    country: String
+    token: String
+    organization_type: OrganizationType
+    subscription_id: String
+    registration_date: String
+    updated: String
+    p_next_billing_time: String
+    found_by: FoundBy
+    paypal_plan: String
+  }
+
+  enum FoundBy {
+    CROSS_BORDER_ASSOCIATION
+    UNIVERSITY
+    SAUTI_STAFF
+    OTHER
+  }
+
+  enum UserTier {
+    FREE
+    PAID
+    ADMIN
+    GOV_ROLE
+  }
+
+  enum OrganizationType {
+    GOVERNMENT
+    NGO
+    RESEARCH
+    OTHER
+  }
+
+  type Error {
+    message: String
+  }
+
+  union EditedUserOrError = DatabankUser | Error
+  union DeletedUserOrError = DatabankUser | Error
+  union UpdateUserToFree = DatabankUser | Error
+  union AddPaypalPlanOrError = DatabankUser | Error
+
+  input newTraderInput {
+    id: Int
+    gender: String
+    age: String
+    education: String
+    crossing_freq: String
+    produce: String
+    primary_income: String
+    language: String
+    country_of_residence: String
+  }
+
+  input newTraderSessionInput {
+    id: Int
+    gender: String
+    age: String
+    education: String
+    crossing_freq: String
+    produce: String
+    primary_income: String
+    language: String
+    country_of_residence: String
+    procedurecommodity: String
+    procedurecommoditycat: String
+    proceduredest: String
+    procedurerequireddocument: String
+    procedurerelevantagency: String
+    procedureorigin: String
+    commoditycountry: String
+    commoditymarket: String
+    commoditycat: String
+    commodityproduct: String
+    exchangedirection: String
+    created_date: Date
+  }
+
+  input newEditUserInput {
+    id: Int!
+    email: String
+    password: String
+    tier: UserTier
+    interest: String
+    organization: String
+    job_position: String
+    country: String
+    organization_type: OrganizationType
+    subscription_id: String
+  }
+
+  input newUpdateUserToFreeInput {
+    id: Int
+    email: String!
+    subscription_id: String
+  }
+
+  input newAddPaypalPlanInput {
+    id: Int
+    email: String!
+    subscription_id: String
+  }
+
+  input newDeleteUserInput {
+    id: Int!
+    email: String
+  }
+
+  input newRegisterInput {
+    id: Int
+    email: String!
+    password: String!
+    tier: UserTier!
+    interest: String
+    organization: String
+    job_position: String
+    country: String
+    organization_type: OrganizationType!
+    found_by: FoundBy
+  }
+
+  input newLoginInput {
+    email: String!
+    password: String!
+  }
+
+  input Email {
+    email: String
+  }
+
+  type Query {
+    tradersUsers(input: newTraderInput): [TraderUser]!
+    sessionsData(input: newTraderSessionInput): [TraderSession]!
+    databankUsers: [DatabankUser]!
+    databankUser(input: Email!): DatabankUser!
+  }
+
+  type Mutation {
+    register(input: newRegisterInput!): DatabankUser!
+    login(input: newLoginInput!): DatabankUser!
+    editUser(input: newEditUserInput!): EditedUserOrError!
+    deleteUser(input: newDeleteUserInput!): DeletedUserOrError!
+    updateUserToFree(input: newUpdateUserToFreeInput!): UpdateUserToFree!
+    addPaypalPlan(input: newAddPaypalPlanInput!): AddPaypalPlanOrError!
+  }
+`;
 
 ## Database Schema
 
@@ -187,6 +304,8 @@ To populate an .env file with appropriate variables, reach out to Sauti for acce
 - database 
 - host
 - deployed URL 
+- PAYPAL_AUTH_USERNAME
+- PAYPAL_AUTH_SECRET
 
 #### Accessing Gender
 
