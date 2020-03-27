@@ -6,7 +6,7 @@ const qs = require("qs");
 // This cron job checks all users that have deleted their subscriptions.
 // If thier subscription period is equal to the current date, this cron job will revert their account back to free.
 const job = async function () {
-  console.log("This cron job will run every 4 hours.");
+  console.log("This cron job will run every 1 hours.");
   // When the user cancels their subscription through our app, we set thte p_next_billing_time field
   // to their next billing date. If this field is null, it means that the user hasn't cancelled their subsription.
   const cancelledSubs = (await DatabankUsers.findAll())
@@ -24,7 +24,8 @@ const job = async function () {
     // they cancelled it).
     let {
       data: {
-        billing_info: { next_billing_time }
+        billing_info: { next_billing_time, failed_payments_count },
+        status
       }
     } = await catchErrors(
       axios.get(
@@ -34,6 +35,16 @@ const job = async function () {
       err =>
         console.error("error retrieving thte user's subscription info:", err)
     );
+
+    if (status !== "ACTIVE" || failed_payments_count > 1) {
+      subscriber.tier = "FREE";
+      subscriber.subscription_id = null;
+      subscriber.p_next_billing_time = null;
+      DatabankUsers.updateById(subscriber.id, subscriber)
+        .then(() => console.log("updated user successfully", subscriber))
+        .catch(err => console.error("error updating the user", err));
+    }
+
     if (formatDate(subscriber.p_next_billing_time) !== todaysDateFormatted) {
       // update the user's next billing time from today to whatever was returned from the GET request for that user. 
       // When the user first cancels their account, their next billing time is automatically set to today (the same day they cancelled it).
@@ -51,7 +62,7 @@ const job = async function () {
         err => console.error("Error cancelling the subscription", err)
       );
       subscriber.tier = "FREE";
-      subscriber.subscription_id = "cancelled";
+      subscriber.subscription_id = null;
       subscriber.p_next_billing_time = null;
       DatabankUsers.updateById(subscriber.id, subscriber)
         .then(() => console.log("updated user successfully", subscriber))
