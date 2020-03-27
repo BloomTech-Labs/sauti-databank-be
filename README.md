@@ -37,10 +37,10 @@ We used schemas types that organize the requests needed to retrieve specific dat
 Queries are interactive, changable requests. Queries can traverse related objects and their fields which allows fetching a lot of data in a single request. The Query structure similarly reflect the GraphQL schema structure, and the results are based on what is indicated in the schema.
 
 ## Schema Types
+ ``` 
+    scalar Date
 
-      scalar Date
-
-  type TraderUser {
+   type TraderUser {
     id: Int
     gender: String
     age: String
@@ -228,7 +228,8 @@ Queries are interactive, changable requests. Queries can traverse related object
     updateUserToFree(input: newUpdateUserToFreeInput!): UpdateUserToFree!
     addPaypalPlan(input: newAddPaypalPlanInput!): AddPaypalPlanOrError!
   }
-`;
+;
+```
 
 ## Database Schema
 
