@@ -1,24 +1,26 @@
-const CronJob = require("cron").CronJob;
 const axios = require("axios");
 const DatabankUsers = require("../models/databankUsers");
 const qs = require("qs");
 
 // This cron job checks all users that have deleted their subscriptions.
 // If thier subscription period is equal to the current date, this cron job will revert their account back to free.
-const job = async function () {
+const job = async function() {
   console.log("This cron job will run every 4 hours.");
   // When the user cancels their subscription through our app, we set thte p_next_billing_time field
   // to their next billing date. If this field is null, it means that the user hasn't cancelled their subsription.
-  const cancelledSubs = (await DatabankUsers.findAll())
-    .filter(user => user.p_next_billing_time !== null)
+  const cancelledSubs = (await DatabankUsers.findAll()).filter(
+    user => user.p_next_billing_time !== null
+  );
 
   let todaysDateFormatted = formatDate(new Date());
-  let tokenCache = null
+  let tokenCache = null;
 
-  cancelledSubs.forEach(async function updateBillingTimesAndCancelSubscriptions(subscriber) {
+  cancelledSubs.forEach(async function updateBillingTimesAndCancelSubscriptions(
+    subscriber
+  ) {
     // cache the bearer token so that after we get it intitially, we don't have to request it for every account we want to cancel.
     if (tokenCache == null) {
-      tokenCache = await getBearerToken()
+      tokenCache = await getBearerToken();
     }
     // retrieve the next billing time for the subscriber who canelled their account (as it stands, it's set for the same day
     // they cancelled it).
@@ -35,11 +37,11 @@ const job = async function () {
         console.error("error retrieving thte user's subscription info:", err)
     );
     if (formatDate(subscriber.p_next_billing_time) !== todaysDateFormatted) {
-      // update the user's next billing time from today to whatever was returned from the GET request for that user. 
+      // update the user's next billing time from today to whatever was returned from the GET request for that user.
       // When the user first cancels their account, their next billing time is automatically set to today (the same day they cancelled it).
       // Here, we're setting their next billing time to the actual date that's recorded on Paypal's system.
-      subscriber.p_next_billing_time = formatDate(next_billing_time)
-      DatabankUsers.updateById(subscriber.id, subscriber)
+      subscriber.p_next_billing_time = formatDate(next_billing_time);
+      DatabankUsers.updateById(subscriber.id, subscriber);
     } else {
       // If the next billing time is today...
       // Cancel the users' subscriptions
@@ -58,7 +60,7 @@ const job = async function () {
         .catch(err => console.error("error updating the user", err));
     }
   });
-}
+};
 
 job();
 
@@ -114,5 +116,5 @@ async function getBearerToken() {
     console.error("error retrieving the access token and auth creds:", err)
   );
 
-  return authCreds
+  return authCreds;
 }
