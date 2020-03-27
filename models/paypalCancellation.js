@@ -5,7 +5,7 @@ const qs = require("qs");
 // This cron job checks all users that have deleted their subscriptions.
 // If thier subscription period is equal to the current date, this cron job will revert their account back to free.
 const job = async function() {
-  console.log("This cron job will run every 24 hours.");
+  console.log("This cron job will run every hour.");
   // When the user cancels their subscription through our app, we set thte p_next_billing_time field
   // to their next billing date. If this field is null, it means that the user hasn't cancelled their subsription.
   const cancelledSubs = (await DatabankUsers.findAll()).filter(
