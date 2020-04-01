@@ -4,8 +4,8 @@ let transporter = nodemailer.createTransport({
   port: 587,
   secure: false, // USE TLS
   auth: {
-    user: `${process.env.EMAIL_SAUTI}`,
-    pass: `${process.env.EMAIL_PASSWORD}`
+    user: `databank.sautiafrica@gmail.com`,
+    pass: `xk[^Gv.5pDg(;5K2`
   }
 });
 
