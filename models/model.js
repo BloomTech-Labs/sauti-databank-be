@@ -33,6 +33,7 @@ const getDataSessions = () => {
          'pd.exchangedirection',
          'pd.created_date'
       )
+      .orderBy('pd.created_date', 'asc')
 }
 
 // Retrieve sessions data so it can be parsed in `tradersDataParser.js` and `sessionsDataParser.js`
