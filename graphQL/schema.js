@@ -56,6 +56,8 @@ const typeDefs = gql`
     p_next_billing_time: String
     found_by: FoundBy
     paypal_plan: String
+    verification_code: Int
+    resetToken: String
   }
 
   enum FoundBy {
@@ -87,6 +89,7 @@ const typeDefs = gql`
   union DeletedUserOrError = DatabankUser | Error
   union UpdateUserToFree = DatabankUser | Error
   union AddPaypalPlanOrError = DatabankUser | Error
+  union ResetPasswordOrError = DatabankUser | Error
 
   input newTraderInput {
     id: Int
@@ -176,6 +179,10 @@ const typeDefs = gql`
     email: String
   }
 
+  input resetPasswordInput {
+    email: String
+  }
+
   type Query {
     tradersUsers(input: newTraderInput): [TraderUser]!
     sessionsData(input: newTraderSessionInput): [TraderSession]!
@@ -190,6 +197,7 @@ const typeDefs = gql`
     deleteUser(input: newDeleteUserInput!): DeletedUserOrError!
     updateUserToFree(input: newUpdateUserToFreeInput!): UpdateUserToFree!
     addPaypalPlan(input: newAddPaypalPlanInput!): AddPaypalPlanOrError!
+    sendResetPassword(input: resetPasswordInput!): ResetPasswordOrError!
   }
 `;
 
