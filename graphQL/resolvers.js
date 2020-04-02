@@ -262,7 +262,7 @@ module.exports = {
 
       // generating token that expires in 1 hour for the password URL + the token needs to have current user email on it
       const resetTokenGeneration = generateResetToken(theUser);
-      const url = `http://localhost:3000/password-verification/?resetToken=${resetTokenGeneration}`;
+      const url = `https://www.databank.sautiafrica.org/password-verification/?resetToken=${resetTokenGeneration}`;
 
       if (theUser) {
         // if user exists
