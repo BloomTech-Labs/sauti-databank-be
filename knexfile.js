@@ -8,7 +8,7 @@ module.exports = {
       host: process.env.host,
       user: process.env.user,
       password: process.env.password,
-      database: "lambdaStaging",
+      database: "sauti_databank",
       charset: "utf8"
     },
     useNullAsDefault: true,
@@ -24,7 +24,7 @@ module.exports = {
       host: process.env.host,
       user: process.env.user,
       password: process.env.password,
-      database: "lambdaStaging",
+      database: "sauti_databank",
       charset: "utf8"
     },
     useNullAsDefault: true
