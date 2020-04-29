@@ -38,7 +38,7 @@ const getDataSessions = () => {
 
 // Retrieve sessions data so it can be parsed in `tradersDataParser.js` and `sessionsDataParser.js`
 const findLanceData = () => {
-   return db("platform_sessions2");
+   return db("platform_sessions");
 }
 
 // **************** These two functions run every 24 hours on heroku, to delete, and reparse the traders, and sessions **************** 
