@@ -52,13 +52,13 @@ try {
 
     sessions.map(element => {
       let num = element.cell_num;
-      if (element.data.includes("Male")) {
+      if (element.data.includes("Male") || element.data.includes("Kiume")) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Male";
           }
         });
-      } else if (element.data.includes("Female")) {
+      } else if (element.data.includes("Female") || element.data.includes("Kike") || element.data.includes("Musajja") || element.data.includes("Mukazi")) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Female";
@@ -122,7 +122,7 @@ try {
 
     sessions.map(element => {
       let num = element.cell_num;
-      if (element.data.includes("No formal education")) {
+      if (element.data.includes("No formal education") || element.data.includes("Ssaasomako")) {
         arrayWithEducation.map(user => {
           if (user.cell_num === num) {
             user.education = "No formal education";
@@ -157,7 +157,7 @@ try {
 
     sessions.map(element => {
       let num = element.cell_num;
-      if (element.data.includes("Never")) {
+      if (element.data.includes("Never") || element.data.includes("Ssiyitangayo")) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Never";
@@ -169,13 +169,13 @@ try {
             user.crossing_freq = "Monthly";
           }
         });
-      } else if (element.data.includes("Weekly")) {
+      } else if (element.data.includes("Weekly") || element.data.includes("Buli wiiki")) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Weekly";
           }
         });
-      } else if (element.data.includes("Daily")) {
+      } else if (element.data.includes("Daily") || element.data.includes("Buli lunaku")) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Daily";
