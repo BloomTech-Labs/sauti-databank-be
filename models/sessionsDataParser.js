@@ -84,16 +84,18 @@ try {
               }
 
               //used to remove numbers from commoditycat
-              if (key === "commoditycat"){
-                for(let i = 0; i<data[key].length; i++) {
-                  let item = data[key][i]
-                  // item = parseInt(item)
-                  // console.log(item);
-                  if (item.length > 3){
-                    console.log(item);
-                  }
-                }
-              }
+              // if (key === "commoditycat"){
+              //   let array = []
+              //   for(let i = 0; i<data[key].length; i++) {
+              //     let item = data[key][i]
+              //     // item = parseInt(item)
+              //     // console.log(item);
+              //     if (item.length > 3){
+              //       array.push(item)
+              //     }
+              //   }
+              //   console.log(array);
+              // }
 
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
@@ -101,6 +103,26 @@ try {
               data[key] = data[key].toString()
             }
           }
+          function greaterThanThree(data){
+            for(let key in data){
+              // console.log(key);
+          if (key === "commoditycat"){
+            let array = []
+            console.log(data[key])
+            // for(let i = 0; i<data[key].length; i++) {
+            //   let item = data[key][i]
+            //   // item = parseInt(item)
+            //   // console.log(item);
+            //   if (item.length > 3){
+            //     array.push(item)
+            //   }
+            // }
+            // return array
+          }
+        }
+      }
+        let greater = greaterThanThree(data)
+        console.log(greater);
 
           // Object that is being sent into database table
           const sessionObj = {
