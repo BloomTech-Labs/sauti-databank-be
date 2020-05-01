@@ -83,6 +83,11 @@ try {
                 data[key] = data[key].map(num => agencyTypes[+num])
               }
 
+              //used to remove numbers from commoditycat
+              if (key === "commoditycat"){
+                console.log(data[key])
+              }
+
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
               // ["Maize", "Carrots"] turns into "Maize,Carrots"
@@ -126,9 +131,9 @@ try {
         // console.log(parsedArray.length)
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()))
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        db.truncateTable('parsed_data');
+       // db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        db.batchInsert('parsed_data', parsedArray);
+        //db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
       }
