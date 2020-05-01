@@ -85,7 +85,14 @@ try {
 
               //used to remove numbers from commoditycat
               if (key === "commoditycat"){
-                console.log(data[key])
+                for(let i = 0; i<data[key].length; i++) {
+                  let item = data[key][i]
+                  // item = parseInt(item)
+                  // console.log(item);
+                  if (item.length > 3){
+                    console.log(item);
+                  }
+                }
               }
 
               // Turn the value into a string, before it's sent into database table
