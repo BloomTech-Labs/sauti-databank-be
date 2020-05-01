@@ -108,21 +108,21 @@ try {
               // console.log(key);
           if (key === "commoditycat"){
             let array = []
-            console.log(data[key])
-            // for(let i = 0; i<data[key].length; i++) {
-            //   let item = data[key][i]
-            //   // item = parseInt(item)
-            //   // console.log(item);
-            //   if (item.length > 3){
-            //     array.push(item)
-            //   }
-            // }
-            // return array
+            let dataArray = [data[key]]
+            for(let i = 0; i<dataArray.length; i++) {
+              let item = dataArray[i]
+              // item = parseInt(item)
+              console.log(item);
+              if (item.length > 3){
+                array.push(item)
+              }
+            }
+            return array
           }
         }
       }
         let greater = greaterThanThree(data)
-        console.log(greater);
+        // console.log(greater);
 
           // Object that is being sent into database table
           const sessionObj = {
