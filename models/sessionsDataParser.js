@@ -93,8 +93,6 @@ try {
               //used to remove numbers from commoditycat
               if (key === "commoditycat"){
                 data[key] = data[key].filter(e => e.length > 3)
-                //data[key] = data[key].replace(/[0-9]/g, '')
-                //console.log(data[key]);
               }
 
               // Turn the value into a string, before it's sent into database table
@@ -103,22 +101,7 @@ try {
               data[key] = data[key].toString();
             }
           }
-          // function greaterThanThree(data) {
-          //   let valuesArray = [];
-          //   let array = data.split(",");
-          //   for (let i = 0; i < array.length; i++) {
-          //     let item = array[i];
-          //     if (item.length > 3) {
-          //       return item
-          //     }
-          //   }
-          // }
-          // console.log(`great`,greaterThanThree(data.commoditycat));
-          // console.log(data.commoditycat)
-          // console.log(greater);
-         // let comm = greaterThanThree(data.commoditycat)
-         // console.log(`comm`, comm)
-          // Object that is being sent into database table
+    
           const sessionObj = {
             platform_sessions_id: serializedRow.sess_id,
             cell_num: serializedRow.cell_num,
@@ -135,8 +118,6 @@ try {
             exchangedirection: data.exchangedirection,
             created_date: serializedRow.created_date.toISOString()
           };
-
-         console.log(sessionObj)
 
           // There's a lot of extra information in the parsed data we don't use. If the array's values only contain:
           // 'platform_sessions_id', 'cell_num', and 'created_date' (a length of 3), then we don't put it into the database, as it will never be used
@@ -163,9 +144,9 @@ try {
         // console.log(parsedArray.length)
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()));
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        // db.truncateTable('parsed_data');
+         db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        //db.batchInsert('parsed_data', parsedArray);
+          db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
       }
