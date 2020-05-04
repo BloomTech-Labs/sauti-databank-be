@@ -95,6 +95,10 @@ try {
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
+              if (key === "commodityproduct"){
+                data[key] = data[key].filter(e => e.length > 3)
+              }
+
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
               // ["Maize", "Carrots"] turns into "Maize,Carrots"
