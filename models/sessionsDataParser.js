@@ -88,14 +88,13 @@ try {
                 data[key] = data[key].map(num => agencyTypes[+num]);
               }
 
-              
-
               //used to remove numbers from commoditycat
-              if (key === "commoditycat"){
+              let reg = /,/ 
+              if (key === "commoditycat" && reg.test(data[key])){
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
-              if (key === "commodityproduct"){
+              if (key === "commodityproduct" && reg.test(data[key])){
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
@@ -147,10 +146,11 @@ try {
       try {
         // console.log(parsedArray.length)
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()));
+        //commented out lines 152 and 154 for testing purposes
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-         db.truncateTable('parsed_data');
+        //  db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-          db.batchInsert('parsed_data', parsedArray);
+        // db.batchInsert('parsed_data', parsedArray);
       } catch {
         console.log("Failed to batch insert");
       }
