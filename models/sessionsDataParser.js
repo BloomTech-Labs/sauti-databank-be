@@ -2,6 +2,8 @@ require("dotenv").config();
 let unserializer = require("php-unserialize");
 const db = require("./model");
 
+const seperateMultiples = require("./seperateMultiples")
+
 // sessionsDataParser.js parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data" table
 
 // ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
@@ -88,15 +90,14 @@ try {
                 data[key] = data[key].map(num => agencyTypes[+num]);
               }
 
-              //used to remove numbers from commoditycat
-              let reg = /,/ 
-              if (key === "commoditycat" && reg.test(data[key])){
+              // used to remove numbers from commoditycat
+              if (key === "commoditycat"){
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
-              if (key === "commodityproduct" && reg.test(data[key])){
+              if (key === "commodityproduct"){
                 data[key] = data[key].filter(e => e.length > 3)
-              }
+              }          
 
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
@@ -105,7 +106,7 @@ try {
             }
           }
     
-          const sessionObj = {
+          let sessionObj = {
             platform_sessions_id: serializedRow.sess_id,
             cell_num: serializedRow.cell_num,
             procedurecommodity: data.procedurecommodity,
@@ -121,6 +122,31 @@ try {
             exchangedirection: data.exchangedirection,
             created_date: serializedRow.created_date.toISOString()
           };
+          
+          // let sessionObjArray = []
+          // let reg = /,/  
+          // // console.log("commoditycat", sessionObj.commoditycat)
+          // if (reg.test(sessionObj.commoditycat)){
+          //   console.log(sessionObj.commoditycat)
+          //     // console.log("sessionsObjArray", sessionObjArray)
+          //     let commodityArray = sessionObj.commoditycat.split(",")
+          //     console.log("commodityArray", commodityArray)
+          //     let length = commodityArray.length
+          //     console.log("length", length)
+          //     // // sessionObjArray.push(sessionObj)
+          //     // for (i=0; i < length; i++) {
+          //     //   sessionObj = {
+          //     //     ...sessionObj,
+          //     //     commoditycat: commoditycat[0]
+          //     //   }
+          //     //   sessionObjArray.push(sessionObj)
+          //     // }
+          // }
+
+          // if (key === "commodityproduct" && reg.test(data[key])){
+          //   // data[key] = data[key].filter(e => e.length > 3)
+          // }
+
 
           // There's a lot of extra information in the parsed data we don't use. If the array's values only contain:
           // 'platform_sessions_id', 'cell_num', and 'created_date' (a length of 3), then we don't put it into the database, as it will never be used
@@ -143,6 +169,8 @@ try {
         }
       });
 
+      seperateMultiples(parsedArray)
+
       try {
         // console.log(parsedArray.length)
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()));
@@ -150,7 +178,7 @@ try {
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
         //  db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        // db.batchInsert('parsed_data', parsedArray);
+        // db.batchInsert('parsed_data', parsedArray)
       } catch {
         console.log("Failed to batch insert");
       }
