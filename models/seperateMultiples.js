@@ -1,30 +1,17 @@
-//when new ones are add, mo, qtr, year are not on them
-const removeMultiples = require("./removeMultiples")
 module.exports = function separateMultiples(parsedArray) {
-    // console.log("parcedArray", parsedArray[0]);
-
-    newData = []
-    const testArray = parsedArray.splice(0,5)
-    newData.push(testArray)
-
-    testArray.map(obj => {
-        // console.log("object", obj)
-
+    let newNewData = []
+    let newData = parsedArray
+    // console.log("orginal length", newData.length)
+    newData.map(obj => {
         Object.entries(obj).forEach(entry => {
-            // console.log("entry", entry)
             if (entry[1], typeof(entry[1]) === "string" && entry[1].includes(",")) {
-            // console.log("multiple entries", entry[1])
-            let propName = entry[0]
-            // console.log("propName", propName)
-            let split = entry[1].split(",");
-            let unique = [...new Set(split)];
+                let propName = entry[0]
+                let split = entry[1].split(",");
+                let unique = [...new Set(split)];
                 unique.shift();
-                // console.log("unique", unique)
                 if (unique.length) {
                     let length = unique.length
                     for (i=0; i < length; i++) {
-                        // console.log(propName)
-                        // console.log(unique[i])
                         let object = {
                             platform_sessions_id: obj.platform_sessions_id,
                             cell_num: obj.cell_num,
@@ -44,14 +31,22 @@ module.exports = function separateMultiples(parsedArray) {
                         object[propName] = unique[i];
                     
                         let newObj = new Object(object)
-                        // newObj.object[i] = str
-                        // console.log(newObj)
                         newData.push(newObj)
                     }
                 }
             } 
         });
     })
-    console.log(newData)
-    // removeMultiples(newData)
-  }
+  
+    newData.map(obj => {
+        Object.entries(obj).forEach((entry => {
+            if (entry[1], typeof(entry[1]) === "string" && entry[1].includes(",")) {
+                let split = entry[1].split(",");
+                obj[entry[0]] = split[0]
+            }
+        }))
+        newNewData.push(obj)
+    })
+    return newNewData
+    // console.log("length of the returned data", newNewData.length)
+}

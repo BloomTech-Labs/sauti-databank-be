@@ -169,7 +169,9 @@ try {
         }
       });
 
-      seperateMultiples(parsedArray)
+      console.log("length of original data", parsedArray.length)
+      const addedData = seperateMultiples(parsedArray)
+      console.log("length of the returned data", addedData.length)
 
       try {
         // console.log(parsedArray.length)
