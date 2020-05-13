@@ -2,6 +2,8 @@
 // To run the file during testing, run: node ./models/sessionsDataParser.js
 
 module.exports = function separateMultiples(parsedArray) {
+    //uncomment this line of code for testing to shorten array to splice (* is length)
+    // parsedArray = parsedArray.splice(0, 5)
     //make a new array that will contain the final array of Data
     let newData = []   
     //use the console log below the see the number of entries in the original data array
@@ -69,6 +71,8 @@ module.exports = function separateMultiples(parsedArray) {
         //pushes the object back onto a new array
         newData.push(obj)
     })
+    //uncomment this console log to see the retured data
+    // console.log(newData)
     //use this console log to check the lenth of the retuned array of data
     // console.log("length of the returned data", newData.length)
     return newData

@@ -147,17 +147,17 @@ try {
       
       //use these to test the length of the original and returned data
       // console.log("length of original data", parsedArray.length)
-      const addedData = seperateMultiples(parsedArray)
-      // console.log("length of the returned data", addedData.length)
+      const filteredData = seperateMultiples(parsedArray)
+      // console.log("length of the returned data", filteredData.length)
 
       try {
         // console.log(parsedArray.length)
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()));
-        //commented out lines 152 and 154 for testing purposes
+        //commented out lines 158 and 160 for testing purposes
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        //  db.truncateTable('parsed_data');
+         db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        // db.batchInsert('parsed_data', parsedArray)
+        db.batchInsert('parsed_data', filteredData)
       } catch {
         console.log("Failed to batch insert");
       }
