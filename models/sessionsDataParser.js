@@ -90,11 +90,12 @@ try {
                 data[key] = data[key].map(num => agencyTypes[+num]);
               }
 
-              // used to remove numbers from commoditycat
+              // used to remove numbers from commoditycat (comes in as a mix of numbers and values)
               if (key === "commoditycat"){
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
+              // used to remove numbers from commodityproduct (comes in as a mix of numbers and values)
               if (key === "commodityproduct"){
                 data[key] = data[key].filter(e => e.length > 3)
               }          
@@ -122,31 +123,6 @@ try {
             exchangedirection: data.exchangedirection,
             created_date: serializedRow.created_date.toISOString()
           };
-          
-          // let sessionObjArray = []
-          // let reg = /,/  
-          // // console.log("commoditycat", sessionObj.commoditycat)
-          // if (reg.test(sessionObj.commoditycat)){
-          //   console.log(sessionObj.commoditycat)
-          //     // console.log("sessionsObjArray", sessionObjArray)
-          //     let commodityArray = sessionObj.commoditycat.split(",")
-          //     console.log("commodityArray", commodityArray)
-          //     let length = commodityArray.length
-          //     console.log("length", length)
-          //     // // sessionObjArray.push(sessionObj)
-          //     // for (i=0; i < length; i++) {
-          //     //   sessionObj = {
-          //     //     ...sessionObj,
-          //     //     commoditycat: commoditycat[0]
-          //     //   }
-          //     //   sessionObjArray.push(sessionObj)
-          //     // }
-          // }
-
-          // if (key === "commodityproduct" && reg.test(data[key])){
-          //   // data[key] = data[key].filter(e => e.length > 3)
-          // }
-
 
           // There's a lot of extra information in the parsed data we don't use. If the array's values only contain:
           // 'platform_sessions_id', 'cell_num', and 'created_date' (a length of 3), then we don't put it into the database, as it will never be used
@@ -168,10 +144,11 @@ try {
           );
         }
       });
-
-      console.log("length of original data", parsedArray.length)
+      
+      //use these to test the length of the original and returned data
+      // console.log("length of original data", parsedArray.length)
       const addedData = seperateMultiples(parsedArray)
-      console.log("length of the returned data", addedData.length)
+      // console.log("length of the returned data", addedData.length)
 
       try {
         // console.log(parsedArray.length)
