@@ -149,9 +149,9 @@ try {
       //use these to test the length of the original and returned data
       // console.log("length of original data", parsedArray.length)
       const filteredData = seperateMultiples(parsedArray)
-      // console.log("length of the returned data", filteredData.length)
-      const normalizedData = dataNormalize(filteredData.splice(0, 30))
-      // console.log("returned data", normalizedData)
+      console.log("length of the returned data", filteredData.length)
+      const normalizedData = dataNormalize(filteredData)
+      console.log("returned data", normalizedData.length)
 
       try {
         // console.log(parsedArray.length)
