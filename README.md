@@ -294,6 +294,12 @@ Queries are interactive, changable requests. Queries can traverse related object
 
 - The file `sessionsDataParser.js` in the `models` folder has the script that cleans the data from platform_sessions2 table and populates the trader's sessions info in the `parsed_data` table every 24 hours. 
 
+- The file `seperateMultiples.js` in the `models` folder is a function that cleans the data returned from the sessions table and breaks down the sessions into objects based on how many searches were perfomed in a session so that there is no more than one search for each catagory in a session. This presents the user with addtional objects as well as more accurate data.
+
+- The file `dataNormalize.js` in the `models` folder is a function that takes in the cleaned data and removes several issues that caused duplicate or confusing data to return such as:
+-- Multiple entries due to captialization,
+-- Multiple entries due to the word "Market" being included in some entries and not others.
+
 ## Environment Variables
 
 In order for the app to function correctly, the user must set up the proper environment variables on their local machines. 
