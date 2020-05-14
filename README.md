@@ -298,7 +298,8 @@ Queries are interactive, changable requests. Queries can traverse related object
 
 - The file `dataNormalize.js` in the `models` folder is a function that takes in the cleaned data and removes several issues that caused duplicate or confusing data to return such as:
 -- Multiple entries due to captialization,
--- Multiple entries due to the word "Market" being included in some entries and not others.
+-- Multiple entries due to the word "Market" being included in some entries and not others,
+-- Translates several words including Ibishyimbo => Beans, Mpunga => Rice, Nguo	=> Clothing, Nyanya => Tomato, Umuceri =>	rice.
 
 ## Environment Variables
 
