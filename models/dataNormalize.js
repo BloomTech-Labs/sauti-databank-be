@@ -4,6 +4,7 @@
 module.exports = function dataNormalize(filteredData) {
     //uncomment this line of code for testing to shorten array to splice (* is length)
     // filteredData = filteredData.splice(0, 5)
+    //or you can uncomment the mock object below and uncomment this line depenting on what you would like to test
     // const filteredData = mockObject;
     //new array of data where we will put the final normalized array
     normalizedData = []
@@ -18,60 +19,88 @@ module.exports = function dataNormalize(filteredData) {
         })
         normalizedData.push(obj)
     })
+    // console.log("final", normalizedData)
     return normalizedData;
 }
 
 function normalize(str) {
     str = str.toLowerCase();
+    let m = new RegExp(" market")
     // Translates several words to english and replaces them
     switch(str){
-        case "market":
-            str = str.replace(' market', '')
-            break;
-             case "ibishyimbo":
+        case "ibishyimbo":
             str = str.replace('ibishyimbo', 'beans')
-            break;
-             case "mpunga":
+        break;
+        case "mpunga":
             str = str.replace('mpunga', 'rice')
-            break;
-             case "nguo":
+        break;
+        case "nguo":
             str = str.replace('nguo', 'clothing')
-            break;
-             case "nyanya":
+        break;
+        case "nyanya":
             str = str.replace('nyanya', 'tomatoes')
-            break;
-             case "umuceri":
+        break;
+        case "umuceri":
             str = str.replace('umuceri', 'rice')
-            break;
-            default:
-            true;
-            break;
-      }
-      //converts all first letter of words to capitalize
-        var splitStr = str.split(' ');
-        for (var i = 0; i < splitStr.length; i++) {
-            // You do not need to check if i is larger than splitStr length, as your for does that for you
-            // Assign it back to the array
-            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
-        }
-        return splitStr.join(' ');
+        break;
+        case "animal product":
+            str = str.replace("animal product", "animal products")
+        break;
+        case 'vegetable':
+            str = str.replace("vegetable", "vegetables")
+        break;
+        //needs to be last, for some reason we could not get this switch to catch and change market
+        case str:
+            str = str.replace(" market", "")
+        break;
+    default:
+    true;
+    break;
+  }
+
+    //converts all first letter of words to capitalize
+    var splitStr = str.split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    return splitStr.join(' ');
  }
 
+
+//You can uncomment and use this mock object for testing.
 // const mockObject = [
 //  { 
 //     platform_sessions_id: 45495,
 //     cell_num: '254000045495',
 //     procedurecommodity: 'NGUO',
-//     procedurecommoditycat: 'Vegetables',
+//     procedurecommoditycat: 'VegetablE',
 //     proceduredest: 'KEN->UGA',
 //     procedurerequireddocument: undefined,
 //     procedurerelevantagency: undefined,
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
-//     commoditymarket: 'Kitale',
-//     commoditycat: 'Animal Products',
+//     commoditymarket: 'KITale Market',
+//     commoditycat: 'Animal Product',
 //     commodityproduct: 'Ibishyimbo',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
 //   },
+//   { 
+//     platform_sessions_id: 45495,
+//     cell_num: '254000045495',
+//     procedurecommodity: 'umuceri',
+//     procedurecommoditycat: 'ANIMAL PRODUCT',
+//     proceduredest: 'KEN->UGA',
+//     procedurerequireddocument: undefined,
+//     procedurerelevantagency: undefined,
+//     procedureorigin: 'EAC',
+//     commoditycountry: 'KEN',
+//     commoditymarket: 'KITale MARKET',
+//     commoditycat: 'Animal Product',
+//     commodityproduct: 'nyanya',
+//     exchangedirection: 'KES->UGX',
+//     created_date: '2020-04-13T22:04:20.000Z'
+//   }
 // ]
