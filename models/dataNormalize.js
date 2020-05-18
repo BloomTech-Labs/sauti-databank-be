@@ -25,7 +25,6 @@ module.exports = function dataNormalize(filteredData) {
 
 function normalize(str) {
     str = str.toLowerCase();
-    let m = new RegExp(" market")
     // Translates several words to english and replaces them
     switch(str){
         case "ibishyimbo":
@@ -46,17 +45,25 @@ function normalize(str) {
         case "animal product":
             str = str.replace("animal product", "animal products")
         break;
+        case 'groundnuts':
+            str = str.replace('groundnuts', "ground nuts")
+        break;
         case 'vegetable':
             str = str.replace("vegetable", "vegetables")
-        break;
-        //needs to be last, for some reason we could not get this switch to catch and change market
-        case str:
-            str = str.replace(" market", "")
         break;
     default:
     true;
     break;
   }
+
+  //had a hard time doing two word inputs in the switch (especially Market where the first word could be anything) so we used if statements
+  if(/farm/.test(str) && /input/.test(str)){
+    str = 'farm inputs'
+    }
+
+  if(/ market/.test(str)){
+    str = str.replace(' market','')
+    }
 
     //converts all first letter of words to capitalize
     var splitStr = str.split(' ');
@@ -82,7 +89,7 @@ function normalize(str) {
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
 //     commoditymarket: 'KITale Market',
-//     commoditycat: 'Animal Product',
+//     commoditycat: 'farm input',
 //     commodityproduct: 'Ibishyimbo',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
@@ -98,8 +105,24 @@ function normalize(str) {
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
 //     commoditymarket: 'KITale MARKET',
-//     commoditycat: 'Animal Product',
+//     commoditycat: 'Farm Input',
 //     commodityproduct: 'nyanya',
+//     exchangedirection: 'KES->UGX',
+//     created_date: '2020-04-13T22:04:20.000Z'
+//   },
+//   { 
+//     platform_sessions_id: 45495,
+//     cell_num: '254000045495',
+//     procedurecommodity: 'groundNuts',
+//     procedurecommoditycat: 'ANIMAL PRODUCT',
+//     proceduredest: 'KEN->UGA',
+//     procedurerequireddocument: undefined,
+//     procedurerelevantagency: undefined,
+//     procedureorigin: 'EAC',
+//     commoditycountry: 'KEN',
+//     commoditymarket: 'KITale MARKET',
+//     commoditycat: 'Ground nuts',
+//     commodityproduct: 'GROUNDNUTS',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
 //   }
