@@ -2,8 +2,8 @@ require("dotenv").config();
 let unserializer = require("php-unserialize");
 const db = require("./model");
 
-const dataNormalize = require('./dataNormalize')
 const seperateMultiples = require("./seperateMultiples")
+const dictionaryParcer = require("./dictionaryParcer")
 
 // sessionsDataParser.js parses info stored in the DATA COLUMN of "platform_sessions2" table in PHP serialized format, and populates it into "parsed_data" table
 
@@ -149,9 +149,9 @@ try {
       //use these to test the length of the original and returned data
       // console.log("length of original data", parsedArray.length)
       const filteredData = seperateMultiples(parsedArray)
-      // console.log("length of the returned data", filteredData.length)
-      const normalizedData = dataNormalize(filteredData)
-      // console.log("returned data", normalizedData.length)
+      // console.log("filtered", filteredData)
+      const translatedData = dictionaryParcer(filteredData)
+      // console.log("returned data", translatedData)
 
       try {
         // console.log(parsedArray.length)
@@ -160,7 +160,7 @@ try {
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
         db.truncateTable('parsed_data');
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        db.batchInsert('parsed_data', normalizedData)
+        db.batchInsert('parsed_data', translatedData)
       } catch {
         console.log("Failed to batch insert");
       }

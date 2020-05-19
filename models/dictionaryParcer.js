@@ -1,70 +1,62 @@
+const { products, markets } = require("./dictionary.js")
+
 // ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
 // To run the file during testing, run: node ./models/sessionsDataParser.js
 
-module.exports = function dataNormalize(filteredData) {
-    //uncomment this line of code for testing to shorten array to splice (* is length)
-    // filteredData = filteredData.splice(0, 5)
-    //or you can uncomment the mock object below and uncomment this line depenting on what you would like to test
-    // const filteredData = mockObject;
-    //new array of data where we will put the final normalized array
-    normalizedData = []
+module.exports = function dictionaryParcer(data) {
+    // data = mockObject
 
-    filteredData.forEach(obj => {
+    translatedData = [];
+
+    data.forEach(obj => {
         Object.entries(obj).forEach(entry => {
-            //put here list of keys we want checked
-            //filters out entries into the 5 keys that could need to be changed
             if (typeof entry[1] ==="string" && (entry[0]==="procedurecommoditycat"||entry[0]==="procedurecommodity"||entry[0]==="commoditymarket"||entry[0]==="commoditycat" ||entry[0]==="commodityproduct")) {
-                obj[entry[0]] = normalize(entry[1])
-            }
+                obj[entry[0]] = toCaps(entry[1])
+            } //this will capitalize the first letter of each word of select props
+            
+            if (typeof entry[1] ==="string" && entry[0]==="commodityproduct") {
+            // console.log(obj[entry[0]])
+                Object.entries(products).forEach(productEntry => {
+                   if (obj[entry[0]] === productEntry[0]) {
+                       obj[entry[0]] = productEntry[1]
+                   } 
+                })
+            } // will run translations for products
+   
+            if (typeof entry[1] ==="string" && entry[0]==="commoditymarket") {
+                Object.entries(markets).forEach(marketEntry => {
+                    if (obj[entry[0]] === marketEntry[0]) {
+                        obj[entry[0]] = marketEntry[1]
+                    }
+                })
+            } // normalizes the market entries
+
+            if (typeof entry[1] ==="string" && entry[0]==="commodityproduct") {
+                const testArray = []
+                Object.entries(products).forEach(entries => {
+                    testArray.push(entries[0], entries[1])
+                })
+
+                if(!testArray.includes(obj[entry[0]])) {
+                    // console.log("object", obj)
+                    obj.commodityproduct = undefined
+                    obj.commoditycat = undefined
+                }
+            } // removes words that aren't present in the dictionaryParser
         })
-        normalizedData.push(obj)
+        translatedData.push(obj)
+        
     })
-    // console.log("final", normalizedData)
-    return normalizedData;
+    // console.log("final", translatedData)
+    return translatedData
 }
 
-function normalize(str) {
+function toCaps(str) {
     str = str.toLowerCase();
-    // Translates several words to english and replaces them
-    switch(str){
-        case "ibishyimbo":
-            str = str.replace('ibishyimbo', 'beans')
-        break;
-        case "mpunga":
-            str = str.replace('mpunga', 'rice')
-        break;
-        case "nguo":
-            str = str.replace('nguo', 'clothing')
-        break;
-        case "nyanya":
-            str = str.replace('nyanya', 'tomatoes')
-        break;
-        case "umuceri":
-            str = str.replace('umuceri', 'rice')
-        break;
-        case "animal product":
-            str = str.replace("animal product", "animal products")
-        break;
-        case 'groundnuts':
-            str = str.replace('groundnuts', "ground nuts")
-        break;
-        case 'vegetable':
-            str = str.replace("vegetable", "vegetables")
-        break;
-    default:
-    true;
-    break;
-  }
 
-  //had a hard time doing two word inputs in the switch (especially Market where the first word could be anything) so we used if statements
-  if(/farm/.test(str) && /input/.test(str)){
-    str = 'farm inputs'
+    if(/ market/.test(str)){
+        str = str.replace(' market','')
     }
-
-  if(/ market/.test(str)){
-    str = str.replace(' market','')
-    }
-
     //converts all first letter of words to capitalize
     var splitStr = str.split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -73,8 +65,7 @@ function normalize(str) {
         splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
     }
     return splitStr.join(' ');
- }
-
+}
 
 //You can uncomment and use this mock object for testing.
 // const mockObject = [
@@ -89,23 +80,23 @@ function normalize(str) {
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
 //     commoditymarket: 'KITale Market',
-//     commoditycat: 'farm input',
-//     commodityproduct: 'Ibishyimbo',
+//     commoditycat: 'Ifu-ibigori',
+//     commodityproduct: 'ibitunguru-umweru',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
 //   },
 //   { 
 //     platform_sessions_id: 45495,
 //     cell_num: '254000045495',
-//     procedurecommodity: 'umuceri',
+//     procedurecommodity: 'Peanut Butter Sandwich',
 //     procedurecommoditycat: 'ANIMAL PRODUCT',
 //     proceduredest: 'KEN->UGA',
 //     procedurerequireddocument: undefined,
 //     procedurerelevantagency: undefined,
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
-//     commoditymarket: 'KITale MARKET',
-//     commoditycat: 'Farm Input',
+//     commoditymarket: 'Peatnut Butter',
+//     commoditycat: 'cow peas',
 //     commodityproduct: 'nyanya',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
@@ -120,9 +111,9 @@ function normalize(str) {
 //     procedurerelevantagency: undefined,
 //     procedureorigin: 'EAC',
 //     commoditycountry: 'KEN',
-//     commoditymarket: 'KITale MARKET',
+//     commoditymarket: 'MBSA',
 //     commoditycat: 'Ground nuts',
-//     commodityproduct: 'GROUNDNUTS',
+//     commodityproduct: 'super rice',
 //     exchangedirection: 'KES->UGX',
 //     created_date: '2020-04-13T22:04:20.000Z'
 //   }
