@@ -92,14 +92,14 @@ try {
               }
 
               // used to remove numbers from commoditycat (comes in as a mix of numbers and values)
-              if (key === "commoditycat"){
+              if (key === "commoditycat") {
                 data[key] = data[key].filter(e => e.length > 3)
               }
 
               // used to remove numbers from commodityproduct (comes in as a mix of numbers and values)
-              if (key === "commodityproduct"){
+              if (key === "commodityproduct") {
                 data[key] = data[key].filter(e => e.length > 3)
-              }          
+              }
 
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
@@ -107,7 +107,7 @@ try {
               data[key] = data[key].toString();
             }
           }
-    
+
           let sessionObj = {
             platform_sessions_id: serializedRow.sess_id,
             cell_num: serializedRow.cell_num,
@@ -145,13 +145,13 @@ try {
           );
         }
       });
-      
+
       //use these to test the length of the original and returned data
       // console.log("length of original data", parsedArray.length)
       const filteredData = seperateMultiples(parsedArray)
-      // console.log("filtered", filteredData)
+      // console.log("filtered", filteredData.splice(0, 15))
       const translatedData = dictionaryParcer(filteredData)
-      // console.log("returned data", translatedData)
+      // console.log("returned data", translatedData.splice(0, 15))
 
       try {
         // console.log(parsedArray.length)
