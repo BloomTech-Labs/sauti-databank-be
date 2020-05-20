@@ -223,6 +223,8 @@ module.exports = {
     "Eldoret": "Eldoret",
     "Gitega": "Gitega",
     "Goma (Birere)": "Goma Birere",
+    "Goma(Birere)": "Goma Birere",
+    "Goma(birere)": "Goma Birere",
     "Goma Birere": "Goma Birere",
     "Gulu": "Gulu",
     "Hoima Market": "Hoima",
