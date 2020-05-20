@@ -296,15 +296,9 @@ Queries are interactive, changable requests. Queries can traverse related object
 
 - The file `seperateMultiples.js` in the `models` folder is a function that cleans the data returned from the sessions table and breaks down the sessions into objects based on how many searches were perfomed in a session so that there is no more than one search for each catagory in a session. This presents the user with addtional objects as well as more accurate data.
 
-- The file `dataNormalize.js` in the `models` folder is a function that takes in the cleaned data and removes several issues that caused duplicate or confusing data to return such as:
--- Multiple entries due to captialization,
--- Multiple entries due to the word "Market" being included in some entries and not others,
--- Changed: 
-  --"Animal Product" to "Animal Products", 
-  --"Vegetable" to "Vegetables",
-  --"Farm Input" to "Farm Imputs",
-  --"GroundNuts" to "Ground Nuts" 
--- Translates several words including Ibishyimbo => Beans, Mpunga => Rice, Nguo	=> Clothing, Nyanya => Tomato, Umuceri =>	rice.
+- The file `dictionary.js` in the `models` folder contians 4 objects an object called "products" that includes all possible products, an object called object called "categories" that includes all possible categories, an object called `procedureComm` that correct several different spellings of various proceedure commodities, and an object called `markets` that corrects several different spellings of various markets.
+
+- The file `dictionaryParcer.js` in the `models` folder is a function that takes in the cleaned data and compares it to the dictionary in `dictionary.js` to remove several issues that caused duplicate or confusing data to return. Only values that exist in the dictionary can be returned as products or product categories, new addtions will have to be added to dictionary.js before they can be seen on the app. Markets that do not exist in the dictionary can be added so that the list can expand. The word "Market" is always removed from the entry to avoid duplicates. New Peoceedure Commodities can be added but several spelling errors are corrected. The presentation is also made more uniform (i.e. "Fresh Talapia" to "Talapia - Fresh")
 
 ## Environment Variables
 
