@@ -1,4 +1,4 @@
-const { products, markets, categories } = require("./dictionary.js")
+const { products, markets, categories, procedureComm } = require("./dictionary.js")
 
 // ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
 // To run the file during testing, run: node ./models/sessionsDataParser.js
@@ -39,6 +39,15 @@ module.exports = function dictionaryParcer(data) {
 
                 })
             }//normilizes commoditycategories against the dictionary
+
+            if (typeof entry[1] === "string" && entry[0] === "procedurecommodity") {
+                Object.entries(procedureComm).forEach(commodity => {
+                    if (obj[entry[0]] === commodity[0]) {
+                        obj[entry[0]] = commodity[1]
+                    }
+
+                })
+            }//normilizes proceedureCommodities against the dictionary
 
             if (typeof entry[1] === "string" && entry[0] === "commodityproduct") {
                 const productArray = []
@@ -90,7 +99,7 @@ function toCaps(str) {
 //     {
 //         platform_sessions_id: 45495,
 //         cell_num: '254000045495',
-//         procedurecommodity: 'NGUO',
+//         procedurecommodity: 'Dried / Preserved Tilapia',
 //         procedurecommoditycat: 'VegetablE',
 //         proceduredest: 'KEN->UGA',
 //         procedurerequireddocument: undefined,
@@ -106,7 +115,7 @@ function toCaps(str) {
 //     {
 //         platform_sessions_id: 45495,
 //         cell_num: '254000045495',
-//         procedurecommodity: 'Peanut Butter Sandwich',
+//         procedurecommodity: 'groundNuts',
 //         procedurecommoditycat: 'ANIMAL PRODUCT',
 //         proceduredest: 'KEN->UGA',
 //         procedurerequireddocument: undefined,
@@ -122,7 +131,7 @@ function toCaps(str) {
 //     {
 //         platform_sessions_id: 45495,
 //         cell_num: '254000045495',
-//         procedurecommodity: 'groundNuts',
+//         procedurecommodity: 'Pawpaws(papaya)',
 //         procedurecommoditycat: 'ANIMAL PRODUCT',
 //         proceduredest: 'KEN->UGA',
 //         procedurerequireddocument: undefined,
