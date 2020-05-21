@@ -158,9 +158,9 @@ try {
         console.log("\n** PARSED DATA TABLE **\n", Date(Date.now().toString()));
         //commented out lines 161 and 163 for testing purposes
         // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        // db.truncateTable("parsed_data");
+        db.truncateTable("parsed_data");
         // THIS INSERTS ~80,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-        // db.batchInsert("parsed_data", translatedData);
+        db.batchInsert("parsed_data", translatedData);
       } catch {
         console.log("Failed to batch insert");
       }
