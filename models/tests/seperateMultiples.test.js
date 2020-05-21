@@ -28,7 +28,7 @@ describe("creates arrays with new objects that are the correct size and shape fo
     for (var i = 0; i < mockData.length; i++) {
       Object.entries(mockData[i]).forEach(entry => {
         if (typeof entry[1] === "string" && entry[1].includes(",")) {
-          ++count;
+            count = count + entry[1].match(/a/gi).length;
         }
       });
     }
@@ -49,7 +49,7 @@ describe("all new objects have undefined for thier properties excluding the new 
     for (var i = 0; i < mockData.length; i++) {
       Object.entries(mockData[i]).forEach(entry => {
         if (typeof entry[1] === "string" && entry[1].includes(",")) {
-          ++count;
+            count = count + entry[1].match(/a/gi).length;
         }
       });
     }
@@ -68,7 +68,7 @@ describe("all new objects have undefined for thier properties excluding the new 
     for (var i = 0; i < mockData.length; i++) {
       Object.entries(mockData[i]).forEach(entry => {
         if (typeof entry[1] === "string" && entry[1].includes(",")) {
-          ++count;
+            count = count + entry[1].match(/a/gi).length;
         }
       });
     }
@@ -87,7 +87,7 @@ describe("all new objects have undefined for thier properties excluding the new 
     for (var i = 0; i < mockData.length; i++) {
       Object.entries(mockData[i]).forEach(entry => {
         if (typeof entry[1] === "string" && entry[1].includes(",")) {
-          ++count;
+            count = count + entry[1].match(/a/gi).length;
         }
       });
     }
@@ -106,11 +106,11 @@ describe("all new objects have undefined for thier properties excluding the new 
     for (var i = 0; i < mockData.length; i++) {
       Object.entries(mockData[i]).forEach(entry => {
         if (typeof entry[1] === "string" && entry[1].includes(",")) {
-          ++count;
+            count = count + entry[1].match(/a/gi).length;
         }
       });
     }
-    let newObjNum = seperateMultiples(mockData).length - count;
+    let newObjNum = seperateMultiples(mockData).length - count + 1;
     for (var j = newObjNum; j < seperateMultiples(mockData).length; j++) {
       let countOfNumbers = 0;
       let countOfStrings = 0;

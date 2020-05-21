@@ -123,7 +123,7 @@ module.exports = mockData = [
     commoditycountry: "TZA",
     commoditymarket: "Kigoma",
     commoditycat: "Beans",
-    commodityproduct: "Yellow Beans",
+    commodityproduct: "Yellow Beans,rice,eggs",
     exchangedirection: undefined,
     created_date: "2020-03-13T18:35:16.000Z"
   } //7
