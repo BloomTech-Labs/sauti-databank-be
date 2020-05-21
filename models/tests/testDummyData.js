@@ -26,7 +26,7 @@ module.exports = mockData = [
     procedureorigin: "OutsideEAC",
     commoditycountry: "TZA",
     commoditymarket: "Arusha",
-    commoditycat: "Beans",
+    commoditycat: "Beans,Maize",
     commodityproduct: "Red Beans",
     exchangedirection: "TZS->KES",
     created_date: "2020-03-10 18:37:00"

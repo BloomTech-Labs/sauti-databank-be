@@ -139,7 +139,7 @@ describe("duplicate tests", () => {
   // beforeEach(() => {
   //   jest.resetModules();
   // });
-  test("After running the function with and array that has 2 extra object values, it removes those dupplicates(-2) ", async () => {
+  test("Array has an extra property value, removes extra value and gives it its own object (length+1) ", async () => {
     const testData1 = require("./testDummyData");
     /*
         The function will run, takes in "testData1" array as an arguement, 
@@ -148,12 +148,13 @@ describe("duplicate tests", () => {
         of data before and after(theReturned) .
         */
     //this is the returned values length
-    const before = testData1;
-    console.log("length of array before function", testData1.length); //8
-    const theReturnedValue = seperateMultiples(new Array(testData1)[0]);
-    console.log("length of array after function", theReturnedValue.length); //6
+    const before = Array.from(testData1);
+    // console.log("length of array before function", testData1.length); //8
+    const theReturnedValue = seperateMultiples(Array.from(testData1));
+    // console.log("length of array after function", theReturnedValue.length); //6
     // this is the length of the array before the function is used
-    // expect(theReturnedValue.length).toBeLessThan(8);
+    // console.log("before and after", before.length, theReturnedValue.length);
+    expect(theReturnedValue.length).toBeGreaterThan(before.length);
     // expect(theReturnedValue.length).toBeLessThan(new Array(testData1)[0].length)
   });
   test("function does nothing when array has no duplicated data is sent to it", async () => {
@@ -181,30 +182,13 @@ describe("duplicate tests", () => {
         created_date: "2020-04-24T17:31:40.000Z"
       }
     ];
-    //they are the same
-    const noDupesStill = [
-      {
-        platform_sessions_id: 45773,
-        cell_num: "250000045773",
-        procedurecommodity: undefined,
-        procedurecommoditycat: undefined,
-        proceduredest: undefined,
-        procedurerequireddocument: undefined,
-        procedurerelevantagency: undefined,
-        procedureorigin: undefined,
-        commoditycountry: "RWA",
-        commoditymarket: undefined,
-        commoditycat: undefined,
-        commodityproduct: undefined,
-        exchangedirection: undefined,
-        created_date: "2020-04-24T17:31:40.000Z"
-      }
-    ];
     /*Here I'll save it
         in a variable as a string to match it to the its self using RegExp methods.*/
-    const theReturnedValue = JSON.stringify(seperateMultiples(noDupes));
+    const theReturnedValue = JSON.stringify(
+      seperateMultiples(Array.from(noDupes))
+    );
     /* Here I am using "toMatch"(a RegExp testing method)
            to confirm the array is still the same as before*/
-    expect(theReturnedValue).toMatch(JSON.stringify(noDupesStill));
+    expect(theReturnedValue).toMatch(JSON.stringify(Array.from(noDupes)));
   });
 });
