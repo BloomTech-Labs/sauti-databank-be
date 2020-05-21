@@ -1,3 +1,5 @@
+// prettier-ignore
+
 module.exports = {
   products: {
     "Local Eggs": "Local Eggs",
@@ -223,6 +225,8 @@ module.exports = {
     "Eldoret": "Eldoret",
     "Gitega": "Gitega",
     "Goma (Birere)": "Goma Birere",
+    "Goma(Birere)": "Goma Birere",
+    "Goma(birere)": "Goma Birere",
     "Goma Birere": "Goma Birere",
     "Gulu": "Gulu",
     "Hoima Market": "Hoima",
@@ -440,6 +444,7 @@ module.exports = {
   categories: {
     "Animal Product": "Animal Products",
     "Animal Products - Other": "Animal Products",
+    "ANIMAL PRODUCT": "Animal Products",
     "Animal Products": "Animal Products",
     "Beans": "Beans",
     "Cereals - Maize": "Cereals - Maize",
@@ -543,6 +548,7 @@ module.exports = {
     "New Clothes": "Clothes - New",
     "New Clothing And Shoes": "Clothes and Shoes - New",
     "New Clothing and Shoes": "Clothes and Shoes - New",
+    "Clothing & Shoes": "Clothes and Shoes - New",
     "Nile Perch Dried Or Preserved": "Nile Perch - Dried / Preserved",
     "Omena": "Omena",
     "Onions": "Onions",
