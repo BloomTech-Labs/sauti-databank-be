@@ -58,7 +58,7 @@ try {
             user.gender = "Male";
           }
         });
-      } else if (element.data.includes("Female") || element.data.includes("Kike") || element.data.includes("Musajja") || element.data.includes("Mukazi")) {
+      } else if (element.data.includes("Female") || element.data.includes("Kike") || element.data.includes("Musajja") || element.data.includes("Mukazi") || element.data.includes("Gore")) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Female";
