@@ -42,9 +42,9 @@ module.exports = function dictionaryParcer(data) {
           obj[entry[0]] = destFormat(entry[1]);
         }
 
-        if (entry[1].includes("maize" || "Maize")) {
-          obj[entry[0]] = undefined;
-        }
+        // if (entry[1].includes("maize" || "Maize")) {
+        //   obj[entry[0]] = undefined;
+        // }
       }
 
       if (typeof entry[1] === "string" && entry[0] === "commoditymarket") {
@@ -92,6 +92,15 @@ module.exports = function dictionaryParcer(data) {
           obj.commoditycat = undefined;
         }
       } //removes categories that are not present in the dictionaryParser
+
+      if (
+        typeof entry[1] === "string" &&
+        entry[0] === "proceduredest" &&
+        entry[1].length > 3 &&
+        !entry[1].includes("->")
+      ) {
+        obj.proceduredest = undefined;
+      }
     });
     translatedData.push(obj);
   });

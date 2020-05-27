@@ -581,5 +581,5 @@ module.exports = {
     "Watermelon": "Watermelon",
     "Wheat Flour": "Wheat Flour",
     "Wheat Grain": "Wheat Grain"
-  }
+  },
 }
