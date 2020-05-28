@@ -9,6 +9,7 @@ const {
 // To run the file during testing, run: node ./models/sessionsDataParser.js
 
 module.exports = function dictionaryParcer(data) {
+  //  line 13 can be uncommented for testing and the mock object at the bottom of the file will also have to be uncommented
   //   data = mockObject;
 
   translatedData = [];
@@ -41,11 +42,7 @@ module.exports = function dictionaryParcer(data) {
         if (entry[1].includes("->")) {
           obj[entry[0]] = destFormat(entry[1]);
         }
-
-        if (entry[1].includes("maize" || "Maize")) {
-          obj[entry[0]] = undefined;
-        }
-      }
+      }// removes the arrow from proceduredest and exchange direction
 
       if (typeof entry[1] === "string" && entry[0] === "commoditymarket") {
         Object.entries(markets).forEach(marketEntry => {
@@ -92,6 +89,16 @@ module.exports = function dictionaryParcer(data) {
           obj.commoditycat = undefined;
         }
       } //removes categories that are not present in the dictionaryParser
+
+      if (
+        typeof entry[1] === "string" &&
+        entry[0] === "proceduredest" &&
+        entry[1].length > 3 &&
+        !entry[1].includes("->")
+      ) {
+        obj.proceduredest = undefined;
+      }//checks if the entry type in proceeduredest is valid
+
     });
     translatedData.push(obj);
   });
@@ -104,10 +111,11 @@ function toCaps(str) {
 
   if (/ market/.test(str)) {
     str = str.replace(" market", "");
-  }
-  //converts all first letter of words to capitalize
+  }// Removes the word market wherever it appears so the values are the same (i.e. Busia Market becomes Busia)
+
   var splitStr = str.split(" ");
   for (var i = 0; i < splitStr.length; i++) {
+    // Capitalizes the first letter in each string
     // You do not need to check if i is larger than splitStr length, as your for does that for you
     // Assign it back to the array
     splitStr[i] =
@@ -122,7 +130,7 @@ function destFormat(str) {
     str = str.split("->")[1];
     return str;
   }
-}
+}//removes the arrows
 
 //You can uncomment and use this mock object for testing.
 // const mockObject = [
