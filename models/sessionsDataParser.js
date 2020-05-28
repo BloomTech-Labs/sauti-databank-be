@@ -101,6 +101,11 @@ try {
                 data[key] = data[key].filter(e => e.length > 3);
               }
 
+              // used to remove numbers from commodityproduct (comes in as a mix of numbers and values) as well as some odd values (single letters and kg repeatedly)
+              if (key === "commoditymarket") {
+                data[key] = data[key].filter(e => e.length > 3);
+              }
+
               // Turn the value into a string, before it's sent into database table
               // Some values are arrays and can't be stored in the database, which is because a trader's request may contain multiple values for that request_type
               // ["Maize", "Carrots"] turns into "Maize,Carrots"
