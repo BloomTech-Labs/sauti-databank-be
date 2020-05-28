@@ -41,10 +41,6 @@ module.exports = function dictionaryParcer(data) {
         if (entry[1].includes("->")) {
           obj[entry[0]] = destFormat(entry[1]);
         }
-
-        // if (entry[1].includes("maize" || "Maize")) {
-        //   obj[entry[0]] = undefined;
-        // }
       }
 
       if (typeof entry[1] === "string" && entry[0] === "commoditymarket") {
