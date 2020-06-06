@@ -20,7 +20,7 @@
   "homepage": "https://github.com/sauti-databank/back-end#readme",
   "dependencies": {
     "apollo-server": "^2.10.1",
-    "apollo-server-express": "^2.10.1",
+    "apollo-server-express": "^2.14.2",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
