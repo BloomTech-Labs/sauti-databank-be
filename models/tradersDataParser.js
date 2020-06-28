@@ -1,10 +1,11 @@
 require("dotenv").config();
+let unserializer = require("php-unserialize");
 
 const db = require("./model");
 
 // tradersDataParser.js withdraws user information from PHP serialized data in `platform_sessions2` table in database
 // Many users have submit more than one request so there are ~80,000 entries in `platform_sessions2` but only ~11,000 users in `traders` table
-// This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc. 
+// This applies all user details to their phone number such as: age, gender, education, border crossing frequency, etc.
 
 // ==== SEE BOTTOM OF FILE BEFORE RUNNING ====
 // To run the file during testing, run: node ./models/tradersDataParser.js
@@ -38,7 +39,8 @@ try {
           produce: null,
           primary_income: null,
           language: null,
-          country_of_residence: null
+          country_of_residence: null,
+          crossing_location: null
         });
       }
     }
@@ -58,7 +60,13 @@ try {
             user.gender = "Male";
           }
         });
-      } else if (element.data.includes("Female") || element.data.includes("Kike") || element.data.includes("Musajja") || element.data.includes("Mukazi") || element.data.includes("Gore")) {
+      } else if (
+        element.data.includes("Female") ||
+        element.data.includes("Kike") ||
+        element.data.includes("Musajja") ||
+        element.data.includes("Mukazi") ||
+        element.data.includes("Gore")
+      ) {
         arrayWithGender.map(user => {
           if (user.cell_num === num) {
             user.gender = "Female";
@@ -122,7 +130,10 @@ try {
 
     sessions.map(element => {
       let num = element.cell_num;
-      if (element.data.includes("No formal education") || element.data.includes("Ssaasomako")) {
+      if (
+        element.data.includes("No formal education") ||
+        element.data.includes("Ssaasomako")
+      ) {
         arrayWithEducation.map(user => {
           if (user.cell_num === num) {
             user.education = "No formal education";
@@ -157,7 +168,10 @@ try {
 
     sessions.map(element => {
       let num = element.cell_num;
-      if (element.data.includes("Never") || element.data.includes("Ssiyitangayo")) {
+      if (
+        element.data.includes("Never") ||
+        element.data.includes("Ssiyitangayo")
+      ) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Never";
@@ -169,13 +183,19 @@ try {
             user.crossing_freq = "Monthly";
           }
         });
-      } else if (element.data.includes("Weekly") || element.data.includes("Buli wiiki")) {
+      } else if (
+        element.data.includes("Weekly") ||
+        element.data.includes("Buli wiiki")
+      ) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Weekly";
           }
         });
-      } else if (element.data.includes("Daily") || element.data.includes("Buli lunaku")) {
+      } else if (
+        element.data.includes("Daily") ||
+        element.data.includes("Buli lunaku")
+      ) {
         arrayWithCrossingFreq.map(user => {
           if (user.cell_num === num) {
             user.crossing_freq = "Daily";
@@ -287,28 +307,47 @@ try {
 
     arrayWithCountry.map(user => {
       let num = user.cell_num;
-      if ((/^254/).test(num)) {
+      if (/^254/.test(num)) {
         user.country_of_residence = "KEN";
-      } else if ((/^256/).test(num)) {
+      } else if (/^256/.test(num)) {
         user.country_of_residence = "UGA";
-      } else if ((/^250/).test(num)) {
+      } else if (/^250/.test(num)) {
         user.country_of_residence = "RWA";
-      } else if ((/^255/).test(num)) {
+      } else if (/^255/.test(num)) {
         user.country_of_residence = "TZA";
       }
     });
 
-    
+    getcrossing_location(sessions, arrayWithCountry);
+  };
+
+  getcrossing_location = (sessions, arrayWithCountry) => {
+    let arrayWithCrossingLocation = arrayWithCountry;
+
+    sessions.map(element => {
+      let num = element.cell_num;
+      if (element.data.includes("survey-1-border")) {
+        const unSerialData = unserializer.unserialize(element.data);
+        if (unSerialData["survey-1-border"] !== undefined) {
+          arrayWithCrossingLocation.map(user => {
+            if (user.cell_num === num) {
+              user.crossing_location = unSerialData["survey-1-border"]["0"];
+            }
+          });
+        }
+      }
+    });
+
     try {
-      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()))
+      console.log("\n** TRADERS TABLE **\n", Date(Date.now().toString()));
       // THIS DELETES ALL ENTRIES IN TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      db.truncateTable('traders');
+      db.truncateTable("traders");
       // THIS INSERTS ~11,000 ENTRIES INTO TABLE - COMMENT OUT THIS LINE WHEN TESTING
-      db.batchInsert('traders', arrayWithCountry);
+      db.batchInsert("traders", arrayWithCrossingLocation);
     } catch {
       console.log("Failed to batch insert");
     }
   };
 } catch ({ message }) {
-    console.log("Failed file", message);
+  console.log("Failed file", message);
 }
