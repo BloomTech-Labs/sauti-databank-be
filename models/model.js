@@ -16,6 +16,7 @@ const getDataSessions = () => {
          't.age',
          't.education',
          't.crossing_freq',
+         't.crossing_location',
          't.produce',
          't.primary_income',
          't.language',
