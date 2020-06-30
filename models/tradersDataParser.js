@@ -266,7 +266,6 @@ try {
         element.data.includes(`survey-1-primaryincome\";a:1:{i:0;s:3`) ||
         element.data.includes(`survey-1-primaryincome\";a:1:{i:0;s:4`)
       ) {
-        console.log(element.data)
         arrayWithPrimaryIncome.map(user => {
           if (user.cell_num === num) {
             user.primary_income = "Yes";
