@@ -9,6 +9,7 @@ const typeDefs = gql`
     age: String
     education: String
     crossing_freq: String
+    crossing_location: String
     produce: String
     primary_income: String
     language: String
@@ -21,6 +22,7 @@ const typeDefs = gql`
     age: String
     education: String
     crossing_freq: String
+    crossing_location: String
     produce: String
     primary_income: String
     language: String
@@ -97,6 +99,7 @@ const typeDefs = gql`
     age: String
     education: String
     crossing_freq: String
+    crossing_location: String
     produce: String
     primary_income: String
     language: String
@@ -109,6 +112,7 @@ const typeDefs = gql`
     age: String
     education: String
     crossing_freq: String
+    crossing_location: String
     produce: String
     primary_income: String
     language: String
