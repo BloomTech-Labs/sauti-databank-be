@@ -13,7 +13,7 @@ module.exports = function dictionaryParcer(data) {
   //   data = mockObject;
 
   translatedData = [];
-
+  
   data.forEach(obj => {
     Object.entries(obj).forEach(entry => {
       if (
@@ -37,8 +37,9 @@ module.exports = function dictionaryParcer(data) {
 
       if (
         typeof entry[1] === "string" &&
-        (entry[0] === "proceduredest" || entry[0] === "exchangedirection")
+        (entry[0] === "proceduredest")
       ) {
+        
         if (entry[1].includes("->")) {
           obj[entry[0]] = destFormat(entry[1]);
         }
